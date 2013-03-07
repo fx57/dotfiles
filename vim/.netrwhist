@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/Users/david/dotfiles'
+let g:netrw_dirhist_2='/Users/david'
+let g:netrw_dirhist_3='/Users/david/dotfiles'
+let g:netrw_dirhist_4='/usr/share/vim/vim73/colors'
