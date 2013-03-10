@@ -1,3 +1,5 @@
+# Mac OSX
+
 export PATH=/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH
 export CLICOLOR=1
 alias ls='CLICOLOR_FORCE=1 ls -G'
