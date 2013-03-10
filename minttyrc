@@ -1,0 +1,13 @@
+BoldAsFont=no
+CursorColour=255,0,0
+CursorType=block
+Transparency=off
+CursorBlinks=no
+FontHeight=9
+FontSmoothing=full
+Columns=150
+Rows=66
+Scrollbar=none
+Term=xterm-256color
+ForegroundColour=255,255,255
+BackgroundColour=40,40,40
