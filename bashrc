@@ -200,3 +200,5 @@ PS1='\u@\h:\w$ '
 # }
 # 
 # alias cd=cd_func
+alias cdc="cd /cygdrive/c"
+alias more="less -X"
