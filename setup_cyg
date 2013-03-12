@@ -5,6 +5,7 @@ cp -f gitconfig $HOME/.gitconfig
 ln -fs dot/bashrc $HOME/.bashrc
 ln -fs dot/vimrc $HOME/.vimrc
 ln -fs dot/vim $HOME/.vim
+ln -fs dot/minttyrc $HOME/.minttyrc
 bin/apt-cyg install vim
 popd
 source $HOME/.bashrc
