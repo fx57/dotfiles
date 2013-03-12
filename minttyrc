@@ -11,3 +11,7 @@ Scrollbar=none
 Term=xterm-256color
 ForegroundColour=255,255,255
 BackgroundColour=40,40,40
+Font=Lucida Console
+FontIsBold=no
+PgUpDnScroll=yes
+ScrollMod=shift
