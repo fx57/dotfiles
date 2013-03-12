@@ -1,3 +1,5 @@
+execute pathogen#infect()
+
 let mapleader=','
 nmap n nzz
 nmap N Nzz
@@ -17,6 +19,8 @@ nnoremap <c-l> <c-w>l
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>e :edit %%
 map <leader>v :view %%
+
+map <leader>f :NERDTreeToggle<CR>
 
 function! LoadCscope()
   let db = findfile("cscope.out", ".;")
