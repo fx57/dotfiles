@@ -1,0 +1,11 @@
+"hg6898
+
+loadplugins '\.(js|penta)$'
+group user
+highlight Hint::after content: attr(text); font-size:12pt; color:white; background:red
+map -count -modes=n,v <C-l> <count><Esc>
+map -count -modes=c <C-l> <Esc>
+map -count -modes=i <C-l> <Esc>
+set hintkeys=asdfghjkl;
+
+" vim: set ft=pentadactyl:

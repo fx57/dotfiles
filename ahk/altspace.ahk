@@ -8,6 +8,7 @@ WinSet, Transparent, 120
 Gui,Font,s20 cYellow bold,Calibri
 Gui, Add, Text, vText1, %text%
 
+^;::
 !Space::
 GuiControl, , Text1, %text%
 ;GuiControl, Move, Text1, x30 w120
