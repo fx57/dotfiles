@@ -1,6 +1,6 @@
 #SingleInstance force
 
-text=(F)irefox`n(T)erminal`n(E)xplorer`n(Q)uit
+text=(F)irefox`n(C)hrome`n(B)ash`n(E)xplorer`n(Q)uit
 
 Gui, +LastFound +AlwaysOnTop +owner -Caption   
 Gui, Color, black,black
@@ -13,10 +13,10 @@ Gui, Add, Text, vText1, %text%
 GuiControl, , Text1, %text%
 ;GuiControl, Move, Text1, x30 w120
 Gui, Show, NoActivate  ;, AutoSize Center
-Input,thekey,L1 T3
+Input,thekey,L1 T3 M
 if (ErrorLevel="max")
 {
-    if (thekey="t")
+    if (thekey="b" OR theKey=chr(2))
     {
 	Gui,Cancel
         ifwinexist, -bash
@@ -24,7 +24,15 @@ if (ErrorLevel="max")
         else
             Run, c:\cygwin\bin\mintty.exe -
     }
-    else if (thekey="f")
+    else if (thekey="c" OR theKey=chr(3))
+    {
+	Gui,Cancel
+        ifwinexist, ahk_class Chrome_WidgetWin_1
+      	    WinActivate
+        else
+      	    Run, "C:\Users\dstam.CORP\AppData\Local\Google\Chrome\Application\chrome.exe", C:\Users\dstam.CORP\AppData\Local\Google\Chrome\Application
+    }
+    else if (thekey="f" OR theKey=chr(6))
     {
 	Gui,Cancel
         ifwinexist, ahk_class MozillaWindowClass
@@ -32,7 +40,7 @@ if (ErrorLevel="max")
         else
       	    Run, "c:\Program Files\Mozilla Firefox\firefox.exe", c:\Program Files\Mozilla Firefox
     }
-    else if (thekey="e")
+    else if (thekey="e" OR theKey=chr(5))
     {
 	Gui,Cancel
         ifwinexist, ahk_class CabinetWClass
@@ -44,6 +52,10 @@ if (ErrorLevel="max")
     {
 	Gui,Cancel
       	Send !{F4}
+    }
+    else if (thekey=";")
+    {
+	Gui,Cancel
     }
     else
     {
