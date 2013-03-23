@@ -1,6 +1,6 @@
 #SingleInstance force
 
-text=(F)irefox`n(C)hrome`n(B)ash`n(E)xplorer`n(Q)uit
+text=(F)irefox`n(C)hrome`n(B)ash`n(E)xplorer`n(V)im`n(Q)uit app
 
 Gui, +LastFound +AlwaysOnTop +owner -Caption   
 Gui, Color, black,black
@@ -18,7 +18,7 @@ if (ErrorLevel="max")
 {
     if (thekey="b" OR theKey=chr(2))
     {
-	Gui,Cancel
+		Gui,Cancel
         ifwinexist, -bash
             WinActivate
         else
@@ -26,7 +26,7 @@ if (ErrorLevel="max")
     }
     else if (thekey="c" OR theKey=chr(3))
     {
-	Gui,Cancel
+		Gui,Cancel
         ifwinexist, ahk_class Chrome_WidgetWin_1
       	    WinActivate
         else
@@ -34,7 +34,7 @@ if (ErrorLevel="max")
     }
     else if (thekey="f" OR theKey=chr(6))
     {
-	Gui,Cancel
+		Gui,Cancel
         ifwinexist, ahk_class MozillaWindowClass
       	    WinActivate
         else
@@ -42,20 +42,28 @@ if (ErrorLevel="max")
     }
     else if (thekey="e" OR theKey=chr(5))
     {
-	Gui,Cancel
+		Gui,Cancel
         ifwinexist, ahk_class CabinetWClass
       	    WinActivate
         else
       	    Send #e
     }
+    else if (thekey="v" OR theKey=chr(22))
+    {
+	    Gui,Cancel
+        ifwinexist, ahk_class Vim
+      	    WinActivate
+        else
+      	    Run, "c:\Program Files\Vim\vim73\gvim.exe", c:\Program Files\Vim\vim73
+    }
     else if (thekey="q")
     {
-	Gui,Cancel
+	    Gui,Cancel
       	Send !{F4}
     }
     else if (thekey=";")
     {
-	Gui,Cancel
+	    Gui,Cancel
     }
     else
     {

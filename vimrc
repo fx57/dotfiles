@@ -15,11 +15,16 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
 
-" edit files in same directory
-cnoremap %% <C-R>=expand('%:h').'/'<cr>
-map <leader>e :edit %%
-map <leader>v :view %%
-
+set nowrap
+set lines=55
+set columns=160
+set guioptions-=T
+set guioptions-=r
+set guioptions-=L
+set guioptions-=m
+set guifont=Lucida\ Console:h9
+set nu
+ 
 map <leader>f :NERDTreeToggle<CR>
 
 function! LoadCscope()
@@ -32,3 +37,6 @@ function! LoadCscope()
   endif
 endfunction
 au BufEnter /* call LoadCscope()
+
+set tabstop=4
+set shiftwidth=4
