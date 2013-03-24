@@ -1,2 +1,2 @@
 #!/bin/bash
-cp altspace.ahk /cygdrive/c/Documents\ and\ Settings/Administrator/Start\ Menu/Programs/Startup/
+cp altspace.ahk "$USERPROFILE/Start Menu/Programs/Startup/"

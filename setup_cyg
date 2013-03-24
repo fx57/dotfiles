@@ -4,15 +4,15 @@ pushd $HOME/dot
 cp -f gitconfig $HOME/.gitconfig
 ln -fs dot/bashrc $HOME/.bashrc
 ln -fs dot/vimrc $HOME/.vimrc
-ln -fs dot/vim $HOME/.vim
+ln -fsT dot/vim $HOME/.vim
 ln -fs dot/minttyrc $HOME/.minttyrc
 bin/apt-cyg install vim
 cp bin/apt-cyg /bin
-cp _vimperatorrc $USERPROFILE
-cp vimrc $USERPROFILE/_vimrc
+cp _vimperatorrc "$USERPROFILE"
+cp vimrc "$USERPROFILE/_vimrc"
 pushd vim
-mkdir $USERPROFILE/vimfiles
-cp -r * $USERPROFILE/vimfiles
+mkdir -p "$USERPROFILE/vimfiles"
+cp -r * "$USERPROFILE/vimfiles"
 popd
 popd
 source $HOME/.bashrc
