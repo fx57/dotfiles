@@ -10,6 +10,10 @@ bin/apt-cyg install vim
 cp bin/apt-cyg /bin
 cp _vimperatorrc $USERPROFILE
 cp vimrc $USERPROFILE/_vimrc
+pushd vim
+mkdir $USERPROFILE/vimfiles
+cp -r * $USERPROFILE/vimfiles
+popd
 popd
 source $HOME/.bashrc
 
