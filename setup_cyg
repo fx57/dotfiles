@@ -8,6 +8,8 @@ ln -fs dot/vim $HOME/.vim
 ln -fs dot/minttyrc $HOME/.minttyrc
 bin/apt-cyg install vim
 cp bin/apt-cyg /bin
+cp _vimperatorrc $USERPROFILE
+cp vimrc $USERPROFILE/_vimrc
 popd
 source $HOME/.bashrc
 
