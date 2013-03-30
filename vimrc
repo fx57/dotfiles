@@ -1,7 +1,7 @@
 execute pathogen#infect()
 
 source $VIMRUNTIME/evim.vim
-imap <C-J> <C-O>:
+imap <F10> <C-O>:
 
 let mapleader=','
 nmap n nzz
@@ -28,6 +28,12 @@ else
 	" support alt key in 7-bit terminals like mintty
 	let c='a'
 	while c <= 'z'
+	  exec "set <A-".c.">=\e".c
+	  exec "imap \e".c." <A-".c.">"
+	  let c = nr2char(1+char2nr(c))
+	endw
+	let c='A'
+	while c <= 'Z'
 	  exec "set <A-".c.">=\e".c
 	  exec "imap \e".c." <A-".c.">"
 	  let c = nr2char(1+char2nr(c))
@@ -59,7 +65,7 @@ set backspace=indent,start
 " and space character
 set whichwrap=b,s,<,>,[,]
 
-map <leader>f :NERDTreeToggle<CR>
+inoremap <silent> <A-f> <C-O>:NERDTreeToggle<CR>
 
 function! LoadCscope()
   let db = findfile("cscope.out", ".;")
@@ -128,6 +134,8 @@ inoremap <silent> <Ins> <C-O>"aP
 
 " undo last operation
 inoremap <silent> <kMultiply> <C-O>u
+inoremap <A-u> <C-O>u
+inoremap <A-U> <C-O><C-R>
 
 "-----------------------
 " Buffer
@@ -163,7 +171,7 @@ inoremap <silent> <C-kMinus> <C-O>:bdelete<CR>
 inoremap <A-b> <C-O>:buffers<CR>:buffer 
 
 " Display buffer information
-inoremap <A-f> <C-O>:file<CR>
+"inoremap <A-f> <C-O>:file<CR>
 
 "-----------------------
 " Windows

@@ -16,3 +16,4 @@ FontIsBold=no
 PgUpDnScroll=yes
 ScrollMod=shift
 OpaqueWhenFocused=no
+AltFnShortcuts=no
