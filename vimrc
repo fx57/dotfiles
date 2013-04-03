@@ -49,7 +49,7 @@ set guioptions-=m
 
 set guifont=Consolas:h13
 set number
-set guicursor=n-v-c:block-Cursor/lCursor,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175,a:blinkon0
+set guicursor=n-v-c:block-Cursor/lCursor,ve:hor13-Cursor,o:hor50-Cursor,i-ci:hor13-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 hi Cursor guifg=white guibg=red
 
 " Always the display the current line and column
@@ -136,6 +136,10 @@ inoremap <silent> <Ins> <C-O>"aP
 inoremap <silent> <kMultiply> <C-O>u
 inoremap <A-u> <C-O>u
 inoremap <A-U> <C-O><C-R>
+
+" linewise selections
+inoremap <silent> <S-Down> <C-O>gH<S-Down>
+inoremap <silent> <S-Up> <C-O>gH<S-Up>
 
 "-----------------------
 " Buffer
