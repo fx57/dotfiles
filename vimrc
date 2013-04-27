@@ -17,9 +17,6 @@ set cpo&vim
 " set 'selection', 'selectmode', 'mousemodel' and 'keymodel' for MS-Windows
 behave mswin
 
-" backspace and cursor keys wrap to previous/next line
-set backspace=indent,eol,start whichwrap+=<,>,[,]
-
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
 
@@ -149,7 +146,7 @@ set nowrap
 if has("gui_running")
 	au GUIEnter * simalt ~x
 else
-	set lines=55
+"	set lines=55
 	set columns=160
 
 	" support alt key in 7-bit terminals like mintty
@@ -185,12 +182,16 @@ set ruler
 " Always have a status line
 set laststatus=2
 
+" backspace and cursor keys wrap to previous/next line
+"set backspace=indent,eol,start whichwrap+=<,>,[,]
+
 " Allow backspace over everything
-set backspace=indent,start
+set backspace=indent,eol,start
 
 " Wrap to the line above the current one when using arrow keys, backpsace
 " and space character
-set whichwrap=b,s,<,>,[,]
+"set whichwrap=b,s,<,>,[,]
+set whichwrap=
 
 inoremap <silent> <A-f> <C-O>:NERDTreeToggle<CR>
 
@@ -319,9 +320,12 @@ inoremap <silent> <a-down> <c-o><c-w>w
 " goto the window above the current window
 inoremap <silent> <a-up> <c-o><c-w>w
 
+let b:homeline = 0
+let b:endline = 0
+
 function! s:BriefHomeKey()
    " if we are on the first char of the line, go to the top of the screen
-   if (col(".") <= 1)
+   if (col(".") <= 1 && line(".") == b:homeline)
       " if on top of screen, go to top of file
       let l:a = line(".")
       normal H0
@@ -332,6 +336,7 @@ function! s:BriefHomeKey()
    else
       " goto beginning of line
       normal 0
+	  let b:homeline = line(".")
    endif
 endfunction
 
@@ -340,9 +345,10 @@ function! s:BriefEndKey()
     let cur_col = virtcol(".")
     let line_len = virtcol("$")
 
-    if cur_col != line_len
+	if cur_col != line_len || line(".") != g:endline
         " The cursor is not at the end of the line, goto the end of the line
         execute "normal " . line_len . "|"
+		let g:endline = line(".")
     else
         " The cursor is already at the end of the line
         let cur_line = line(".")
