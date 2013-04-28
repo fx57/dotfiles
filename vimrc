@@ -1,5 +1,142 @@
 execute pathogen#infect()
 
+" Cursor Movement Keys
+" --------------------
+" <Up>         - Move cursor up one line
+" <Down>       - Move cursor down one line
+" <C-Left>     - Goto beginning of previous word
+" <C-Right>    - Goto beginning of next word
+" <Home>       - Home key.  If you press once, cursor will move to the first
+"                column in the current line.  If you press twice, cursor will
+"                move to the first column in the first line in the current
+"                page.  If you press thrice, cursor will be positioned at the
+"                top of the file.
+" <End>        - End key. If you press once, cursor will move to the last
+"                column in the current line.  If you press twice, cursor will
+"                move to the last column in the last line in the current page.
+"                If you press thrice, cursor will be positioned at the end of
+"                the file.
+" <C-PageUp>   - Goto-beginning of file
+" <C-PageDown> - goto-end of file
+" <C-Home>     - Beginning-of-window
+" <C-End>      - End-of-window
+" <C-d>        - Scroll line down
+" <C-e>        - Scroll line up
+" <A-Home>     - Move the cursor to the first character on screen
+" <A-End>      - Move the cursor to the last character on screen
+" <C-b>        - Move the current line to the bottom of the window
+" <C-c>        - Move the current line to the center of the window
+" <C-t>        - Move the current line to the top of the window
+" 
+" Editing Keys
+" ------------
+" <C-CR>       - Open a new line below the current line and goto that line
+" <S-CR>       - open a new line below the current line, cursor stays in the
+"                current line
+" <A-i>        - Toggle insert mode
+" <A-k>        - Delete from the cursor position to the end of line
+" <C-k>        - Delete from the cursor position to the start of line
+" <A-d>        - Delete the current line
+" <kPlus>      - Copy line or mark to scrap buffer.  Vim register 'a' is used
+"                as the scrap  buffer.
+" <kMinus>     - Cut line or mark to scrap buffer.  Vim register 'a' is used
+"                as the scrap buffer.
+" <Ins>        - Paste scrab buffer contents to current cursor position.  Vim
+"                register 'a' is used as the scrap buffer
+" <C-Ins>      - Copy marked text to system clipboard.  If no mark, copy
+"                current line
+" <S-Ins>      - Paste the system clipboard contents to current cursor
+" <S-Del>      - Cut the marked text to system clipboard. If no mark, cut the
+"                current line
+" <C-Del>      - Remove the marked text
+" <C-v>        - Clipboard paste
+" <A-g>        - Goto line
+" <C-BS>       - Delete the previous word
+" <A-BS>       - Delete the next word
+" <A-/>        - Complete a partially typed word
+" <A-q>        - Quote the next character
+" 
+" Delete Keys
+" -----------
+" <A-u>        - 
+" <kMultiply>  - Undo last operation.  Either keypad * key or <A-u> can be
+"                used.
+" <A-y>        - Restore line
+" <C-y>        - Redo the previously undid commands
+" 
+" Search and Replace Commands
+" ---------------------------
+" <C-f>        -
+" <F5>         -
+" <A-s>        - String search
+" <S-F5>       - search again
+" <A-F5>       - Reverse search
+" <F6>         - Search and replace from the current cursor position
+" <A-t>        - Search and replace the current word from the current cursor
+"                position
+" <S-F6>       - Repeat last search and replace
+" <C-F5>       - toggle case sensitivity of search commands.
+" 
+" Buffer Commands
+" ---------------
+" <A-e>        - Open file
+" <A-x>        - Exit
+" <A-r>        - Read file
+" <A-w>        - Save the current file
+" <A-o>        - Save the current file in a different file name
+" <A-n>        - Select next buffer from the buffer list
+" <A-->        -
+" <A-p>        - Select previous buffer from the buffer list
+" <C-->        -
+" <C-kMinus>   - Delete current buffer from buffer list
+" <A-b>        - Display buffer list
+" <A-f>        - Display buffer information
+" 
+" Compiler related commands
+" -------------------------
+" <A-F10>      - Compile current buffer
+" <C-n>        - Jump to the next error
+" <C-l>        - pJump to the next previous error
+" <C-p>        - View compiler output
+" 
+" Mark commands
+" -------------
+" <A-m>        - Toggle standard text marking mode
+" <A-l>        - Toggle line marking mode
+" <A-c>        - 
+" <A-a>        - Toggle column marking mode
+" <A-h>        - Mark current word
+" 
+" Misc commands
+" -------------
+" <A-v>        - Show version
+" <C-Up>
+" <C-Down>     - Goto next/previous function
+" <A-z>        - Start a shell
+" <A-F1>       - Search for a keyword in online help
+" 
+" Bookmark
+" --------
+" <A-0>        - Mark bookmark 0
+" <A-1>        - Mark bookmark 1
+" <A-2>        - Mark bookmark 2
+" <A-3>        - Mark bookmark 3
+" <A-4>        - Mark bookmark 4
+" <A-5>        - Mark bookmark 5
+" <A-6>        - Mark bookmark 6
+" <A-7>        - Mark bookmark 7
+" <A-8>        - Mark bookmark 8
+" <A-9>        - Mark bookmark 9
+" <A-j>        - Jump to a bookmark
+" 
+" Windows Commands
+" ----------------
+" <F3>         - Split window
+" <F4>         - Delete window
+" <A-F2>       - Zoom window
+" <A-Down>     - Goto the window below the current window
+" <A-Up>       - Goto the window above the current window
+"
 "--- evim
 "source $VIMRUNTIME/evim.vim
 " Don't use Vi-compatible mode.
@@ -27,22 +164,22 @@ vnoremap <C-X> "+x
 vnoremap <C-C> "+y
 
 " CTRL-V is Paste
-map <C-V>		"+gP
-cmap <C-V>		<C-R>+
+"map <C-V>		"+gP
+"cmap <C-V>		<C-R>+
 
 " Pasting blockwise and linewise selections is not possible in Insert and
 " Visual mode without the +virtualedit feature.  They are pasted as if they
 " were characterwise instead.
 " Uses the paste.vim autoload script.
 
-exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
-exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
+"exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
+"exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
 
 imap <S-Insert>		<C-V>
 vmap <S-Insert>		<C-V>
 
 " Use CTRL-Q to do what CTRL-V used to do
-noremap <C-Q>		<C-V>
+inoremap <C-Q>		<C-V>
 
 " For CTRL-V to work autoselect must be off.
 " On Unix we have two selections, autoselect can be used.
@@ -85,11 +222,11 @@ inoremap <silent> <Down> <C-R>=pumvisible() ? "\<lt>Down>" : "\<lt>C-O>gj"<CR>
 inoremap <silent> <Up> <C-R>=pumvisible() ? "\<lt>Up>" : "\<lt>C-O>gk"<CR>
 
 " CTRL-F does Find dialog instead of page forward
-noremap <silent> <C-F> :promptfind<CR>
-vnoremap <silent> <C-F> y:promptfind <C-R>"<CR>
-onoremap <silent> <C-F> <C-C>:promptfind<CR>
-inoremap <silent> <C-F> <C-O>:promptfind<CR>
-cnoremap <silent> <C-F> <C-C>:promptfind<CR>
+"noremap <silent> <C-F> :promptfind<CR>
+"vnoremap <silent> <C-F> y:promptfind <C-R>"<CR>
+"onoremap <silent> <C-F> <C-C>:promptfind<CR>
+"inoremap <silent> <C-F> <C-O>:promptfind<CR>
+"cnoremap <silent> <C-F> <C-C>:promptfind<CR>
 
 set backspace=2		" allow backspacing over everything in insert mode
 set autoindent		" always set autoindenting on
@@ -128,8 +265,6 @@ endif " has("autocmd")
 imap <F10> <C-O>:
 
 let mapleader=','
-nmap n nzz
-nmap N Nzz
 syntax enable
 colo gc
 " virtual edit everywhere
@@ -141,7 +276,7 @@ set virtualedit=all
 "nnoremap <c-j> <c-w>j
 "nnoremap <c-k> <c-w>k
 "nnoremap <c-l> <c-w>l
-
+                
 set nowrap
 if has("gui_running")
 	au GUIEnter * simalt ~x
@@ -156,14 +291,20 @@ else
 	  exec "imap \e".c." <A-".c.">"
 	  let c = nr2char(1+char2nr(c))
 	endw
-	let c='A'
-	while c <= 'Z'
-	  exec "set <A-".c.">=\e".c
-	  exec "imap \e".c." <A-".c.">"
-	  let c = nr2char(1+char2nr(c))
-	endw
+"	let c='A'
+"	while c <= 'Z'
+"	  exec "set <A-".c.">=\e".c
+"	  exec "imap \e".c." <A-".c.">"
+"	  let c = nr2char(1+char2nr(c))
+"	endw
 	set notimeout
 endif
+
+" numpad-5 and shifted numpad-5
+exec "set <t_K5>=\eOE"
+exec "set <t_S5>=\e[1;2E"
+imap <t_K5> foobar
+imap <t_S5> cowbar
 
 " hide gui crap
 set guioptions-=T
@@ -193,6 +334,9 @@ set backspace=indent,eol,start
 "set whichwrap=b,s,<,>,[,]
 set whichwrap=
 
+" Ctrl-] to follow link
+inoremap <C-]> <C-O><C-]>
+
 inoremap <silent> <A-f> <C-O>:NERDTreeToggle<CR>
 
 function! LoadCscope()
@@ -205,6 +349,9 @@ function! LoadCscope()
   endif
 endfunction
 au BufEnter /* call LoadCscope()
+
+set tabstop=4
+set shiftwidth=4
 
 "-----------------------------------------------------------------------
 " Brief bindings
@@ -240,12 +387,57 @@ inoremap <silent> <PageDown> <C-O>:call <SID>BriefPageDown()<CR>
 inoremap <silent> <S-Down> <C-O>gH<S-Down>
 inoremap <silent> <S-Up> <C-O>gH<S-Up>
 
+" goto-beginning of file
+inoremap <silent> <C-PageUp> <C-O>gg
+
+" goto-end of file
+inoremap <silent> <C-PageDown> <C-O>G
+
+" beginning-of-window
+inoremap <silent> <C-Home> <C-O>H
+
+" end-of-window
+inoremap <silent> <C-End> <C-O>L
+
+" scroll line down
+inoremap <silent> <C-d> <C-x><C-y>
+
+" scroll line up
+inoremap <silent> <C-e> <C-x><C-e>
+
+" Move the cursor to the first character on screen
+inoremap <silent> <A-Home> <C-O>g0
+
+" Move the cursor to the last character on screen
+inoremap <silent> <A-End> <C-O>g$
+
+" Move the current line to the bottom of the window
+inoremap <silent> <C-b> <C-O>z-
+
+" Move the current line to the center of the window
+"inoremap <silent> <C-c> <C-O>z.
+
+" Move the current line to the top of the window
+inoremap <silent> <C-t> <C-O>z<CR>
+
 "-----------------------
 " Editing
 "-----------------------
 
+" Open a new line below the current line and goto that line
+inoremap <silent> <C-CR> <C-O>o
+
+" open a new line below the current line, cursor stays in the current line
+inoremap <silent> <S-CR> <C-O>o<C-O>k
+
 " Toggle insert mode
 inoremap <silent> <A-i> <Ins>
+
+" Delete from the cursor position to the end of line
+inoremap <silent> <A-k> <C-O>d$
+
+" Delete from the cursor position to the start of line
+inoremap <silent> <C-k> <C-U>
 
 " Delete the current line
 inoremap <silent> <A-d> <C-O>dd
@@ -264,15 +456,81 @@ vnoremap <silent> <kMinus> "ax
 " used as the scrap buffer
 inoremap <silent> <Ins> <C-O>"aP
 
-" undo last operation
-inoremap <silent> <kMultiply> <C-O>u
-inoremap <A-u> <C-O>u
-inoremap <A-U> <C-O><C-R>
+" Copy marked text to system clipboard.  If no mark, copy current line
+inoremap <silent> <C-Ins> <C-O>"*yy
+vnoremap <silent> <C-Ins> "*y
+
+" Paste the system clipboard contents to current cursor
+inoremap <silent> <S-Ins> <C-O>"*P
+
+" Cut the marked text to system clipboard. If no mark, cut the current line
+inoremap <silent> <S-Del> <C-O>"*dd
+vnoremap <silent> <S-Del> "*d
+
+" Remove the marked text
+vnoremap <silent> <C-Del> <C-O>d
+
+" Clipboard paste
+inoremap <silent> <C-v> <C-O>"*P
+
+" Goto line
+inoremap <silent> <A-g> <C-O>:call <SID>BriefGotoLine()<CR>
+
+" Delete the previous word
+inoremap <silent> <C-BS> <C-W>
+
+" Delete the next word
+inoremap <silent> <A-BS> <C-O>E<C-O>E<C-O>a<C-W>
+
+" Complete a partially typed word
+inoremap <silent> <A-/> <C-p>
+
+" Quote the next character
+inoremap <silent> <A-q> <C-v>
 
 "-----------------------
-" Misc
+" Delete
 "-----------------------
-inoremap <A-h> <C-O>:help 
+
+" undo last operation.  Either keypad * key or <A-u> can be used
+inoremap <silent> <A-u> <C-O>u
+inoremap <silent> <kMultiply> <C-O>u
+
+" Restore line
+inoremap <silent> <A-y> <C-O>U
+
+" Redo the previously undid commands
+inoremap <silent> <C-y> <C-r>
+
+"-----------------------
+" Search and replace
+"-----------------------
+
+" string-search
+inoremap <silent> <C-f> <C-O>:call <SID>BriefSearch("")<CR>
+inoremap <silent> <F5> <C-O>:call <SID>BriefSearch("")<CR>
+
+inoremap <silent> <A-s> <C-O>:call <SID>BriefSearch(expand("<cword>")<CR>
+
+" search again
+inoremap <silent> <S-F5> <C-O>n
+inoremap <silent> <C-n> <C-O>n
+
+" Reverse search
+inoremap <silent> <A-F5> <C-O>N
+inoremap <silent> <C-p> <C-O>N
+
+" Search and replace from the current cursor position
+inoremap <silent> <F6> <C-O>:call <SID>BriefSearchAndReplace("")<CR>
+
+" Search and replace the current word from the current cursor position
+inoremap <silent> <A-t> <C-O>:call <SID>BriefSearchAndReplace(expand("<cword>"))<CR>
+
+" Repeat last search and replace
+inoremap <silent> <S-F6> <C-O>:.,$&&<CR>
+
+" toggle case sensitivity of search commands.
+inoremap <silent> <C-F5> <C-O>:set invignorecase<CR>
 
 "-----------------------
 " Buffer
@@ -311,14 +569,116 @@ inoremap <A-b> <C-O>:buffers<CR>:buffer
 "inoremap <A-f> <C-O>:file<CR>
 
 "-----------------------
+" Compiler related
+"-----------------------
+" compile-buffer
+inoremap <silent> <A-F10> <C-O>:make<CR>
+
+" next-error
+"inoremap <silent> <C-n> <C-O>:cnext<CR>
+
+" previous error
+"inoremap <silent> <C-l> <C-O>:cprevious<CR>
+
+" View compiler output
+"inoremap <silent> <C-p> <C-O>:copen<CR>
+
+"-----------------------
+" Mark
+"-----------------------
+
+" toggle standard text marking mode
+inoremap <silent> <A-m> <C-O>v
+vnoremap <silent> <A-m> v
+
+" Toggle line marking mode
+inoremap <silent> <A-l> <C-O>V
+vnoremap <silent> <A-l> V
+
+" Toggle column marking mode
+inoremap <silent> <A-c> <C-O><C-V>
+inoremap <silent> <A-a> <C-O><C-V>
+vnoremap <silent> <A-c> <C-V>
+vnoremap <silent> <A-a> <C-V>
+
+" Mark current word
+inoremap <silent> <A-h> <C-O>viw
+
+"-----------------------
+" Misc commands
+"-----------------------
+
+" show version
+inoremap <silent> <A-v> <C-O>:version<CR>
+
+" Goto next/previous function
+inoremap <silent> <C-Up>    <C-O>[[
+inoremap <silent> <C-Down>  <C-O>]]
+
+" Start shell
+inoremap <silent> <A-z> <C-O>:stop<CR>
+
+" Search for a keyword in the online help
+inoremap <A-F1> <C-O>:help  
+
+" Alt-h for help
+inoremap <A-h> <C-O>:help 
+
+"-----------------------
+" Bookmark
+"-----------------------
+
+" Mark bookmark 0
+inoremap <silent> <A-0> <C-O>mb
+
+" Mark bookmark 1
+inoremap <silent> <A-1> <C-O>mc
+
+" Mark bookmark 2
+inoremap <silent> <A-2> <C-O>md
+
+" Mark bookmark 3
+inoremap <silent> <A-3> <C-O>me
+
+" Mark bookmark 4
+inoremap <silent> <A-4> <C-O>mf
+
+" Mark bookmark 5
+inoremap <silent> <A-5> <C-O>mg
+
+" Mark bookmark 6
+inoremap <silent> <A-6> <C-O>mh
+
+" Mark bookmark 7
+inoremap <silent> <A-7> <C-O>mi
+
+" Mark bookmark 8
+inoremap <silent> <A-8> <C-O>mj
+
+" Mark bookmark 9
+inoremap <silent> <A-9> <C-O>mk
+
+" Jump to a bookmark
+inoremap <silent> <A-j> <C-O>:call <SID>BriefJumpMark()<CR>
+
+"-----------------------
 " Windows
 "-----------------------
 
-" goto the window below the current window
-inoremap <silent> <a-down> <c-o><c-w>w
+" Split window
+inoremap <silent> <F3> <C-O>:split<CR>
 
-" goto the window above the current window
-inoremap <silent> <a-up> <c-o><c-w>w
+" Delete window
+inoremap <silent> <F4> <C-O>:quit<CR>
+
+" Zoom window
+inoremap <silent> <A-F2> <C-O>:only<CR>
+
+" Goto the window below the current window
+inoremap <silent> <A-Down> <C-O><C-W>w
+
+" Goto the window above the current window
+inoremap <silent> <A-Up> <C-O><C-W>W
 
 "-----------------------
 " Functions
@@ -398,6 +758,45 @@ function! s:BriefEndKey()
     endif
 endfunction
 
+function! s:BriefSearch(pattern)
+    if has("gui_running")
+        if a:pattern == ""
+            promptfind
+        else
+            execute "promptfind " . a:pattern
+        endif
+    else
+        let searchstr = input("Find text: ", a:pattern)
+        if searchstr == ""
+            return
+        endif
+
+        execute '/' . searchstr
+    endif
+endfunction
+
+function! s:BriefSearchAndReplace(pattern)
+    if has("gui_running")
+        if a:pattern == ""
+            execute "promptrepl " . a:pattern
+        else
+            promptrepl
+        endif
+    else
+        let searchstr = input("Find text: ", a:pattern)
+        if searchstr == ""
+            return
+        endif
+
+        let replacestr = input("Replace with: ")
+        if replacestr == ""
+            return
+        endif
+
+        execute '.,$substitute/' . searchstr . '/' . replacestr . '/c'
+    endif
+endfunction
+
 function! s:BriefSave()
     if expand("%") == ""
         if has("gui_running")
@@ -426,6 +825,49 @@ function! s:BriefSaveAs()
     endif
 endfunction
 
-set tabstop=4
-set shiftwidth=4
+function! s:BriefJumpMark()
+    let mark = input("Jump to bookmark: ")
+    if mark == ""
+        return
+    endif
+    if mark == "0"
+        normal `b
+    endif
+    if mark == "1"
+        normal `c
+    endif
+    if mark == "2"
+        normal `d
+    endif
+    if mark == "3"
+        normal `e
+    endif
+    if mark == "4"
+        normal `f
+    endif
+    if mark == "5"
+        normal `g
+    endif
+    if mark == "6"
+        normal `h
+    endif
+    if mark == "7"
+        normal `i
+    endif
+    if mark == "8"
+        normal `j
+    endif
+    if mark == "9"
+        normal `k
+    endif
+endfunction
+
+function! s:BriefGotoLine()
+    let linenr = input("Line number to jump to: ")
+    if linenr == ""
+        return
+    endif
+
+    execute "normal " . linenr . "gg"
+endfunction
 
