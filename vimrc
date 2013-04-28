@@ -55,8 +55,8 @@ noremap <C-Z> u
 inoremap <C-Z> <C-O>u
 
 " CTRL-Y is Redo (although not repeat); not in cmdline though
-noremap <C-Y> <C-R>
-inoremap <C-Y> <C-O><C-R>
+"noremap <C-Y> <C-R>
+"inoremap <C-Y> <C-O><C-R>
 
 " CTRL-A is Select all
 noremap <C-A> gggH<C-O>G
@@ -230,11 +230,11 @@ inoremap <silent> <C-Left> <C-O>B
 " goto beginning of next word
 inoremap <silent> <C-Right> <C-O>W
 
-" brief-home-key
+" brief-home/end/pgup/pgdn
 inoremap <silent> <Home> <C-O>:call <SID>BriefHomeKey()<CR>
-
-" brief-end-key
 inoremap <silent> <End> <C-O>:call <SID>BriefEndKey()<CR>
+inoremap <silent> <PageUp> <C-O>:call <SID>BriefPageUp()<CR>
+inoremap <silent> <PageDown> <C-O>:call <SID>BriefPageDown()<CR>
 
 " linewise selections
 inoremap <silent> <S-Down> <C-O>gH<S-Down>
@@ -320,9 +320,36 @@ inoremap <silent> <a-down> <c-o><c-w>w
 " goto the window above the current window
 inoremap <silent> <a-up> <c-o><c-w>w
 
-let b:homeline = 0
-let b:endline = 0
+"-----------------------
+" Functions
+"-----------------------
 
+" page up exactly one page without moving cursor position on screen
+function! s:BriefPageUp()
+   let l:a = getpos(".")
+   execute "normal " . winheight(0) . "\<c-y>"
+   let a[1] = a[1] - winheight(0)
+   if (a[1] < 1) 
+      let a[1] = 1
+   endif
+   call setpos(".",a)
+endfunction
+
+" page down exactly one page without moving cursor position on screen
+function! s:BriefPageDown()
+   let l:a = getpos(".")
+   let l:dist = winheight(0)
+   if (line(".") + winheight(0) > line("$"))
+	  " page down would go past end of buffer
+      let l:dist = line("$") - line(".") 
+   else
+   	  execute "normal " . l:dist . "\<c-e>"
+   endif
+   let a[1] = a[1] + l:dist
+   call setpos(".",a)
+endfunction
+
+let b:homeline = 0
 function! s:BriefHomeKey()
    " if we are on the first char of the line, go to the top of the screen
    if (col(".") <= 1 && line(".") == b:homeline)
@@ -341,14 +368,15 @@ function! s:BriefHomeKey()
 endfunction
 
 " This function is taken from vim online web page and modified
+let b:endline = 0
 function! s:BriefEndKey()
     let cur_col = virtcol(".")
     let line_len = virtcol("$")
 
-	if cur_col != line_len || line(".") != g:endline
+	if cur_col != line_len || line(".") != b:endline
         " The cursor is not at the end of the line, goto the end of the line
         execute "normal " . line_len . "|"
-		let g:endline = line(".")
+		let b:endline = line(".")
     else
         " The cursor is already at the end of the line
         let cur_line = line(".")
