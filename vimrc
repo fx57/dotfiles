@@ -158,10 +158,10 @@ behave mswin
 vnoremap <BS> d
 
 " CTRL-X is Cut
-vnoremap <C-X> "+x
+"vnoremap <C-x> "+x
 
 " CTRL-C is Copy
-vnoremap <C-C> "+y
+"vnoremap <C-c> "+y
 
 " CTRL-V is Paste
 "map <C-V>		"+gP
@@ -466,6 +466,7 @@ inoremap <silent> <S-Ins> <C-O>"*P
 " Cut the marked text to system clipboard. If no mark, cut the current line
 inoremap <silent> <S-Del> <C-O>"*dd
 vnoremap <silent> <S-Del> "*d
+vnoremap <silent> <C-x> "*d
 
 " Remove the marked text
 vnoremap <silent> <C-Del> <C-O>d
