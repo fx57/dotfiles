@@ -1,6 +1,6 @@
 #SingleInstance force
 
-text=(F)irefox`n(C)hrome`n(B)ash`n(E)xplorer`n(V)im`n(Q)uit app
+text=(F)irefox`n(C)hrome`n(T)erminal`n(E)xplorer`n(V)im`n(Q)uit app
 
 Gui, +LastFound +AlwaysOnTop +owner -Caption   
 Gui, Color, black,black
@@ -16,7 +16,7 @@ Gui, Show, NoActivate  ;, AutoSize Center
 Input,thekey,L1 T3 M
 if (ErrorLevel="max")
 {
-    if (thekey="b" OR theKey=chr(2))
+    if (thekey="t" OR theKey=chr(20))
     {
 		Gui,Cancel
         ifwinexist, -bash
