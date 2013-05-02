@@ -7,7 +7,7 @@ ln -fs dot/vimrc $HOME/.vimrc
 mv $HOME/.vim $HOME/.vim_old
 ln -fsF dot/vim $HOME/.vim
 mv $HOME/Library/Preferences/com.apple.Terminal.plist $HOME/Library/Preferences/com.apple.Terminal.plist_old
-cp com.apple.Terminal.plist $HOME/Library/Preferences
+cp -p com.apple.Terminal.plist $HOME/Library/Preferences
 #ln -fs dot/minttyrc $HOME/.minttyrc
 #bin/apt-cyg install vim
 #cp bin/apt-cyg /bin

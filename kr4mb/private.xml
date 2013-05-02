@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<root>
+    <item>
+        <name>Change Keypad to F15+</name>
+        <identifier>remap.KP5_to_F15</identifier>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_5, KeyCode::F15</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_0, KeyCode::F16</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_PLUS, KeyCode::F17</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_MINUS, KeyCode::F17</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_MULTIPLY, KeyCode::F18</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_SLASH, KeyCode::F19</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_EQUAL, KeyCode::F14</autogen>
+    </item>
+</root>
