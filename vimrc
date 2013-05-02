@@ -466,7 +466,7 @@ inoremap <silent> <S-Del> <C-O>"*dd
 vnoremap <silent> <S-Del> "*d
 
 " Remove the marked text
-vnoremap <silent> <C-Del> <C-O>d
+vnoremap <silent> <Del> d
 
 " Clipboard paste
 "inoremap <silent> <C-v> <C-O>"*P
