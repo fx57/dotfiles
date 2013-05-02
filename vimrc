@@ -187,14 +187,6 @@ if !has("unix")
   set guioptions-=a
 endif
 
-" CTRL-Z is Undo; not in cmdline though
-noremap <C-Z> u
-inoremap <C-Z> <C-O>u
-
-" CTRL-Y is Redo (although not repeat); not in cmdline though
-"noremap <C-Y> <C-R>
-"inoremap <C-Y> <C-O><C-R>
-
 " CTRL-A is Select all
 noremap <C-A> gggH<C-O>G
 inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
@@ -282,7 +274,7 @@ if has("gui_running")
 	au GUIEnter * simalt ~x
 else
 "	set lines=55
-	set columns=160
+"	set columns=120
 
 	" support alt key in 7-bit terminals like mintty
 	let c='a'
@@ -300,13 +292,14 @@ else
 	set notimeout
 endif
 
-" numpad-5 and shifted numpad-5
+" numpad-5 and shifted numpad-5, hide selection or select word
 exec "set <t_K5>=\eOE"
 exec "set <t_S5>=\e[1;2E"
-imap <t_K5> foobar
-imap <t_S5> cowbar
+imap <t_K5> <Nop>
+smap <t_K5> <right><left>
+imap <t_S5> <C-O>viW<C-g>
 
-" hide gui crap
+" hide gui distractions
 set guioptions-=T
 set guioptions-=r
 set guioptions-=L
@@ -498,6 +491,8 @@ inoremap <silent> <A-q> <C-v>
 "-----------------------
 
 " undo last operation.  Either keypad * key or <A-u> can be used
+noremap <C-Z> u
+inoremap <C-Z> <C-O>u
 inoremap <silent> <A-u> <C-O>u
 inoremap <silent> <kMultiply> <C-O>u
 
@@ -505,7 +500,7 @@ inoremap <silent> <kMultiply> <C-O>u
 inoremap <silent> <A-y> <C-O>U
 
 " Redo the previously undid commands
-inoremap <silent> <C-y> <C-r>
+inoremap <silent> <C-y> <C-O>:redo<CR>
 
 "-----------------------
 " Search and replace
