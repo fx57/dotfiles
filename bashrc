@@ -203,3 +203,4 @@ PS1='\u@\h:\w$ '
 alias cdc="cd /cygdrive/c"
 alias more="less -X"
 alias b="vi"
+export DISPLAY=localhost:0.0
