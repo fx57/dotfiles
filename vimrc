@@ -384,8 +384,8 @@ inoremap <silent> <PageUp> <C-O>:call <SID>BriefPageUp()<CR>
 inoremap <silent> <PageDown> <C-O>:call <SID>BriefPageDown()<CR>
 
 " linewise selections
-inoremap <silent> <S-Down> <C-O>gH<S-Down>
-inoremap <silent> <S-Up> <C-O>gH<S-Up>
+inoremap <silent> <S-Down> <C-O>gH
+inoremap <silent> <S-Up> <C-O>gH
 
 " goto-beginning of file
 inoremap <silent> <C-PageUp> <C-O>gg
@@ -445,16 +445,21 @@ inoremap <silent> <A-d> <C-O>dd
 " Copy line or mark to scrap buffer.  Vim register 'a' is used as the scrap
 " buffer
 inoremap <silent> <kPlus> <C-O>"ayy
+inoremap <silent> <C-c> <C-O>"ayy
 vnoremap <silent> <kPlus> "ay
+vnoremap <silent> <C-c> "ay
 
 " Cut line or mark to scrap buffer.  Vim register 'a' is used as the scrap
 " buffer
 inoremap <silent> <kMinus> <C-O>"add
+inoremap <silent> <C-x> <C-O>"add
 vnoremap <silent> <kMinus> "ax
+vnoremap <silent> <C-x> "ax
 
 " Paste scrap buffer contents to current cursor position.  Vim register 'a' is
 " used as the scrap buffer
 inoremap <silent> <Ins> <C-O>"aP
+inoremap <silent> <C-v> <C-O>"aP
 
 " Copy marked text to system clipboard.  If no mark, copy current line
 inoremap <silent> <C-Ins> <C-O>"*yy
@@ -466,13 +471,12 @@ inoremap <silent> <S-Ins> <C-O>"*P
 " Cut the marked text to system clipboard. If no mark, cut the current line
 inoremap <silent> <S-Del> <C-O>"*dd
 vnoremap <silent> <S-Del> "*d
-vnoremap <silent> <C-x> "*d
 
 " Remove the marked text
 vnoremap <silent> <C-Del> <C-O>d
 
 " Clipboard paste
-inoremap <silent> <C-v> <C-O>"*P
+"inoremap <silent> <C-v> <C-O>"*P
 
 " Goto line
 inoremap <silent> <A-g> <C-O>:call <SID>BriefGotoLine()<CR>
