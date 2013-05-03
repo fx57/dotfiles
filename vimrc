@@ -292,13 +292,6 @@ else
 	set notimeout
 endif
 
-" numpad-5 and shifted numpad-5, hide selection or select word
-exec "set <t_K5>=\eOE"
-exec "set <t_S5>=\e[1;2E"
-imap <t_K5> <Nop>
-smap <t_K5> <right><left>
-imap <t_S5> <C-O>viW<C-g>
-
 " hide gui distractions
 set guioptions-=T
 set guioptions-=r
@@ -412,6 +405,15 @@ inoremap <silent> <C-b> <C-O>z-
 
 " Move the current line to the top of the window
 inoremap <silent> <C-t> <C-O>z<CR>
+
+" select word - (shifted numpad-5)  --> TODO: further presses select line, block
+exec "set <t_S5>=\e[1;2E"
+imap <t_S5> <C-O>viW<C-g>
+
+" hide selection - (numpad-5)
+exec "set <t_K5>=\eOE"
+imap <t_K5> <C-O>:nohl<CR>
+smap <t_K5> <right><left>
 
 "-----------------------
 " Editing
@@ -531,6 +533,18 @@ inoremap <silent> <S-F6> <C-O>:.,$&&<CR>
 
 " toggle case sensitivity of search commands.
 inoremap <silent> <C-F5> <C-O>:set invignorecase<CR>
+
+" Jump to matching brace or paren - (Ctrl-%)
+exec "set <t_C5>=\e[1;5u"
+inoremap <silent> <t_C5> <C-O>%
+
+" Search forward for word under cursor - (Ctrl-*)
+exec "set <t_C8>=\e[1;5x"
+inoremap <silent> <t_C8> <C-O>*
+
+" Search backward for word under cursor - (Shift-Ctrl-*)
+exec "set <t_C*>=\e[1;6x"
+inoremap <silent> <t_C*> <C-O>#
 
 "-----------------------
 " Buffer

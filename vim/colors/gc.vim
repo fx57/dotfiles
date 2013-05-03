@@ -82,7 +82,8 @@ hi StatusLine	cterm=bold,reverse
 hi StatusLineNC cterm=reverse
 hi VertSplit	cterm=reverse
 hi Title	ctermfg=5
-hi Visual	cterm=reverse
+"hi Visual	cterm=NONE ctermfg=233 ctermbg=101
+hi Visual	ctermbg=240
 hi VisualNOS	cterm=bold,underline
 hi WarningMsg	ctermfg=1
 hi WildMenu	ctermfg=0 ctermbg=3
@@ -103,6 +104,6 @@ hi Underlined	cterm=underline ctermfg=5
 hi Ignore	cterm=bold ctermfg=7
 hi Ignore	ctermfg=darkgrey
 hi Error	cterm=bold ctermfg=7 ctermbg=1
-
+hi MatchParen ctermfg=7 ctermbg=235
 
 "vim: sw=4
