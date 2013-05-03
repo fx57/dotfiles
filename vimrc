@@ -18,8 +18,8 @@ execute pathogen#infect()
 "                the file.
 " <C-PageUp>   - Goto-beginning of file
 " <C-PageDown> - goto-end of file
-" <C-Home>     - Beginning-of-window
-" <C-End>      - End-of-window
+" <C-Home>     - Was beginning-of-window - Changed this to jump back
+" <C-End>      - Was end-of-window       - changed this to jump fwd
 " <C-d>        - Scroll line down
 " <C-e>        - Scroll line up
 " <A-Home>     - Move the cursor to the first character on screen
@@ -320,9 +320,6 @@ set backspace=indent,eol,start
 "set whichwrap=b,s,<,>,[,]
 set whichwrap=
 
-" Ctrl-] to follow link
-inoremap <C-]> <C-O><C-]>
-
 inoremap <silent> <A-f> <C-O>:NERDTreeToggle<CR>
 
 function! LoadCscope()
@@ -380,10 +377,16 @@ inoremap <silent> <C-PageUp> <C-O>gg
 inoremap <silent> <C-PageDown> <C-O>G
 
 " beginning-of-window
-inoremap <silent> <C-Home> <C-O>H
+"inoremap <silent> <C-Home> <C-O>H
 
 " end-of-window
-inoremap <silent> <C-End> <C-O>L
+"inoremap <silent> <C-End> <C-O>L
+
+" go out or back (Ctrl-Home)
+inoremap <silent> <C-Home> <C-O><C-O>
+
+" go in or forward (Ctrl-End)
+inoremap <silent> <C-End> <C-O><C-I>
 
 " scroll line down
 inoremap <silent> <C-d> <C-x><C-y>
@@ -414,6 +417,9 @@ imap <t_S5> <C-O>viW<C-g>
 exec "set <t_K5>=\eOE"
 imap <t_K5> <C-O>:nohl<CR>
 smap <t_K5> <right><left>
+
+" Ctrl-] to follow link
+inoremap <C-]> <C-O><C-]>
 
 "-----------------------
 " Editing
