@@ -94,12 +94,12 @@ hi DiffChange	ctermbg=5
 hi DiffDelete	cterm=bold ctermfg=4 ctermbg=6
 hi DiffText	cterm=bold ctermbg=1
 hi Comment	ctermfg=darkgreen
-hi Constant	ctermfg=brown
+hi Constant	ctermfg=red
 hi Special	ctermfg=5
-hi Identifier	ctermfg=6
-hi Statement	ctermfg=6
-hi PreProc	ctermfg=5
-hi Type		ctermfg=3
+hi Identifier	ctermfg=cyan
+hi Statement	ctermfg=cyan
+hi PreProc	ctermfg=brown
+hi Type		ctermfg=cyan
 hi Underlined	cterm=underline ctermfg=5
 hi Ignore	cterm=bold ctermfg=7
 hi Ignore	ctermfg=darkgrey
