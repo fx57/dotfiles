@@ -1,6 +1,6 @@
 execute pathogen#infect()
 
-" Cursor Movement Keys
+"  Movement Keys
 " --------------------
 " <Up>         - Move cursor up one line
 " <Down>       - Move cursor down one line
@@ -502,7 +502,7 @@ inoremap <silent> <A-q> <C-v>
 noremap <C-Z> u
 inoremap <C-Z> <C-O>u
 inoremap <silent> <A-u> <C-O>u
-inoremap <silent> <kMultiply> <C-O>u
+"inoremap <silent> <kMultiply> <C-O>u
 
 " Restore line
 inoremap <silent> <A-y> <C-O>U
@@ -518,7 +518,8 @@ inoremap <silent> <C-y> <C-O>:redo<CR>
 inoremap <silent> <C-f> <C-O>:call <SID>BriefSearch("")<CR>
 inoremap <silent> <F5> <C-O>:call <SID>BriefSearch("")<CR>
 
-inoremap <silent> <A-s> <C-O>:call <SID>BriefSearch(expand("<cword>")<CR>
+"inoremap <silent> <A-s> <C-O>:call <SID>BriefSearch(expand("<cword>")<CR>
+inoremap <A-s> <C-O>/
 
 " search again
 inoremap <silent> <S-F5> <C-O>n
@@ -546,11 +547,15 @@ inoremap <silent> <t_C5> <C-O>%
 
 " Search forward for word under cursor - (Ctrl-*)
 exec "set <t_C8>=\e[1;5x"
-inoremap <silent> <t_C8> <C-O>*
+inoremap <silent> <t_C8> <C-O>*<C-O>:nohl<CR>
+inoremap <silent> <kMultiply> <C-O>*<C-O>:nohl<CR>
 
 " Search backward for word under cursor - (Shift-Ctrl-*)
 exec "set <t_C*>=\e[1;6x"
-inoremap <silent> <t_C*> <C-O>#
+inoremap <silent> <t_C*> <C-O>#<C-O>:nohl<CR>
+inoremap <silent> <S-kMultiply> <C-O>#<C-O>:nohl<CR>
+exec "set <t_~*>=\e[1;2j"
+inoremap <silent> <t_~*> <C-O>#<C-O>:nohl<CR>
 
 "-----------------------
 " Buffer
@@ -691,18 +696,42 @@ inoremap <silent> <F3> <C-O>:split<CR>
 " Delete window
 inoremap <silent> <F4> <C-O>:quit<CR>
 
-" Zoom window
-inoremap <silent> <A-F2> <C-O>:only<CR>
+" Zoom window (Alt-F2)
+inoremap <silent> <A-F2> <C-O>:resize<CR>
+exec "set <t_~2>=\e[1;3Q"
+inoremap <silent> <t_~2> <C-O>:call <SID>BriefZoom()<CR>
 
-" Goto the window below the current window
-inoremap <silent> <A-Down> <C-O><C-W>w
+" Goto the window below the current window (Alt-down, or Ctrl-Alt-Numpad-down)
+inoremap <silent> <A-Down> <C-O><C-W>j
+exec "set <t_~u>=\e[1;7B"          
+inoremap <silent> <t_~u> <C-O><C-W>j
 
-" Goto the window above the current window
-inoremap <silent> <A-Up> <C-O><C-W>W
+" Goto the window above the current window (Alt-up, or Ctrl-Alt-Numpad-up)
+inoremap <silent> <A-Up> <C-O><C-W>k
+exec "set <t_~d>=\e[1;7A"
+inoremap <silent> <t_~d> <C-O><C-W>k
 
 "-----------------------
 " Functions
 "-----------------------
+
+" page up exactly one page without moving cursor position on screen
+function! s:BriefZoom()
+   let l:h = winheight(0)
+   resize
+   if (l:h == winheight(0))
+	   " could not zoom, so unzoom
+	   if (exists("w:restoreHeight")) 
+          execute "resize" w:restoreHeight
+	      unlet w:restoreHeight
+	   endif
+   else
+	   " zoomed
+	   if (!exists("w:restoreHeight")) 
+		   let w:restoreHeight = l:h
+       endif
+   endif
+endfunction
 
 " page up exactly one page without moving cursor position on screen
 function! s:BriefPageUp()
