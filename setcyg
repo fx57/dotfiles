@@ -3,7 +3,7 @@
 pushd $HOME/dot
 cp -f gitconfig $HOME/.gitconfig
 ln -fs dot/bash_profile $HOME/.bash_profile
-ln -fs dot/bashrc $HOME/.bashrc
+ln -fs dot/bashrc_cyg $HOME/.bashrc
 ln -fs dot/vimrc $HOME/.vimrc
 ln -fsT dot/vim $HOME/.vim
 ln -fs dot/minttyrc $HOME/.minttyrc
