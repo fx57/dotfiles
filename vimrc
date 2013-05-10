@@ -18,8 +18,8 @@ execute pathogen#infect()
 "                the file.
 " <C-PageUp>   - Goto-beginning of file
 " <C-PageDown> - goto-end of file
-" <C-Home>     - Was beginning-of-window - Changed this to jump back
-" <C-End>      - Was end-of-window       - changed this to jump fwd
+" <C-Home>     - Was beginning-of-window
+" <C-End>      - Was end-of-window
 " <C-d>        - Scroll line down
 " <C-e>        - Scroll line up
 " <A-Home>     - Move the cursor to the first character on screen
@@ -27,6 +27,8 @@ execute pathogen#infect()
 " <C-b>        - Move the current line to the bottom of the window
 " <C-c>        - Move the current line to the center of the window
 " <C-t>        - Move the current line to the top of the window
+" <Keypad=>    - Jump Forward
+" <S-Keypad=>  - Jump Back
 " 
 " Editing Keys
 " ------------
@@ -377,16 +379,17 @@ inoremap <silent> <C-PageUp> <C-O>gg
 inoremap <silent> <C-PageDown> <C-O>G
 
 " beginning-of-window
-"inoremap <silent> <C-Home> <C-O>H
+inoremap <silent> <C-Home> <C-O>H
 
 " end-of-window
-"inoremap <silent> <C-End> <C-O>L
+inoremap <silent> <C-End> <C-O>L
 
-" go out or back (Ctrl-Home)
-inoremap <silent> <C-Home> <C-O><C-O>
+" go in or forward (Keypad/)
+inoremap <silent> <kDivide> <C-O><C-I>
 
-" go in or forward (Ctrl-End)
-inoremap <silent> <C-End> <C-O><C-I>
+" go out or back (S-Keypad/)
+exec "set <t_k/>=\e[1;2o"
+inoremap <silent> <t_k/> <C-O><C-O>
 
 " scroll line down
 inoremap <silent> <C-d> <C-x><C-y>
@@ -411,7 +414,7 @@ inoremap <silent> <C-t> <C-O>z<CR>
 
 " select word - (shifted numpad-5)  --> TODO: further presses select line, block
 exec "set <t_S5>=\e[1;2E"
-imap <t_S5> <C-O>viW<C-g>
+imap <t_S5> <C-O>viWo<C-g>
 
 " hide selection - (numpad-5)
 exec "set <t_K5>=\eOE"
