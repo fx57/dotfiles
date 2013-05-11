@@ -1,0 +1,371 @@
+= brief editor
+
+Clones:
+
+    * Boxer
+    * CrispEditor
+    * Short
+    * Terse is a TinyEditor? (4K)
+    * Perisoft Brief Freeware Windows clone
+    * Zeus
+
+Emacs with brief bindings
+Vim with brief bindings
+
+= Features
+
+== Arrows to move cursor
+B> Virtual space, no wrapping left or right.  
+B> Goes in expected direction until it can't, then stops.
+B> Cursor is always ON a space, not in between. 
+B> Special cursor when over virtual space.
+B> Page down/up does not move cursor screen position unless it can't page
+
+== backspace and delete
+B> Should not backspace at col 1 --- seems like "set whichwrap=" should do it, but it doesn't
+B> Delete at end of line or beyond will delete newline
+
+== Shift-arrows	to extend selection
+EXT> Moving arrow without shift causes deselect.
+EXT> Pasting when selection present replaces selection.
+EXT> Starting mark is in between characters, to the left of the current character.
+EXT> Ending mark is always the cursor.
+EXT> Can also click and drag with mouse to select, or shift-click to extend selection.
+IDEA> Make Shift-N5 extend selection - select WORD if no selection, or increase size (word-> quote -> line -> block)
+IDEA> Make N5 undo immediately preceding Shift-N5 extend selections
+IDEA> to get N5 working, remap scan code to something like F15 in registry (like caps<->ctrl) - then make AHK map N5 to 5 in numlock mode
+
+== Ctrl-arrows to move faster
+B> Ctrl-left and Ctrl-right to go back or forward by a word
+B> Ctrl-home or Ctrl-end to go vertically to top of bottom of screen
+B> Ctrl-pgup or Ctrl-pgdn to go to beginning or end of document (same as home-home-home or end-end-end)
+EXT> Ctrl-up or Ctrl-down to scroll up or down
+
+== Home and End keys
+B> One press goes to beginning or end of line
+B> Two presses goes to top left or bottom line of screen (rightmost non-virtual space)
+B> Three presses goes home or end of document
+
+== Pageup and pagedown keys
+B> Pages without moving cursor if it can, otherwise goes to first or last line.
+B> Column never changes.
+
+== Cut and paste
+B> Cut    Keypad-Minus
+B> Copy   Keypad-Plus
+B> Paste  Keypad-Ins
+EXT> Cut    Ctrl-X
+EXT> Copy   Ctrl-C
+EXT> Paste  Ctrl-V
+
+== Undo
+B> Undo    Keypad-Star or Alt-u
+EXT> Undo    Ctrl-Z
+EXT> Redo    Ctrl-y
+
+== Indenting blocks
+B> TAB or Shift-TAB to indent or outdent the current selection.
+
+=== Windowing
+B> F1   Active window, ALT-F1 to hide borders
+B> F2   Size window, ALT-F2 to toggle zoom
+B> F3   Create window
+B> F4   Delete window
+
+EXT> Ctrl-]		go to matching brace
+EXT> Ctrl-shift 8	Show whitespace (also Ctrl-R Ctrl-W)
+EXT> Mouse selection
+EXT> Alt-Mouse selection (block selection)
+EXT> Ctrl-F		Find
+EXT> Ctrl-Shift-F	Find in files
+EXT> Shift-Alt-Arrow	Row select or column select
+EXT> Ctrl-minus	Navigate backward
+EXT> Ctrl-plus	Navigate forward
+EXT> Ctrl-space	Autocomplete
+EXT> Alt-rarrow	Autocomplete
+EXT> Ctrl-KK		Drop bookmark
+EXT> Ctrl-KN		Go to next bookmark (F2)
+EXT> Ctrl-KP		Go to previous bookmark (Shift-F2)
+EXT> Ctrl-KW		Show bookmarks
+
+EXT> syntax "C" coloring (green comments, blue keywords, red constants)
+EXT> browsing (go to declaration for functions, macros, struct members)
+EXT> browsing (go to definition for functions)
+EXT> code completion (struct members list provided after typing . or ->)
+EXT> auto indenting
+EXT> back/forward to undo or redo navigation
+EXT> Virtual space (move cursor past end of line)
+
+== brief key bindings
+
+Cursor movements
+
+ <Left Arrow>        Moves cursor left one column
+ <Right Arrow>       Moves cursor right one column
+ <Ctrl Left Arrow>   Moves cursor to the beginning of the next word.
+ <Ctrl Right Arrow>  Moves cursor to the beginning of previous word.
+ <Home>              Moves cursor to start of line
+ <End>               Moves cursor to end of line
+ <Up Arrow>          Moves cursor up one row
+ <Down Arrow>        Moves cursor down one row
+ <PgUp>              Moves text window up one page
+ <PgDn>              Moves text window down one page
+ <Ctrl PgUp>         Moves cursor to top of file
+ <Ctrl PgDn>         Moves cursor to bottom of file
+
+Basic editing operations
+
+ Any keyboard char   Insert/Overwrite? character into file
+ <Tab>               Insert tab character
+ <Enter>             Start new line, add <CR><LF> pair to file.
+ <Backspace>         Delete character to left of cursor
+ <Del>               Delete character under cursor (to right)
+ <Alt-U>             Undo recent <Del> operation/Overwritten?
+                     characters.
+ <Alt-I>             Toggle between Insert/Overwrite? mode (Ins/Ovr?)
+ <Alt-K>             Delete to end of line
+ <Alt-D>             Delete current line
+ <Alt-Y>             Restore deleted line (up to 255 characters)
+
+Block Operations
+
+ <Alt-A>             drop/raise Anchor.  Block is between anchor and cursor.
+ <Keypad-Plus>       Copy block to clipboard buffer
+ <Keypad-Minus>      Delete block to clipboard buffer
+ <Ins>               Paste from clipboard buffer
+ <Alt-P>             Print block.
+
+Search
+
+ <Alt-S>             Search for string
+ <Alt-C>             Toggle search case sensitivity.
+ <Alt-N>             Find next occurrence of string
+ <Alt-T>             Search and Translate
+
+File Operations
+
+ <Alt-Q>             Quit edit: no-save exit (asks for confirmation)
+ <Alt-X>             eXit and save: same as Quit if file name is unknown
+ <Alt-O>             Change output file name.  Supply name if not given.
+ <Alt-W>             Write  the  current  buffer  into  its  file  (if
+                     filename known)
+ <Alt-R>             Read a file to buffer.
+ <Alt-E>             Edit another file.
+
+Scrolling
+
+ <Alt-->             Scroll window horizontally to the left
+ <Alt-+>             Scroll window horizontally to the right
+ <Ctrl Home>         Scroll window up
+ <Ctrl End>          Scroll window down
+
+Misc
+
+ <Alt-I>             Insert/Overwrite? toggle.
+ <Alt-Z>             Push to dos.
+ F1                  Display the help screen.
+ <Alt-H>             Display the help screen.
+ <Alt-M>             (in SLIM only) Set right margin for word wrap.
+ <Alt-G>             (in SLIM only) Goto line.
+
+Entering Special Characters
+
+ <Ctrl @>            Enter the [NUL] character
+ <Ctrl A>            Enter the [SOH] character
+ ...                 All ctrl characters can be inserted this way
+ ...                 Special control characters are described  below
+ <Ctrl C>            Enter the [ETX] character  (DOS abort disabled)
+ ...                 ...
+ <Ctrl H>            Enter the [BS] character
+ <Ctrl I>            Enter the [TAB] character
+ <Ctrl J>            Enter the [LF] character
+ ...                 ...
+ <Ctrl M>            Enter the [CR] character
+ ...                 ...
+ <Ctrl Z>            Enter the [SUB] character (No CP/M style EOF)
+ <Ctrl [>            Enter the [ESC] character
+ <Esc>               Enter the [ESC] character
+ <Ctrl \>            Enter the [FS] character
+ <Ctrl ]>            Enter the [GS] character
+ <Ctrl ^>            Enter the [RS] character
+ <Ctrl _>            Enter the [US] character
+ <Ctrl Backspace>    Enter the [DEL] character
+
+Function |key| description
+
+ -             brief-check-ignore  Internal function used to ignore certain keystrokes. 
+ +             brief-check-ignore   Internal function used to ignore certain keystrokes. 
+ *             brief-check-ignore  Internal function used to ignore certain keystrokes. 
+ Ctrl + Insert brief-copy  Copy the current selection into the clipboard or, if there is no selection, copy the current line into the clipboard. 
+ Copy          brief-copy  Copy the current selection into the clipboard or, if there is no selection, copy the current line into the clipboard. 
+ NumPad? +      brief-copy   Copy the current selection into the clipboard or, if there is no selection, copy the current line into the clipboard. 
+ Cut           brief-cut  Cut the current selection into the clipboard or, if there is no selection, cut the current line into the clipboard. 
+ NumPad? -      brief-cut  Cut the current selection into the clipboard or, if there is no selection, cut the current line into the clipboard. 
+ Delete        brief-delete  Delete the character to the right of the caret and turn off all special states. 
+ End           brief-end  Go to the end of the line or, if already at the end of the line, go to the bottom of the screen or, if already at the bottom of the screen, go to the end of the file. 
+ Escape        brief-escape  Clear out any special states. 
+ Ctrl + X      brief-exit-ide  Save all files and exit the IDE. 
+ Home          brief-home  Go to the start of the line or, if already at the start of the line, go to the top of the screen or, if already at the top of the screen, go to the start of the file. 
+ Ctrl + Shift + Enter brief-insert-line  Insert a new line below the current line and position the caret on the new line. 
+ Ctrl + Numpad Right brief-next-word  Move the caret to the start of the next word while extending selection in any of the special selection modes. 
+ Ctrl + Right brief-next-word  Move the caret to the start of the next word while extending selection in any of the special selection modes. 
+ Shift + Insert brief-paste  Paste the contents of the clipboard before the caret or, if there are lines on the clipboard, paste those lines above the current line. 
+ Insert        brief-paste  Paste the contents of the clipboard before the caret or, if there are lines on the clipboard, paste those lines above the current line.
+ Ctrl + Y      brief-paste  Paste the contents of the clipboard before the caret or, if there are lines on the clipboard, paste those lines above the current line. 
+ Paste         brief-paste  Paste the contents of the clipboard before the caret or, if there are lines on the clipboard, paste those lines above the current line. 
+ Ctrl + Numpad Left brief-previous-word  Move the caret to the start of the previous word while extending selection in any of the special selection modes. 
+ Ctrl + Left   brief-previous-word  Move the caret to the start of the previous word while extending selection in any of the special selection modes. 
+ Alt + C       brief-select-column  Switch to column (block) selecting mode. 
+ Alt + A       brief-select-exclusive  Switch to non-inclusive character selecting mode.
+ Alt + M       brief-select-inclusive   Switch to inclusive character selecting mode. 
+ Shift + End   brief-selection-end Go to the end of the line or, if already at the end of the line, go to the bottom of the screen or, if already at the bottom of the screen, go to the end of the file while extending the selection. 
+ Shift + Home  brief-selection-home  Go to the start of the line or, if already at the start of the line, go to the top of the screen or, if already at the top of the screen, go to the start of the file while extending the selection. 
+ NumPad? *      brief-undo  Undo the last editor action. 
+
+= Brief extensions
+
+* Missing:  shift to start selection... alt-M or alt-L are cumbersome (or any ALT for that matter)
+* Pasting over a selection does not first delete the selection (should replace)
+* No way to select (or copy/cut) the word the cursor is on (without clicking)
+* Doesn't support standard cut/copy/paste using ctrl-XCV
+* Prefer Window's SHIFT selection and copy/cut/paste to brief's anchors
+
+= GVim key bindings
+
+= Terminal key bindings
+Cygwin uses mintty with xterm-256color [[http://code.google.com/p/mintty/wiki/Keycodes]]
+OSX uses ?
+DOS uses ?
+Linux uses ?
+
+OSX
+Issue:  Mac keypad with different arrangement
+Solution: Using keyremap4macbook, map Mac keys to what is in that location on a PC numpad.
+Mac Keypad+ -> PC keypad +
+Mac Keypad- -> PC keypad +
+Mac Keypad* -> PC keypad -
+Mac Keypad/ -> PC keypad *
+Mac Keypad= -> PC keypad /
+
+Issue: Keypad (+,-,*,/,=) produce ascii
+Solution: Using keyremap4macbook, map them to F-keys.   Use terminal to map F-keys to Esc codes.
+PC Keypad+ -> F17
+PC Keypad- -> F18
+PC Keypad* -> F19
+PC Keypad/ -> F14
+
+Issue: Keypad (0,5,Enter) produce nothing
+Solution: Using keyremap4macbook, map them to F-keys.  Use terminal to map F-keys to Esc codes.
+PC Keypad5 -> F15
+PC Keypad0 -> F16
+
+OSX terminal allows mapping Up/Down/Left/Right/Home/End/PgDn/PgUp/F1-F20/FwdDel to arbitrary sequences
+
+
+### Mintty xterm-256color ###
+{{{
+N-Alpha          Ascii a-z
+N-Escape         Ctrl-[ (27)
+N-Fkeys          F1-F4 sends VT100 codes ({EscOP},{EscOQ}...), F5+ sends VT220 codes ({Esc[15~},{Esc[17~}...)
+N-PrintScreen
+N-ScrollLock
+N-BreakPause     Ctrl-\ (28)
+N-`              Ascii `
+N-Numbers        Ascii 1234567890
+N--=             Ascii -=
+N-Back           Ctrl-? (31)
+N-Tab            Ctrl-I (9)
+N-[]\            Ascii []\
+N-;'             Ascii ;'
+N-Enter          Ctrl-M (13)
+N-,./            Ascii ,./
+N-Space          Ascii Space (32)
+N-Arrows         {EscOA},{EscOB},{EscOC},{EscOD}
+N-HomeEnd        {EscOH},{EscOF}
+N-PageUpDown     {Esc[5~},{Esc[6~}
+N-InsDel         {Esc[2~},{Esc[3~}
+N-NumpadEnter    {EscOM}
+N-Numpad+-*/     {EscOk},{EscOm},{EscOj},{EscOo}
+N-WheelUpDn      {Esc[<64;c;rM},{Esc[<65;c;rM}  c=col  r=row
+S-Alpha          Ascii A-Z
+S-Escape         Nothing
+S-Fkeys          m=2: F1-F4 sends ({Esc[1;mP},{Esc[1;mQ}...), F5+ sends ({Esc[15;m~},{Esc[17;m~}...)
+S-PrintScreen
+S-ScrollLock
+S-BreakPause     Ctrl-] (29)
+S-`              Ascii ~
+S-Numbers        Ascii !@#$%^&*()
+S--=             Ascii _+
+S-Back           Ctrl-? (31)  same as N-Back
+S-Tab            {Esc[z}
+S-[]\            Ascii {}|
+S-;'             Ascii :"
+S-Enter          Ctrl-@ (0)
+S-,./            Ascii <>?
+S-Space          Ascii
+S-Arrows         {Esc[1;2A},{Esc[1;2B},{Esc[1;2C},{Esc[1;2D}
+S-HomeEnd        {Esc[1;2H},{Esc[1;2F}
+S-PageUpDown     {Esc[5;2~},{Esc[6;2~}
+S-Ins            Handled by terminal, pastes clipboard text
+S-Del            {Esc[3;2~}
+S-NumpadEnter    {Esc[1;2M}
+S-Numpad+-*/     {Esc[1;2k},{Esc[1;2m},{Esc[1;2j},{Esc[1;2o}
+S-Wheel          ArrowUp, ArrowDn
+C-Alpha          Ctrl-A to Ctrl-Z (1 to 26)
+C-Escape         Handled by Windows (start menu)
+C-Fkeys          same as shift, but m=5 instead of 2
+C-PrintScreen
+C-ScrollLock
+C-BreakPause     
+C-`              Nothing
+C-1              {Esc[1;5q}
+C-2              Ctrl-@ (0)
+C-3              {Esc[1;5s}
+C-4              {Esc[1;5t}
+C-5              {Esc[1;5u}
+C-6              Ctrl-^ (30)
+C-7              {Esc[1;5w}
+C-8              {Esc[1;5x}
+C-9              {Esc[1;5y}
+C-0              resets font size (terminal)
+C--=             - decreses font size, (terminal) = increases font size (terminal)
+C-Back           Ctrl-_ (31)
+C-Tab            Handled by Windows (switches app)
+C-[]\            Ctrl-[ (27), Ctrl-] (29), Ctrl-\ (28)
+C-;'             Nothing
+C-Enter          Ctrl-^ (30)
+C-,./            {Esc[1;5l}, {Esc[1;5n}, Ctrl-_ (31)
+C-Space          Ctrl-@ (0)
+C-Arrows         same as shift, but m=5 instead of 2
+C-HomeEnd        same as shift, but m=5 instead of 2
+C-PageUpDown     same as shift, but m=5 instead of 2
+C-Ins            Nothing
+C-Del            same as shift, but m=5 instead of 2
+C-NumpadEnter    same as shift, but m=5 instead of 2
+C-Numpad+-*/     +- handled by terminal to change font, others same as shift but m=5 instead of 2
+C-Wheel          {Esc[<80;c;rM},{Esc[<81;c;rM}  c=col  r=row
+A-Alpha          {EscA} to {EscZ}
+A-Escape         Handled by Windows (app switch)
+A-Fkeys          same as shift, but m=3 instead of 2
+A-PrintScreen
+A-ScrollLock
+A-BreakPause
+A-`              {Esc`}
+A-Numbers        {Esc0 to Esc9}
+A--=             {Esc-}, {Esc=}
+A-Back           Cancels alt-q?
+A-Tab            Handled by Windows (app switch)
+A-[]\            {Esc-}, {Esc=}
+A-;'             {Esc;}, {Esc'} 
+A-Enter          Handled by terminal, toggles fullscreen
+A-,./            {Esc,}, {Esc.}, {Esc/}
+A-Space          Nothing
+A-Arrows         numpad produces alt-code, otherwise same as shift but m=3 instead of 2
+A-HomeEnd        numpad produces alt-code, otherwise same as shift but m=3 instead of 2
+A-PageUpDown     numpad produces alt-code, otherwise same as shift but m=3 instead of 2
+A-Ins            numpad produces alt-code, otherwise {Esc[2;3~}
+A-Del            numpad produces alt-code, otherwise same as shift but m=3 instead of 2
+A-NumpadEnter    Handled by terminal, toggles fullscreen
+A-Numpad+-*/     + produces alt-code, otherwise same as shift but m=3 instead of 2
+A-Wheel           {Esc[<72;c;rM},{Esc[<73;c;rM}  c=col  r=row
+

@@ -18,8 +18,8 @@ execute pathogen#infect()
 "                the file.
 " <C-PageUp>   - Goto-beginning of file
 " <C-PageDown> - goto-end of file
-" <C-Home>     - Was beginning-of-window
-" <C-End>      - Was end-of-window
+" <C-Home>     - Go to beginning-of-window
+" <C-End>      - Go to end-of-window
 " <C-d>        - Scroll line down
 " <C-e>        - Scroll line up
 " <A-Home>     - Move the cursor to the first character on screen
@@ -27,8 +27,8 @@ execute pathogen#infect()
 " <C-b>        - Move the current line to the bottom of the window
 " <C-c>        - Move the current line to the center of the window
 " <C-t>        - Move the current line to the top of the window
-" <Keypad=>    - Jump Forward
-" <S-Keypad=>  - Jump Back
+" <Keypad/>    - Jump Forward
+" <S-Keypad/>  - Jump Back
 " 
 " Editing Keys
 " ------------
@@ -256,8 +256,6 @@ if has("autocmd")
 endif " has("autocmd")
 "--- evim end
 
-imap <F10> <C-O>:
-
 let mapleader=','
 syntax enable
 colo gc
@@ -338,6 +336,15 @@ au BufEnter /* call LoadCscope()
 set tabstop=4
 set shiftwidth=4
 
+" Restore session:  Go to last file(s) if invoked without arguments.
+autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
+   \ execute "source " . $HOME . "/.vim/Session.vim"
+
+autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
+   \ call mkdir($HOME . "/.vim") |
+   \ endif |
+   \ execute "mksession! " . $HOME . "/.vim/Session.vim"
+
 "-----------------------------------------------------------------------
 " Brief bindings
 
@@ -392,10 +399,12 @@ exec "set <t_k/>=\e[1;2o"
 inoremap <silent> <t_k/> <C-O><C-O>
 
 " scroll line down
-inoremap <silent> <C-d> <C-x><C-y>
+"inoremap <silent> <C-d> <C-x><C-y>  " prevents scrolling when cursor hits bottom
+inoremap <silent> <C-d> <C-O><C-y>
 
 " scroll line up
-inoremap <silent> <C-e> <C-x><C-e>
+"inoremap <silent> <C-e> <C-x><C-e>  " prevents scrolling when cursor hits top
+inoremap <silent> <C-e> <C-O><C-e>
 
 " Move the cursor to the first character on screen
 inoremap <silent> <A-Home> <C-O>g0
@@ -646,11 +655,11 @@ inoremap <silent> <C-Down>  <C-O>]]
 " Start shell
 inoremap <silent> <A-z> <C-O>:stop<CR>
 
-" Search for a keyword in the online help
-inoremap <A-F1> <C-O>:help  
-
-" Alt-h for help
+" Help (Alt-h)
 inoremap <A-h> <C-O>:help 
+
+" Command (F10)
+imap <F10> <C-O>:
 
 "-----------------------
 " Bookmark
