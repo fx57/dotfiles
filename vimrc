@@ -4,6 +4,8 @@ execute pathogen#infect()
 " --------------------
 " <Up>         - Move cursor up one line
 " <Down>       - Move cursor down one line
+" <Left>       - Moves cursor left one column
+" <Right>      - Moves cursor right one column
 " <C-Left>     - Goto beginning of previous word
 " <C-Right>    - Goto beginning of next word
 " <Home>       - Home key.  If you press once, cursor will move to the first
@@ -283,12 +285,12 @@ else
 	  exec "imap \e".c." <A-".c.">"
 	  let c = nr2char(1+char2nr(c))
 	endw
-"	let c='A'
-"	while c <= 'Z'
-"	  exec "set <A-".c.">=\e".c
-"	  exec "imap \e".c." <A-".c.">"
-"	  let c = nr2char(1+char2nr(c))
-"	endw
+	let c='0'
+	while c <= '9'
+	  exec "set <A-".c.">=\e".c
+	  exec "imap \e".c." <A-".c.">"
+	  let c = nr2char(1+char2nr(c))
+	endw
 	set notimeout
 endif
 
@@ -438,10 +440,10 @@ inoremap <C-]> <C-O><C-]>
 "-----------------------
 
 " Open a new line below the current line and goto that line
-inoremap <silent> <C-CR> <C-O>o
-
+inoremap <silent> <C-^> <C-O>o
+                      
 " open a new line below the current line, cursor stays in the current line
-inoremap <silent> <S-CR> <C-O>o<C-O>k
+"inoremap <silent> <S-CR> <C-O>o<C-O>k
 
 " Toggle insert mode
 inoremap <silent> <A-i> <Ins>
@@ -473,6 +475,8 @@ vnoremap <silent> <C-x> "ax
 " used as the scrap buffer
 inoremap <silent> <Ins> <C-O>"aP
 inoremap <silent> <C-v> <C-O>"aP
+vnoremap <silent> <Ins> "aP
+vnoremap <silent> <C-v> "aP
 
 " Copy marked text to system clipboard.  If no mark, copy current line
 inoremap <silent> <C-Ins> <C-O>"*yy
@@ -553,21 +557,18 @@ inoremap <silent> <S-F6> <C-O>:.,$&&<CR>
 " toggle case sensitivity of search commands.
 inoremap <silent> <C-F5> <C-O>:set invignorecase<CR>
 
-" Jump to matching brace or paren - (Ctrl-%)
-exec "set <t_C5>=\e[1;5u"
-inoremap <silent> <t_C5> <C-O>%
-
-" Search forward for word under cursor - (Ctrl-*)
-exec "set <t_C8>=\e[1;5x"
-inoremap <silent> <t_C8> <C-O>*<C-O>:nohl<CR>
+" Search forward for word under cursor - (*)
 inoremap <silent> <kMultiply> <C-O>*<C-O>:nohl<CR>
 
-" Search backward for word under cursor - (Shift-Ctrl-*)
-exec "set <t_C*>=\e[1;6x"
-inoremap <silent> <t_C*> <C-O>#<C-O>:nohl<CR>
-inoremap <silent> <S-kMultiply> <C-O>#<C-O>:nohl<CR>
+" Search backward for word under cursor - (Shift-*)
 exec "set <t_~*>=\e[1;2j"
 inoremap <silent> <t_~*> <C-O>#<C-O>:nohl<CR>
+inoremap <silent> <S-kMultiply> <C-O>#<C-O>:nohl<CR>
+
+" Jump to matching brace or paren - (Ctrl-*)
+exec "set <t_C5>=\e[1;5j"
+inoremap <silent> <t_C5> <C-O>%
+
 
 "-----------------------
 " Buffer
@@ -590,17 +591,19 @@ inoremap <silent> <A-o> <C-O>:call <SID>BriefSaveAs()<CR>
 
 " Select next buffer from the buffer list
 inoremap <silent> <A-n> <C-O>:bnext<CR>
+snoremap <silent> <A-n> <right><left>:bnext<CR>
 
 " Select previous buffer from the buffer list
-inoremap <silent> <A--> <C-O>:bprevious<CR>
+"inoremap <silent> <A--> <C-O>:bprevious<CR>
 inoremap <silent> <A-p> <C-O>:bprevious<CR>
+snoremap <silent> <A-p> <right><left>:bprevious<CR>
 
 " Delete current buffer from buffer list
-inoremap <silent> <C--> <C-O>:bdelete<CR>
-inoremap <silent> <C-kMinus> <C-O>:bdelete<CR>
+"inoremap <silent> <C--> <C-O>:bdelete<CR>
+"inoremap <silent> <C-kMinus> <C-O>:bdelete<CR>
 
 " Display buffer list
-inoremap <A-b> <C-O>:buffers<CR>:buffer 
+inoremap <A-b> <C-O>:buffers<CR>
 
 " Display buffer information
 "inoremap <A-f> <C-O>:file<CR>
@@ -660,6 +663,7 @@ inoremap <A-h> <C-O>:help
 
 " Command (F10)
 imap <F10> <C-O>:
+smap <F10> <C-O>:
 
 "-----------------------
 " Bookmark
