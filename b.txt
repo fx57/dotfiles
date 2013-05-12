@@ -104,12 +104,12 @@ Cursor movements
  <Down>              Move cursor down one line
  <Left>              Moves cursor left one column
  <Right>             Moves cursor right one column
- <Ctrl Left Arrow>   Moves cursor to the beginning of the next word.
- <Ctrl Right Arrow>  Moves cursor to the beginning of previous word.
+ <C-Left>            Moves cursor to the beginning of the next word.
+ <C-Right>           Moves cursor to the beginning of previous word.
  <Home>              Moves cursor to start of line, start of page, start of buffer
  <End>               Moves cursor to end of line, end of page, end of buffer
- <C-Home>     		 Moves cursor up to first line of window
- <C-End>      		 Moves cursor down to last line of window
+ <C-Home>     		 Moves cursor to first line of window
+ <C-End>      		 Moves cursor to last line of window
  <PgUp>              Moves text window up one page
  <PgDn>              Moves text window down one page
  <Ctrl PgUp>         Moves cursor to beginning of buffer

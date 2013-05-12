@@ -10,18 +10,19 @@ execute pathogen#infect()
 " <C-Right>    - Goto beginning of next word
 " <Home>       - Home key.  If you press once, cursor will move to the first
 "                column in the current line.  If you press twice, cursor will
-"                move to the first column in the first line in the current
-"                page.  If you press thrice, cursor will be positioned at the
-"                top of the file.
+"                move to the first line in the current page.  If you press
+"                thrice, cursor will be positioned at the top of the file.
 " <End>        - End key. If you press once, cursor will move to the last
 "                column in the current line.  If you press twice, cursor will
 "                move to the last column in the last line in the current page.
 "                If you press thrice, cursor will be positioned at the end of
 "                the file.
+" <C-Home>     - Move cursor to first line in window
+" <C-End>      - Move cursor to last line in window
+" <PageUp>     - Go back one page, keeping cursor in same screen location
+" <PageDown>   - Go forward one page, keeping cursor in same screen location
 " <C-PageUp>   - Goto-beginning of file
 " <C-PageDown> - goto-end of file
-" <C-Home>     - Go to beginning-of-window
-" <C-End>      - Go to end-of-window
 " <C-d>        - Scroll line down
 " <C-e>        - Scroll line up
 " <A-Home>     - Move the cursor to the first character on screen
@@ -29,8 +30,31 @@ execute pathogen#infect()
 " <C-b>        - Move the current line to the bottom of the window
 " <C-c>        - Move the current line to the center of the window
 " <C-t>        - Move the current line to the top of the window
-" <Keypad/>    - Jump Forward
-" <S-Keypad/>  - Jump Back
+" <Keypad/>    - Extension> Instead of ascii /, navigate Forward in Jumplist
+" <S-Keypad/>  - Extension> Instead of ascii /, navigate Back in Jumplist
+" 
+" Selecting text
+" --------------
+" <A-m>        - Toggle standard text marking mode
+" <A-l>        - Toggle line marking mode
+" <A-c>        - Toggle column marking mode
+" <A-a>        - Toggle non-inclusive marking mode
+" <S-Up>       - Extension> Instead of switching to the window above, this
+"                           starts a line selection or extends it upward
+" <S-Down>     - Extension> Instead of switching to the window below, this
+"                           starts a line selection or extends it downward
+" <S-Right>    - Extension> Instead of switching to the window to the right,
+"                           this starts a column selection or extends it to
+"                           the right
+" <S-Left>     - Extension> Instead of switching to the window to the left,
+"                           starts a line selection or extends it downward
+" <S-Home>     - Extension> Instead of going to the first column, this selects
+"                           between the cursor postition and the first column.
+" <S-End>      - Extension> Instead of going to the right side of the window,
+" 							this selects between the cursor postition and the
+" 							end of the line.
+" <Keypad5>    - Extension> Redraw screen and hide selection and highlights
+" <S-Keypad5>  - Extension> Instead of ascii 5, select word under cursor
 " 
 " Editing Keys
 " ------------
@@ -53,7 +77,11 @@ execute pathogen#infect()
 " <S-Del>      - Cut the marked text to system clipboard. If no mark, cut the
 "                current line
 " <C-Del>      - Remove the marked text
-" <C-v>        - Clipboard paste
+" <C-x>        - Extension> Instead of write files and exit, cut selected
+"                           text to clipboard
+" <C-c>        - Extension> Instead of moving current line to the middle of
+"                           the screen, copy selected text to clipboard
+" <C-v>        - Extension> Paste text from clipboard into document
 " <A-g>        - Goto line
 " <C-BS>       - Delete the previous word
 " <A-BS>       - Delete the next word
@@ -103,14 +131,6 @@ execute pathogen#infect()
 " <C-l>        - pJump to the next previous error
 " <C-p>        - View compiler output
 " 
-" Mark commands
-" -------------
-" <A-m>        - Toggle standard text marking mode
-" <A-l>        - Toggle line marking mode
-" <A-c>        - 
-" <A-a>        - Toggle column marking mode
-" <A-h>        - Mark current word
-" 
 " Misc commands
 " -------------
 " <A-v>        - Show version
@@ -135,9 +155,9 @@ execute pathogen#infect()
 " 
 " Windows Commands
 " ----------------
+" <A-F2>       - Zoom window toggle
 " <F3>         - Split window
 " <F4>         - Delete window
-" <A-F2>       - Zoom window
 " <A-Down>     - Goto the window below the current window
 " <A-Up>       - Goto the window above the current window
 "
@@ -338,6 +358,9 @@ au BufEnter /* call LoadCscope()
 set tabstop=4
 set shiftwidth=4
 
+set backup
+set backupdir=~/.vimfiles
+
 " Restore session:  Go to last file(s) if invoked without arguments.
 autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
    \ execute "source " . $HOME . "/.vim/Session.vim"
@@ -377,10 +400,6 @@ inoremap <silent> <End> <C-O>:call <SID>BriefEndKey()<CR>
 inoremap <silent> <PageUp> <C-O>:call <SID>BriefPageUp()<CR>
 inoremap <silent> <PageDown> <C-O>:call <SID>BriefPageDown()<CR>
 
-" linewise selections
-inoremap <silent> <S-Down> <C-O>gH
-inoremap <silent> <S-Up> <C-O>gH
-
 " goto-beginning of file
 inoremap <silent> <C-PageUp> <C-O>gg
 
@@ -392,13 +411,6 @@ inoremap <silent> <C-Home> <C-O>H
 
 " end-of-window
 inoremap <silent> <C-End> <C-O>L
-
-" go in or forward (Keypad/)
-inoremap <silent> <kDivide> <C-O><C-I>
-
-" go out or back (S-Keypad/)
-exec "set <t_k/>=\e[1;2o"
-inoremap <silent> <t_k/> <C-O><C-O>
 
 " scroll line down
 "inoremap <silent> <C-d> <C-x><C-y>  " prevents scrolling when cursor hits bottom
@@ -414,6 +426,10 @@ inoremap <silent> <A-Home> <C-O>g0
 " Move the cursor to the last character on screen
 inoremap <silent> <A-End> <C-O>g$
 
+" Goto next/previous function
+inoremap <silent> <C-Up>    <C-O>[[
+inoremap <silent> <C-Down>  <C-O>]]
+
 " Move the current line to the bottom of the window
 inoremap <silent> <C-b> <C-O>z-
 
@@ -422,6 +438,24 @@ inoremap <silent> <C-b> <C-O>z-
 
 " Move the current line to the top of the window
 inoremap <silent> <C-t> <C-O>z<CR>
+
+" go in or forward (Keypad/)
+inoremap <silent> <kDivide> <C-O><C-I>
+
+" go out or back (S-Keypad/)
+exec "set <t_k/>=\e[1;2o"
+inoremap <silent> <t_k/> <C-O><C-O>
+
+" Ctrl-] to follow link
+inoremap <C-]> <C-O><C-]>
+
+"-----------------------
+" Selecting
+"-----------------------
+
+" linewise selections
+inoremap <silent> <S-Down> <C-O>gH
+inoremap <silent> <S-Up> <C-O>gH
 
 " select word - (shifted numpad-5)  --> TODO: further presses select line, block
 exec "set <t_S5>=\e[1;2E"
@@ -432,8 +466,22 @@ exec "set <t_K5>=\eOE"
 imap <t_K5> <C-O>:nohl<CR>
 smap <t_K5> <right><left>
 
-" Ctrl-] to follow link
-inoremap <C-]> <C-O><C-]>
+" toggle standard text marking mode
+inoremap <silent> <A-m> <C-O>v
+vnoremap <silent> <A-m> v
+
+" Toggle line marking mode
+inoremap <silent> <A-l> <C-O>V
+vnoremap <silent> <A-l> V
+
+" Toggle column marking mode
+inoremap <silent> <A-c> <C-O><C-V>
+inoremap <silent> <A-a> <C-O><C-V>
+vnoremap <silent> <A-c> <C-V>
+vnoremap <silent> <A-a> <C-V>
+
+" Mark current word
+"inoremap <silent> <A-h> <C-O>viw
 
 "-----------------------
 " Editing
@@ -532,18 +580,24 @@ inoremap <silent> <C-y> <C-O>:redo<CR>
 
 " string-search
 inoremap <silent> <C-f> <C-O>:call <SID>BriefSearch("")<CR>
+inoremap <silent> <A-s> <C-O>:call <SID>BriefSearch("")<CR>
 inoremap <silent> <F5> <C-O>:call <SID>BriefSearch("")<CR>
-
 "inoremap <silent> <A-s> <C-O>:call <SID>BriefSearch(expand("<cword>")<CR>
-inoremap <A-s> <C-O>/
+"inoremap <C-f> <C-O>/
+
+" letter search
+"inoremap <silent> <C-f> <C-O>f
+"inoremap <silent> <C-F> <C-O>F
 
 " search again
-inoremap <silent> <S-F5> <C-O>n
-inoremap <silent> <C-n> <C-O>n
+inoremap <silent> <S-F5> <C-O>n<C-O>:nohl<CR>
+inoremap <silent> <C-n> <C-O>n<C-O>:nohl<CR><C-O>gno<C-g>
+vnoremap <silent> <C-n> <right><left>n:nohl<CR>gno<C-g>
 
 " Reverse search
-inoremap <silent> <A-F5> <C-O>N
-inoremap <silent> <C-p> <C-O>N
+inoremap <silent> <A-F5> <C-O>N<C-O>:nohl<CR>
+inoremap <silent> <C-p> <C-O>N<C-O>:nohl<CR><C-O>gno<C-g>
+vnoremap <silent> <C-p> <right><left>N:nohl<CR>gno<C-g>
 
 " Search and replace from the current cursor position
 inoremap <silent> <F6> <C-O>:call <SID>BriefSearchAndReplace("")<CR>
@@ -569,22 +623,24 @@ inoremap <silent> <S-kMultiply> <C-O>#<C-O>:nohl<CR>
 exec "set <t_C5>=\e[1;5j"
 inoremap <silent> <t_C5> <C-O>%
 
-
 "-----------------------
 " Buffer
 "-----------------------
 
 " open file
 inoremap <A-e> <C-O>:edit 
+vnoremap <A-e> <right><left>:edit
 
 " exit
 inoremap <silent> <A-x> <C-O>:confirm quit<CR>
+vnoremap <silent> <A-x> <right><left>:confirm quit<CR>
 
-" read file
+" read file                          
 inoremap <A-r> <C-O>:read  
 
 " Save the current file
 inoremap <silent> <A-w> <C-O>:call <SID>BriefSave()<CR>
+vnoremap <silent> <A-w> <left><right>:call <SID>BriefSave()<CR>
 
 " Save the current file in a different file name
 inoremap <silent> <A-o> <C-O>:call <SID>BriefSaveAs()<CR>
@@ -624,42 +680,19 @@ inoremap <silent> <A-F10> <C-O>:make<CR>
 "inoremap <silent> <C-p> <C-O>:copen<CR>
 
 "-----------------------
-" Mark
-"-----------------------
-
-" toggle standard text marking mode
-inoremap <silent> <A-m> <C-O>v
-vnoremap <silent> <A-m> v
-
-" Toggle line marking mode
-inoremap <silent> <A-l> <C-O>V
-vnoremap <silent> <A-l> V
-
-" Toggle column marking mode
-inoremap <silent> <A-c> <C-O><C-V>
-inoremap <silent> <A-a> <C-O><C-V>
-vnoremap <silent> <A-c> <C-V>
-vnoremap <silent> <A-a> <C-V>
-
-" Mark current word
-inoremap <silent> <A-h> <C-O>viw
-
-"-----------------------
 " Misc commands
 "-----------------------
 
 " show version
 inoremap <silent> <A-v> <C-O>:version<CR>
-
-" Goto next/previous function
-inoremap <silent> <C-Up>    <C-O>[[
-inoremap <silent> <C-Down>  <C-O>]]
+snoremap <silent> <A-v> <right><left>:version<CR>
 
 " Start shell
 inoremap <silent> <A-z> <C-O>:stop<CR>
 
 " Help (Alt-h)
 inoremap <A-h> <C-O>:help 
+snoremap <A-h> <right><left>:help 
 
 " Command (F10)
 imap <F10> <C-O>:
@@ -715,7 +748,7 @@ inoremap <silent> <F4> <C-O>:quit<CR>
 " Zoom window (Alt-F2)
 inoremap <silent> <A-F2> <C-O>:resize<CR>
 exec "set <t_~2>=\e[1;3Q"
-inoremap <silent> <t_~2> <C-O>:call <SID>BriefZoom()<CR>
+inoremap <silent> <t_~2> <C-O>:call <SID>BriefZoomWindow()<CR>
 
 " Goto the window below the current window (Alt-down, or Ctrl-Alt-Numpad-down)
 inoremap <silent> <A-Down> <C-O><C-W>j
@@ -731,49 +764,8 @@ inoremap <silent> <t_~d> <C-O><C-W>k
 " Functions
 "-----------------------
 
-" page up exactly one page without moving cursor position on screen
-function! s:BriefZoom()
-   let l:h = winheight(0)
-   resize
-   if (l:h == winheight(0))
-	   " could not zoom, so unzoom
-	   if (exists("w:restoreHeight")) 
-          execute "resize" w:restoreHeight
-	      unlet w:restoreHeight
-	   endif
-   else
-	   " zoomed
-	   if (!exists("w:restoreHeight")) 
-		   let w:restoreHeight = l:h
-       endif
-   endif
-endfunction
-
-" page up exactly one page without moving cursor position on screen
-function! s:BriefPageUp()
-   let l:a = getpos(".")
-   execute "normal " . winheight(0) . "\<c-y>"
-   let a[1] = a[1] - winheight(0)
-   if (a[1] < 1) 
-      let a[1] = 1
-   endif
-   call setpos(".",a)
-endfunction
-
-" page down exactly one page without moving cursor position on screen
-function! s:BriefPageDown()
-   let l:a = getpos(".")
-   let l:dist = winheight(0)
-   if (line(".") + winheight(0) > line("$"))
-	  " page down would go past end of buffer
-      let l:dist = line("$") - line(".") 
-   else
-   	  execute "normal " . l:dist . "\<c-e>"
-   endif
-   let a[1] = a[1] + l:dist
-   call setpos(".",a)
-endfunction
-
+" brief home key goes to beginning of line on first press, first line of screen
+" on second press, and beginning of buffer on third press
 let b:homeline = 0
 function! s:BriefHomeKey()
    " if we are on the first char of the line, go to the top of the screen
@@ -792,7 +784,8 @@ function! s:BriefHomeKey()
    endif
 endfunction
 
-" This function is taken from vim online web page and modified
+" brief end key goes to end of line on first press, last line of screen
+" on second press, and end of buffer on third press
 let b:endline = 0
 function! s:BriefEndKey()
     let cur_col = virtcol(".")
@@ -823,6 +816,51 @@ function! s:BriefEndKey()
     endif
 endfunction
 
+" page up exactly one page without moving cursor position on screen
+function! s:BriefPageUp()
+   let l:a = getpos(".")
+   execute "normal " . winheight(0) . "\<c-y>"
+   let a[1] = a[1] - winheight(0)
+   if (a[1] < 1) 
+      let a[1] = 1
+   endif
+   call setpos(".",a)
+endfunction
+
+" page down exactly one page without moving cursor position on screen
+function! s:BriefPageDown()
+   let l:a = getpos(".")
+   let l:dist = winheight(0)
+   if (line(".") + winheight(0) > line("$"))
+	  " page down would go past end of buffer
+      let l:dist = line("$") - line(".") 
+   else
+   	  execute "normal " . l:dist . "\<c-e>"
+   endif
+   let a[1] = a[1] + l:dist
+   call setpos(".",a)
+endfunction
+
+" toggle zoom window size to maximum
+" TODO: use :only to zoom, and mksession to restore
+function! s:BriefZoomWindow()
+   let l:h = winheight(0)
+   resize
+   if (l:h == winheight(0))
+	   " could not zoom, so unzoom
+	   if (exists("w:restoreHeight")) 
+          execute "resize" w:restoreHeight
+	      unlet w:restoreHeight
+	   endif
+   else
+	   " zoomed
+	   if (!exists("w:restoreHeight")) 
+		   let w:restoreHeight = l:h
+       endif
+   endif
+endfunction
+
+" brief search prompts for text, then goes forward to that text
 function! s:BriefSearch(pattern)
     if has("gui_running")
         if a:pattern == ""
@@ -836,7 +874,10 @@ function! s:BriefSearch(pattern)
             return
         endif
 
-        execute '/' . searchstr
+        execute 'normal /' . searchstr . "\<CR>"
+		let @/ = searchstr
+		" TODO: select the text:   <C-O>viWo<C-g>
+		execute "normal gno\<C-g>"
     endif
 endfunction
 
