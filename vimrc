@@ -175,8 +175,13 @@ if 1	" only do this when compiled with expression evaluation
 endif
 set cpo&vim
 
-" set 'selection', 'selectmode', 'mousemodel' and 'keymodel' for MS-Windows
+" Go modeless
+set insertmode
 behave mswin
+" set selectmode="mouse,key"
+" set mousemodel="popup"
+" set keymodel="startsel,stopsel"
+" set selection="exclusive"
 
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
@@ -211,14 +216,6 @@ if !has("unix")
   set guioptions-=a
 endif
 
-" CTRL-A is Select all
-noremap <C-A> gggH<C-O>G
-inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
-cnoremap <C-A> <C-C>gggH<C-O>G
-onoremap <C-A> <C-C>gggH<C-O>G
-snoremap <C-A> <C-C>gggH<C-O>G
-xnoremap <C-A> <C-C>ggVG
-
 " restore 'cpoptions'
 set cpo&
 if 1
@@ -227,8 +224,6 @@ if 1
 endif
 "--mswin end
 
-" Vim is in Insert mode by default
-set insertmode
 
 " Make a buffer hidden when editing another one
 set hidden
@@ -482,6 +477,14 @@ vnoremap <silent> <A-a> <C-V>
 
 " Mark current word
 "inoremap <silent> <A-h> <C-O>viw
+
+" CTRL-A is Select all (or should we make it beginning of line? Eg., Ctrl-aefbd)
+noremap <C-A> gggH<C-O>G
+inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
+cnoremap <C-A> <C-C>gggH<C-O>G
+onoremap <C-A> <C-C>gggH<C-O>G
+snoremap <C-A> <C-C>gggH<C-O>G
+xnoremap <C-A> <C-C>ggVG
 
 "-----------------------
 " Editing
