@@ -1,6 +1,6 @@
 #SingleInstance force
 
-text=(F)irefox`n(C)hrome`n(T)erminal`n(E)xplorer`n(V)im`n(Q)uit app
+text=(F)irefox`n(C)hrome`n(T)erminal`n(E)xplorer`n(V)im`n(`;)Cancel`n(Q)uit app
 
 Gui, +LastFound +AlwaysOnTop +owner -Caption   
 Gui, Color, black,black
