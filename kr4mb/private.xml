@@ -1,8 +1,20 @@
 <?xml version="1.0"?>
 <root>
     <item>
-        <name>Change Keypad to F15+</name>
-        <identifier>remap.KP5_to_F15</identifier>
+        <name>Change PC Keypad to F15+ in Terminal</name>
+        <identifier>remap.PC_KP5_to_F15</identifier>
+        <only>TERMINAL</only>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_5, KeyCode::F15</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_0, KeyCode::F16</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_PLUS, KeyCode::F17</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_MINUS, KeyCode::F18</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_MULTIPLY, KeyCode::F19</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_SLASH, KeyCode::F14</autogen>
+    </item>
+    <item>
+        <name>Change Mac Keypad to F15+ in Terminal</name>
+        <identifier>remap.Mac_KP5_to_F15</identifier>
+        <only>TERMINAL</only>
         <autogen>__KeyToKey__ KeyCode::KEYPAD_5, KeyCode::F15</autogen>
         <autogen>__KeyToKey__ KeyCode::KEYPAD_0, KeyCode::F16</autogen>
         <autogen>__KeyToKey__ KeyCode::KEYPAD_PLUS, KeyCode::F17</autogen>
@@ -10,5 +22,17 @@
         <autogen>__KeyToKey__ KeyCode::KEYPAD_MULTIPLY, KeyCode::F18</autogen>
         <autogen>__KeyToKey__ KeyCode::KEYPAD_SLASH, KeyCode::F19</autogen>
         <autogen>__KeyToKey__ KeyCode::KEYPAD_EQUAL, KeyCode::F14</autogen>
+    </item>
+    <item>
+        <name>Change Mac keypad to PC</name>
+        <appendix>(Change = to /)</appendix>
+        <appendix>(Change / to *)</appendix>
+        <appendix>(Change * to -)</appendix>
+        <appendix>(Change - to +)</appendix>
+        <identifier>remap.pc_style_keypad_lose_equal</identifier>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_EQUAL,    KeyCode::KEYPAD_SLASH</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_SLASH,    KeyCode::KEYPAD_MULTIPLY</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_MULTIPLY, KeyCode::KEYPAD_MINUS</autogen>
+        <autogen>__KeyToKey__ KeyCode::KEYPAD_MINUS,    KeyCode::KEYPAD_PLUS</autogen>
     </item>
 </root>
