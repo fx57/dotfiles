@@ -30,8 +30,8 @@ execute pathogen#infect()
 " <C-b>        - Move the current line to the bottom of the window
 " <C-c>        - Move the current line to the center of the window
 " <C-t>        - Move the current line to the top of the window
-" <Keypad/>    - Extension> Instead of ascii /, navigate Forward in Jumplist
-" <S-Keypad/>  - Extension> Instead of ascii /, navigate Back in Jumplist
+" <Keypad*>    - Extension> Instead of undo, navigate Forward in Jumplist
+" <S-Keypad*>  - Extension> Instead of ???, navigate Back in Jumplist
 " 
 " Selecting text
 " --------------
@@ -98,8 +98,8 @@ execute pathogen#infect()
 " 
 " Search and Replace Commands
 " ---------------------------
-" <C-f>        -
-" <F5>         -
+" <C-f>        - Search
+" <F5>         - Search
 " <A-s>        - String search
 " <S-F5>       - search again
 " <A-F5>       - Reverse search
@@ -108,6 +108,8 @@ execute pathogen#infect()
 "                position
 " <S-F6>       - Repeat last search and replace
 " <C-F5>       - toggle case sensitivity of search commands.
+" Keypad-/     - Search forwards for word under cursor
+" S-Keypad-/   - Seach backwards for word under cursor
 " 
 " Buffer Commands
 " ---------------
@@ -434,11 +436,11 @@ inoremap <silent> <C-b> <C-O>z-
 " Move the current line to the top of the window
 inoremap <silent> <C-t> <C-O>z<CR>
 
-" go in or forward (Keypad/)
-inoremap <silent> <kDivide> <C-O><C-I>
+" go in or forward (Keypad*)
+inoremap <silent> <kMultiply> <C-O><C-I>
 
-" go out or back (S-Keypad/)
-exec "set <t_k/>=\e[1;2o"
+" go out or back (S-Keypad*)
+exec "set <t_k/>=\e[1;2j"
 inoremap <silent> <t_k/> <C-O><C-O>
 
 " Ctrl-] to follow link
@@ -614,16 +616,16 @@ inoremap <silent> <S-F6> <C-O>:.,$&&<CR>
 " toggle case sensitivity of search commands.
 inoremap <silent> <C-F5> <C-O>:set invignorecase<CR>
 
-" Search forward for word under cursor - (*)
-inoremap <silent> <kMultiply> <C-O>*<C-O>:nohl<CR>
+" Search forward for word under cursor - (/)
+inoremap <silent> <kDivide> <C-O>*<C-O>:nohl<CR>
 
-" Search backward for word under cursor - (Shift-*)
-exec "set <t_~*>=\e[1;2j"
+" Search backward for word under cursor - (Shift-/)
+exec "set <t_~*>=\e[1;2o"
 inoremap <silent> <t_~*> <C-O>#<C-O>:nohl<CR>
-inoremap <silent> <S-kMultiply> <C-O>#<C-O>:nohl<CR>
+inoremap <silent> <S-kDivide> <C-O>#<C-O>:nohl<CR>
 
-" Jump to matching brace or paren - (Ctrl-*)
-exec "set <t_C5>=\e[1;5j"
+" Jump to matching brace or paren - (Ctrl-/)
+exec "set <t_C5>=\e[1;5o"
 inoremap <silent> <t_C5> <C-O>%
 
 "-----------------------
