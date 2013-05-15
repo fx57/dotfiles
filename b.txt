@@ -1,16 +1,35 @@
-= brief editor
+= Text Editor
 
-Clones:
+Common GUI functionality
+* Arrow keys to move
+* Shift-arrow to select
+* Ctrl-arrow to move by word
+* Ctrl-xcv to copy/cut/past
+* Ctrl-zy to undo/redo
 
-    * Boxer
-    * CrispEditor
-    * Short
-    * Terse is a TinyEditor? (4K)
-    * Perisoft Brief Freeware Windows clone
-    * Zeus
+Emacs features
+* Ctrl-a/e to go to beginning or end of line
+* Ctrl-b/f to go back or forward by character
 
-Emacs with brief bindings
-Vim with brief bindings
+Brief features
+* Virtual space
+* Home/End triple-function
+* No wrapping
+* Numpad +/- to copy or cut the selection or current line
+* Numpad Ins/Del to insert or delete
+* Alt-W to write
+* Alt-X to exit
+* Windowing using F1/F2/F3/F4
+* Search/Replace using F5/F6
+* Recording using F7/F8
+* Command line using F10
+* Paging without moving cursor location on screen
+
+Custom
+* Numpad * to navigate fwd/back
+* Numpad / to search word under cursor (fwd/back/matching)
+* Numpad 5 to shrink/enlarge selection
+* Ctrl-up/down to move by function
 
 = Features
 
@@ -370,4 +389,18 @@ A-Del            numpad produces alt-code, otherwise same as shift but m=3 inste
 A-NumpadEnter    Handled by terminal, toggles fullscreen
 A-Numpad+-*/     + produces alt-code, otherwise same as shift but m=3 instead of 2
 A-Wheel           {Esc[<72;c;rM},{Esc[<73;c;rM}  c=col  r=row
+
+= Brief editor
+Clones:
+
+    * Boxer
+    * CrispEditor
+    * Short
+    * Terse is a TinyEditor? (4K)
+    * Perisoft Brief Freeware Windows clone
+    * Zeus
+
+Emacs with brief bindings
+Vim with brief bindings
+
 
