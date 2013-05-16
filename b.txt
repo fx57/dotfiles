@@ -1,119 +1,70 @@
 = Text Editor
 
-Common GUI functionality
+Common GUI features
 * Arrow keys to move
-* Shift-arrow to select
+* Page up, page down, goes up or down a page
+* Home, end for beginning, end of line
+* Shift-arrow to select, exclusive
+* Selection deselected by movement
+* Selection deleted by typing
+* Selection deleted by pasting over it
+* Pasting when selection present replaces selection.
 * Ctrl-arrow to move by word
-* Ctrl-xcv to copy/cut/past
+* Ctrl-xcv to copy/cut/paste
 * Ctrl-zy to undo/redo
+* Backspace in col 1 deletes newline on preceding line
+* Delete at newline or beyondt deletes newline
+* Click with mouse to move to cursor
+* Click and drag with mouse to select
+* Click and drag with ALT+mouse for column selection
+* Shift-click to extend selection
 
 Emacs features
 * Ctrl-a/e to go to beginning or end of line
 * Ctrl-b/f to go back or forward by character
 
 Brief features
-* Virtual space
-* Home/End triple-function
-* No wrapping
+* Text mode, runs in terminal, does not require GUI
+* Use "b" to launch
+* Cursor can be moved to virtual space
+* Home/End triple-function by number of consecutive presses (line/screen/document)
+* Arrows do not wrap... goes in expected direction until it can't, then stops.
 * Numpad +/- to copy or cut the selection or current line
 * Numpad Ins/Del to insert or delete
-* Alt-W to write
-* Alt-X to exit
+* Alt-w to write
+* Alt-x to exit
 * Windowing using F1/F2/F3/F4
+* Alt-F2 to toggle zoom
 * Search/Replace using F5/F6
-* Recording using F7/F8
+* Recording/Playback using F7/F8
 * Command line using F10
 * Paging without moving cursor location on screen
+* Cursor is always ON a space, not in between. Insertion point is always before cursor.
+* Special cursor when over virtual space.
+* Ctrl-home or Ctrl-end to go vertically to top of bottom of screen
+* Ctrl-pgup or Ctrl-pgdn to go to beginning or end of document (same as home-home-home or end-end-end)
+* TAB or Shift-TAB to indent or outdent the current selection.
 
 Custom
 * Numpad * to navigate fwd/back
 * Numpad / to search word under cursor (fwd/back/matching)
-* Numpad 5 to shrink/enlarge selection
+* Numpad 5 to shrink/enlarge selection (word->quote->line->block)
 * Ctrl-up/down to move by function
-
-= Features
-
-== Arrows to move cursor
-B> Virtual space, no wrapping left or right.  
-B> Goes in expected direction until it can't, then stops.
-B> Cursor is always ON a space, not in between. 
-B> Special cursor when over virtual space.
-B> Page down/up does not move cursor screen position unless it can't page
-
-== backspace and delete
-B> Should not backspace at col 1 --- seems like "set whichwrap=" should do it, but it doesn't
-B> Delete at end of line or beyond will delete newline
-
-== Shift-arrows	to extend selection
-EXT> Moving arrow without shift causes deselect.
-EXT> Pasting when selection present replaces selection.
-EXT> Starting mark is in between characters, to the left of the current character.
-EXT> Ending mark is always the cursor.
-EXT> Can also click and drag with mouse to select, or shift-click to extend selection.
-IDEA> Make Shift-N5 extend selection - select WORD if no selection, or increase size (word-> quote -> line -> block)
-IDEA> Make N5 undo immediately preceding Shift-N5 extend selections
-IDEA> to get N5 working, remap scan code to something like F15 in registry (like caps<->ctrl) - then make AHK map N5 to 5 in numlock mode
-
-== Ctrl-arrows to move faster
-B> Ctrl-left and Ctrl-right to go back or forward by a word
-B> Ctrl-home or Ctrl-end to go vertically to top of bottom of screen
-B> Ctrl-pgup or Ctrl-pgdn to go to beginning or end of document (same as home-home-home or end-end-end)
-EXT> Ctrl-up or Ctrl-down to scroll up or down
-
-== Home and End keys
-B> One press goes to beginning or end of line
-B> Two presses goes to top left or bottom line of screen (rightmost non-virtual space)
-B> Three presses goes home or end of document
-
-== Pageup and pagedown keys
-B> Pages without moving cursor if it can, otherwise goes to first or last line.
-B> Column never changes.
-
-== Cut and paste
-B> Cut    Keypad-Minus
-B> Copy   Keypad-Plus
-B> Paste  Keypad-Ins
-EXT> Cut    Ctrl-X
-EXT> Copy   Ctrl-C
-EXT> Paste  Ctrl-V
-
-== Undo
-B> Undo    Keypad-Star or Alt-u
-EXT> Undo    Ctrl-Z
-EXT> Redo    Ctrl-y
-
-== Indenting blocks
-B> TAB or Shift-TAB to indent or outdent the current selection.
-
-=== Windowing
-B> F1   Active window, ALT-F1 to hide borders
-B> F2   Size window, ALT-F2 to toggle zoom
-B> F3   Create window
-B> F4   Delete window
-
-EXT> Ctrl-]		go to matching brace
+* Shift-arrow down or up causes linewise selection
+* Shift-arrow right or left during linewise selection switches to column selection
+* Ctrl-] follow link
+* File navigation tree style using arrows (right arrow enters directory) and enter key
 EXT> Ctrl-shift 8	Show whitespace (also Ctrl-R Ctrl-W)
-EXT> Mouse selection
-EXT> Alt-Mouse selection (block selection)
-EXT> Ctrl-F		Find
-EXT> Ctrl-Shift-F	Find in files
-EXT> Shift-Alt-Arrow	Row select or column select
-EXT> Ctrl-minus	Navigate backward
-EXT> Ctrl-plus	Navigate forward
-EXT> Ctrl-space	Autocomplete
-EXT> Alt-rarrow	Autocomplete
-EXT> Ctrl-KK		Drop bookmark
-EXT> Ctrl-KN		Go to next bookmark (F2)
-EXT> Ctrl-KP		Go to previous bookmark (Shift-F2)
-EXT> Ctrl-KW		Show bookmarks
-
 EXT> syntax "C" coloring (green comments, blue keywords, red constants)
 EXT> browsing (go to declaration for functions, macros, struct members)
 EXT> browsing (go to definition for functions)
 EXT> code completion (struct members list provided after typing . or ->)
 EXT> auto indenting
-EXT> back/forward to undo or redo navigation
-EXT> Virtual space (move cursor past end of line)
+
+VIM features
+* Ctrl-O to perform one VIM command (INSERT->NORMAL or SELECT->VISUAL)
+* Ctrl-L to toggle VIM mode (switches from INSERT->NORMAL or SELECT->VISUAL)
+* F10 is VIM command line
 
 == brief key bindings
 
