@@ -13,7 +13,7 @@ Common GUI features
 * Ctrl-xcv to copy/cut/paste
 * Ctrl-zy to undo/redo
 * Backspace in col 1 deletes newline on preceding line
-* Delete at newline or beyondt deletes newline
+* Delete at newline or beyond deletes newline
 * Click with mouse to move to cursor
 * Click and drag with mouse to select
 * Click and drag with ALT+mouse for column selection
@@ -48,11 +48,11 @@ Brief features
 Custom
 * Numpad * to navigate fwd/back
 * Numpad / to search word under cursor (fwd/back/matching)
-* Numpad 5 to shrink/enlarge selection (word->quote->line->block)
+* Numpad 5 to (refresh+shrink)/enlarge selection (word->quote->line->block)
 * Ctrl-up/down to move by function
 * Shift-arrow down or up causes linewise selection
 * Shift-arrow right or left during linewise selection switches to column selection
-* Ctrl-] follow link
+* Ctrl-] or Ctrl-Numpad* to follow link
 * File navigation tree style using arrows (right arrow enters directory) and enter key
 EXT> Ctrl-shift 8	Show whitespace (also Ctrl-R Ctrl-W)
 EXT> syntax "C" coloring (green comments, blue keywords, red constants)
