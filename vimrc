@@ -359,12 +359,14 @@ set backup
 set backupdir=~/.vimfiles
 
 " Restore session:  Go to last file(s) if invoked without arguments.
-autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
+"autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
+autocmd VimEnter * nested if len(bufname("%")) == 0 && filereadable($HOME . "/.vim/Session.vim") |
    \ execute "source " . $HOME . "/.vim/Session.vim"
 
 autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
    \ call mkdir($HOME . "/.vim") |
    \ endif |
+   \ if !exists("g:SoyWikiLoaded") |
    \ execute "mksession! " . $HOME . "/.vim/Session.vim"
 
 "-----------------------------------------------------------------------
