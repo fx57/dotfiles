@@ -359,12 +359,14 @@ set backup
 set backupdir=~/.vimfiles
 
 " Restore session:  Go to last file(s) if invoked without arguments.
-autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
+"autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
+autocmd VimEnter * nested if len(bufname("%")) == 0 && filereadable($HOME . "/.vim/Session.vim") |
    \ execute "source " . $HOME . "/.vim/Session.vim"
 
 autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
    \ call mkdir($HOME . "/.vim") |
    \ endif |
+   \ if !exists("g:SoyWikiLoaded") |
    \ execute "mksession! " . $HOME . "/.vim/Session.vim"
 
 "-----------------------------------------------------------------------
@@ -617,12 +619,15 @@ inoremap <silent> <S-F6> <C-O>:.,$&&<CR>
 inoremap <silent> <C-F5> <C-O>:set invignorecase<CR>
 
 " Search forward for word under cursor - (/)
-inoremap <silent> <kDivide> <C-O>*<C-O>:nohl<CR>
+inoremap <silent> <kDivide> <C-O>*<C-O>:nohl<CR><C-O>viWo<C-g>
+snoremap <silent> <kDivide> <right><left>*:nohl<CR>viWo<C-g>
 
 " Search backward for word under cursor - (Shift-/)
 exec "set <t_~*>=\e[1;2o"
-inoremap <silent> <t_~*> <C-O>#<C-O>:nohl<CR>
-inoremap <silent> <S-kDivide> <C-O>#<C-O>:nohl<CR>
+inoremap <silent> <t_~*> <C-O>#<C-O>:nohl<CR><C-O>viWo<C-g>
+inoremap <silent> <S-kDivide> <C-O>#<C-O>:nohl<CR><C-O>viWo<C-g>
+snoremap <silent> <t_~*> <right><left>#:nohl<CR>viWo<C-g>
+snoremap <silent> <S-kDivide> <right><left>#:nohl<CR>viWo<C-g>
 
 " Jump to matching brace or paren - (Ctrl-/)
 exec "set <t_C5>=\e[1;5o"
