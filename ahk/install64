@@ -1,0 +1,2 @@
+#!/bin/bash
+cp ctrlsemi.ahk "$USERPROFILE/Start Menu/Programs/Startup/"
