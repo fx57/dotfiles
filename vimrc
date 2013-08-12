@@ -439,11 +439,11 @@ inoremap <silent> <C-b> <C-O>z-
 inoremap <silent> <C-t> <C-O>z<CR>
 
 " go in or forward (Keypad*)
-inoremap <silent> <kMultiply> <C-O><C-I>
+inoremap <silent> <kMultiply> <C-O><C-O>
 
 " go out or back (S-Keypad*)
 exec "set <t_k/>=\e[1;2j"
-inoremap <silent> <t_k/> <C-O><C-O>
+inoremap <silent> <t_k/> <C-O><C-I>
 
 " Ctrl-] to follow link
 inoremap <C-]> <C-O><C-]>

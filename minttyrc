@@ -1,6 +1,6 @@
 BoldAsFont=no
 CursorColour=255,0,0
-CursorType=block
+CursorType=underscore
 Transparency=off
 CursorBlinks=no
 FontHeight=10
