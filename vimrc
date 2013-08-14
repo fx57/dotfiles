@@ -986,4 +986,3 @@ function! s:BriefGotoLine()
 
     execute "normal " . linenr . "gg"
 endfunction
-
