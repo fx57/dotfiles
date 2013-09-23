@@ -1,2 +1,2 @@
 #!/bin/bash
-cp ctrlsemi.ahk "$USERPROFILE/Start Menu/Programs/Startup/"
+cp cs64.ahk "$USERPROFILE/Start Menu/Programs/Startup/"

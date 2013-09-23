@@ -1,0 +1,2 @@
+#!/bin/bash
+cp cs32.ahk "$USERPROFILE/Start Menu/Programs/Startup/"

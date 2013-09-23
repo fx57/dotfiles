@@ -1,2 +1,0 @@
-#!/bin/bash
-cp altspace.ahk "$USERPROFILE/Start Menu/Programs/Startup/"
