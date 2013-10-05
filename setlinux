@@ -1,0 +1,17 @@
+#!/bin/bash
+
+pushd $HOME/dot
+cp -f gitconfig $HOME/.gitconfig
+ln -fs dot/bash_profile $HOME/.bash_profile
+ln -fs dot/bashrc_linux $HOME/.bashrc
+ln -fs dot/vimrc $HOME/.vimrc
+ln -fsT dot/vim $HOME/.vim
+ln -fs dot/minttyrc $HOME/.minttyrc
+bin/apt-get install vim
+cp vimrc "$USERPROFILE/_vimrc"
+pushd vim
+mkdir -p "$USERPROFILE/vimfiles"
+cp -r * "$USERPROFILE/vimfiles"
+popd
+popd
+source $HOME/.bashrc

@@ -1,0 +1,7 @@
+alias ls='ls -hF -G'                 # classify files in colour
+alias l='ls -Als -G'                              #
+PS1='\u@\h:\w$ '
+
+alias more="less -X"
+alias b="vi"
+export PATH=$PATH:/opt/local/bin
