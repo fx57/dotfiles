@@ -369,6 +369,9 @@ autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
    \ if !exists("g:SoyWikiLoaded") |
    \ execute "mksession! " . $HOME . "/.vim/Session.vim"
 
+" search for tags in local directory, going up to parent dirs if needed
+set tags=./tags;
+
 "-----------------------------------------------------------------------
 " Brief bindings
 
@@ -447,6 +450,9 @@ inoremap <silent> <t_k/> <C-O><C-I>
 
 " Ctrl-] to follow link
 inoremap <C-]> <C-O><C-]>
+
+" Keypad enter to follow link
+inoremap <kEnter> <C-O><C-]>
 
 "-----------------------
 " Selecting
