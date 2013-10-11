@@ -109,3 +109,6 @@ fi
 alias more="less -X"
 alias b="vim"
 alias l="ls -als"
+
+# fix ls sort order to show dotfiles first
+export LC_COLLATE="C"
