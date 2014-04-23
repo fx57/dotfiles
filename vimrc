@@ -360,15 +360,24 @@ set backup
 set backupdir=~/.vimfiles
 
 " Restore session:  Go to last file(s) if invoked without arguments.
-"autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
+" autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
 autocmd VimEnter * nested if len(bufname("%")) == 0 && filereadable($HOME . "/.vim/Session.vim") |
-   \ execute "source " . $HOME . "/.vim/Session.vim"
+   \ execute "source " . $HOME . "/.vim/Session.vim"  |
+   \ endif
+
+autocmd VimEnter * nested if bufname("%") == "nofile" |
+   \ bd |
+   \ endif
 
 autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
    \ call mkdir($HOME . "/.vim") |
    \ endif |
    \ if !exists("g:SoyWikiLoaded") |
-   \ execute "mksession! " . $HOME . "/.vim/Session.vim"
+   \ execute "mksession! " . $HOME . "/.vim/Session.vim" |
+   \ endif
+
+"autocmd InsertCharPre * nested match none
+autocmd CursorHoldI * nested match none
 
 " search for tags in local directory, going up to parent dirs if needed
 set tags=./tags;
@@ -649,15 +658,15 @@ inoremap <silent> <t_C5> <C-O>%
 "-----------------------
 
 " open file
-inoremap <A-e> <C-O>:edit
-vnoremap <A-e> <right><left>:edit
+inoremap <A-e> <C-O>:edit<space>
+vnoremap <A-e> <right><left>:edit<space>
 
 " exit
 inoremap <silent> <A-x> <C-O>:confirm quit<CR>
 vnoremap <silent> <A-x> <right><left>:confirm quit<CR>
 
 " read file
-inoremap <A-r> <C-O>:read
+inoremap <A-r> <C-O>:read<space>
 
 " Save the current file
 inoremap <silent> <A-w> <C-O>:call <SID>BriefSave()<CR>
@@ -712,8 +721,8 @@ snoremap <silent> <A-v> <right><left>:version<CR>
 inoremap <silent> <A-z> <C-O>:stop<CR>
 
 " Help (Alt-h)
-inoremap <A-h> <C-O>:help
-snoremap <A-h> <right><left>:help
+inoremap <A-h> <C-O>:help<space>
+snoremap <A-h> <right><left>:help<space>
 
 " Command (F10)
 imap <F10> <C-O>:
@@ -895,10 +904,18 @@ function! s:BriefSearch(pattern)
             return
         endif
 
-        execute 'normal /' . searchstr . "\<CR>"
-        let @/ = searchstr
+        let [lll, ccc] = searchpos(searchstr,'c')
+        let cc = ccc - 1
+        let ee = cc + 2 + len(searchstr)
+"        execute 'normal /.*'
+         highlight SearchResults ctermbg=blue guibg=blue
+         execute 'match SearchResults /\%' . lll . 'l\%>' . cc . 'c.\%<' . ee . 'c/'
+
+""         execute 'match RedundantWhitespace /.*/'
+"         execute 'normal /' . searchstr . "\<CR>"
+"        let @/ = searchstr
         " TODO: select the text:   <C-O>viWo<C-g>
-        execute "normal gno\<C-g>"
+"        execute "normal gno\<C-g>"
     endif
 endfunction
 
