@@ -203,4 +203,5 @@ PS1='\u@\h:\w$ '
 alias cdc="cd /cygdrive/c"
 alias more="less -X"
 alias b="vim"
+alias doc="cd /cygdrive/c/doc"
 export DISPLAY=localhost:0.0
