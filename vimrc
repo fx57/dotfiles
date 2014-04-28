@@ -813,48 +813,50 @@ inoremap <silent> <t_~d> <C-O><C-W>k
 
 " brief home key goes to beginning of line on first press, first line of screen
 " on second press, and beginning of buffer on third press
-let b:homeline = 0
 function! s:BriefHomeKey()
-   " if we are on the first char of the line, go to the top of the screen
-   if (col(".") <= 1 && line(".") == b:homeline)
-      " if on top of screen, go to top of file
+   " have we jumped to the start of the line already?
+   if col(".") > 1 || !exists("b:wentsol") || line(".") != b:wentsol
+      " we didn't just jump to the start of this line, so do it now
+      normal 0
+      let b:wentsol = line(".")
+   else    
+      " we recently jumped to the start of this line, so go to start of screen
       let l:a = line(".")
       normal H0
-      if (line(".") == l:a)
-         " we did not move! so ...
+      if line(".") != l:a
+         " we went to start of screen
+         let b:wentsol = line(".")
+      else
+         " jumping to start of screen did not move, so go to start of buffer
          normal 1G
       endif
-   else
-      " goto beginning of line
-      normal 0
-      let b:homeline = line(".")
    endif
 endfunction
 
 " brief end key goes to end of line on first press, last line of screen
 " on second press, and end of buffer on third press
-let b:endline = 0
 function! s:BriefEndKey()
     let cur_col = virtcol(".")
     let line_len = virtcol("$")
 
-    if cur_col != line_len || line(".") != b:endline
-        " The cursor is not at the end of the line, goto the end of the line
+    if !exists("b:wenteol") || cur_col != line_len || line(".") != b:wenteol
+        " The cursor is not at the end of the line, so go to the end of the line
         execute "normal " . line_len . "|"
-        let b:endline = line(".")
+        let b:wenteol = line(".")
     else
-        " The cursor is already at the end of the line
+        " cursor is already at the end of the line, so go to end of screen
         let cur_line = line(".")
-        normal L         " goto the end of the current page
-        if line(".") == cur_line
-            " Cursor is already at the end of the page
-            normal G  " Goto the end of the file
+        normal L
+        if line(".") != cur_line
+            " moved to end of screen, so now go to the end of the line
             let line_len = virtcol("$")
             if line_len > 0
                 execute "normal " . line_len . "|"
             endif
+            let b:wenteol = line(".")
         else
-            " Cursor was not already in the end of the page
+            " jumping to end of screen did not move, so go to end of buffer
+            normal G
             let line_len = virtcol("$")
             if line_len > 0
                 execute "normal " . line_len . "|"
@@ -1077,8 +1079,7 @@ inoremap <C-e> <C-v>
 
 " configure airline
 let g:airline_powerline_fonts = 1
-set noshowmode
-set lazyredraw
+set noshowmode " don't show mode on command line
+set lazyredraw " don't flicker modes during insert mode navigation
 let g:airline_section_z = airline#section#create(['%3p%% ',
-             \ 'linenr', ':%3c-%-3v'])
-
+             \ 'linenr', ':%3c-%-3v']) " add virtual column number

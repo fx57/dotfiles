@@ -21,3 +21,5 @@ CtrlShiftShortcuts=yes
 BoldAsColour=no
 Locale=en_US
 Charset=UTF-8
+CopyAsRTF=no
+RightClickAction=menu
