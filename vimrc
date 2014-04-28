@@ -1,5 +1,6 @@
 execute pathogen#infect()
-
+"Helptags - run this once after adding a new plugin
+"
 "  Movement Keys
 " --------------------
 " <Up>         - Move cursor up one line
@@ -177,13 +178,14 @@ if 1    " only do this when compiled with expression evaluation
 endif
 set cpo&vim
 
-" Go modeless
+" use ESC for normal->insert, and CTRL-L for insert->normal
 set insertmode
-behave mswin
-" set selectmode="mouse,key"
-" set mousemodel="popup"
-" set keymodel="startsel,stopsel"
-" set selection="exclusive"
+
+" behave mswin, except use visual mode instead of select mode
+set selectmode=mouse
+set mousemodel=popup
+set keymodel=startsel,stopsel
+set selection=exclusive
 
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
@@ -210,7 +212,7 @@ imap <S-Insert> <C-V>
 vmap <S-Insert> <C-V>
 
 " Use CTRL-Q to do what CTRL-V used to do
-inoremap <C-Q>  <C-V>
+inoremap <C-q>  <C-v>
 
 " For CTRL-V to work autoselect must be off.
 " On Unix we have two selections, autoselect can be used.
@@ -299,17 +301,32 @@ else
     let c='a'
     while c <= 'z'
       exec "set <A-".c.">=\e".c
-      exec "imap \e".c." <A-".c.">"
+"      exec "imap \e".c." <A-".c.">"
       let c = nr2char(1+char2nr(c))
     endw
     let c='0'
     while c <= '9'
       exec "set <A-".c.">=\e".c
-      exec "imap \e".c." <A-".c.">"
+"      exec "imap \e".c." <A-".c.">"
       let c = nr2char(1+char2nr(c))
     endw
     set notimeout
+
+    " --- The following should let both <Esc> and the alt keys to work, but instead it
+    "  breaks the alt keys.
+    "
+    "set ttimeout
+    "set timeoutlen=1000
+    "set noesckeys
 endif
+
+" mintty application escape key mode - fixes having to hit <Esc> twice
+" see https://code.google.com/p/mintty/wiki/Tips#Avoiding_escape_timeout_issues_in_vim
+" also http://code.google.com/p/mintty/wiki/CtrlSeqs
+let &t_ti.="\e[?7727h"
+let &t_te.="\e[?7727l"
+noremap <Esc>O[ <Esc>
+noremap! <Esc>O[ <Esc>
 
 " hide gui distractions
 set guioptions-=T
@@ -617,14 +634,14 @@ inoremap <silent> <F5> <C-O>:call <SID>BriefSearch("")<CR>
 "inoremap <silent> <C-F> <C-O>F
 
 " search again
-inoremap <silent> <S-F5> <C-O>n<C-O>:nohl<CR>
-inoremap <silent> <C-n> <C-O>n<C-O>:nohl<CR><C-O>gno<C-g>
-vnoremap <silent> <C-n> <right><left>n:nohl<CR>gno<C-g>
+inoremap <silent> <S-F5> <C-O>:call <SID>BriefSearchAgain()<CR>
+inoremap <silent> <C-N> <C-O>:call <SID>BriefSearchAgain()<CR>
+vnoremap <silent> <C-N> <right><left>:call <SID>BriefSearchAgain()<CR>
 
 " Reverse search
-inoremap <silent> <A-F5> <C-O>N<C-O>:nohl<CR>
-inoremap <silent> <C-p> <C-O>N<C-O>:nohl<CR><C-O>gno<C-g>
-vnoremap <silent> <C-p> <right><left>N:nohl<CR>gno<C-g>
+inoremap <silent> <A-F5> <C-O>:call <SID>BriefSearchAgainBack()<CR>
+inoremap <silent> <C-p> <C-O>:call <SID>BriefSearchAgainBack()<CR>
+vnoremap <silent> <C-p> <right><left>:call <SID>BriefSearchAgainBack()<CR>
 
 " Search and replace from the current cursor position
 inoremap <silent> <F6> <C-O>:call <SID>BriefSearchAndReplace("")<CR>
@@ -721,8 +738,8 @@ snoremap <silent> <A-v> <right><left>:version<CR>
 inoremap <silent> <A-z> <C-O>:stop<CR>
 
 " Help (Alt-h)
-inoremap <A-h> <C-O>:help<space>
-snoremap <A-h> <right><left>:help<space>
+inoremap <A-h> <C-O>:tab help<space>
+snoremap <A-h> <right><left>:tab help<space>
 
 " Command (F10)
 imap <F10> <C-O>:
@@ -878,13 +895,13 @@ function! s:BriefZoomWindow()
    resize
    if (l:h == winheight(0))
        " could not zoom, so unzoom
-       if (exists("w:restoreHeight")) 
+       if (exists("w:restoreHeight"))
           execute "resize" w:restoreHeight
           unlet w:restoreHeight
        endif
    else
        " zoomed
-       if (!exists("w:restoreHeight")) 
+       if (!exists("w:restoreHeight"))
            let w:restoreHeight = l:h
        endif
    endif
@@ -904,19 +921,60 @@ function! s:BriefSearch(pattern)
             return
         endif
 
+
         let [lll, ccc] = searchpos(searchstr,'c')
+        if lll == 0 && ccc == 0
+            echo "\rPattern not found.                   "
+            return
+        endif
         let cc = ccc - 1
-        let ee = cc + 2 + len(searchstr)
+        let ee = ccc + len(searchstr) + 1
 "        execute 'normal /.*'
          highlight SearchResults ctermbg=blue guibg=blue
          execute 'match SearchResults /\%' . lll . 'l\%>' . cc . 'c.\%<' . ee . 'c/'
 
 ""         execute 'match RedundantWhitespace /.*/'
 "         execute 'normal /' . searchstr . "\<CR>"
-"        let @/ = searchstr
+         let @/ = searchstr
         " TODO: select the text:   <C-O>viWo<C-g>
 "        execute "normal gno\<C-g>"
     endif
+endfunction
+
+function! s:BriefSearchAgain()
+        let searchstr = @/
+
+        if searchstr == ""
+            return
+        endif
+
+        let [lll, ccc] = searchpos(searchstr,'')
+        if lll == 0 && ccc == 0
+            echo "\rPattern not found.                   "
+            return
+        endif
+        let cc = ccc - 1
+        let ee = ccc + len(searchstr) + 1
+        highlight SearchResults ctermbg=blue guibg=blue
+        execute 'match SearchResults /\%' . lll . 'l\%>' . cc . 'c.\%<' . ee . 'c/'
+endfunction
+
+function! s:BriefSearchAgainBack()
+        let searchstr = @/
+
+        if searchstr == ""
+            return
+        endif
+
+        let [lll, ccc] = searchpos(searchstr,'b')
+        if lll == 0 && ccc == 0
+            echo "\rPattern not found.                   "
+            return
+        endif
+        let cc = ccc - 1
+        let ee = ccc + len(searchstr) + 1
+        highlight SearchResults ctermbg=blue guibg=blue
+        execute 'match SearchResults /\%' . lll . 'l\%>' . cc . 'c.\%<' . ee . 'c/'
 endfunction
 
 function! s:BriefSearchAndReplace(pattern)
@@ -1014,3 +1072,13 @@ function! s:BriefGotoLine()
 
     execute "normal " . linenr . "gg"
 endfunction
+
+inoremap <C-e> <C-v>
+
+" configure airline
+let g:airline_powerline_fonts = 1
+set noshowmode
+set lazyredraw
+let g:airline_section_z = airline#section#create(['%3p%% ',
+             \ 'linenr', ':%3c-%-3v'])
+
