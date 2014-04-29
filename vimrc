@@ -382,7 +382,7 @@ autocmd VimEnter * nested if len(bufname("%")) == 0 && filereadable($HOME . "/.v
    \ execute "source " . $HOME . "/.vim/Session.vim"  |
    \ endif
 
-autocmd VimEnter * nested if bufname("%") == "nofile" |
+autocmd VimEnter * nested if bufname("%") == "_nofile_" |
    \ bd |
    \ endif
 
@@ -394,6 +394,8 @@ autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
    \ endif
 
 "autocmd InsertCharPre * nested match none
+" clear highlights for searches and jumps
+set updatetime=200
 autocmd CursorHoldI * nested match none
 
 " search for tags in local directory, going up to parent dirs if needed
@@ -433,11 +435,11 @@ inoremap <silent> <End> <C-O>:call <SID>BriefEndKey()<CR>
 inoremap <silent> <PageUp> <C-O>:call <SID>BriefPageUp()<CR>
 inoremap <silent> <PageDown> <C-O>:call <SID>BriefPageDown()<CR>
 
-" goto-beginning of file
-inoremap <silent> <C-PageUp> <C-O>gg
+" goto-beginning of file - conflicts with vim prev-tab
+"inoremap <silent> <C-PageUp> <C-O>gg
 
-" goto-end of file
-inoremap <silent> <C-PageDown> <C-O>G
+" goto-end of file - conflicts with vim next-tab
+"inoremap <silent> <C-PageDown> <C-O>G
 
 " beginning-of-window
 inoremap <silent> <C-Home> <C-O>H
@@ -819,7 +821,7 @@ function! s:BriefHomeKey()
       " we didn't just jump to the start of this line, so do it now
       normal 0
       let b:wentsol = line(".")
-   else    
+   else
       " we recently jumped to the start of this line, so go to start of screen
       let l:a = line(".")
       normal H0
@@ -920,6 +922,7 @@ function! s:BriefSearch(pattern)
     else
         let searchstr = input("Find text: ", a:pattern)
         if searchstr == ""
+            echo "\rFind cancelled                   "
             return
         endif
 
@@ -934,12 +937,11 @@ function! s:BriefSearch(pattern)
 "        execute 'normal /.*'
          highlight SearchResults ctermbg=blue guibg=blue
          execute 'match SearchResults /\%' . lll . 'l\%>' . cc . 'c.\%<' . ee . 'c/'
+         call s:MaybeMiddle()
 
-""         execute 'match RedundantWhitespace /.*/'
-"         execute 'normal /' . searchstr . "\<CR>"
          let @/ = searchstr
-        " TODO: select the text:   <C-O>viWo<C-g>
-"        execute "normal gno\<C-g>"
+
+         execute "normal :<BS>"| "clear command window
     endif
 endfunction
 
@@ -959,6 +961,7 @@ function! s:BriefSearchAgain()
         let ee = ccc + len(searchstr) + 1
         highlight SearchResults ctermbg=blue guibg=blue
         execute 'match SearchResults /\%' . lll . 'l\%>' . cc . 'c.\%<' . ee . 'c/'
+    call s:MaybeMiddle()
 endfunction
 
 function! s:BriefSearchAgainBack()
@@ -977,6 +980,7 @@ function! s:BriefSearchAgainBack()
         let ee = ccc + len(searchstr) + 1
         highlight SearchResults ctermbg=blue guibg=blue
         execute 'match SearchResults /\%' . lll . 'l\%>' . cc . 'c.\%<' . ee . 'c/'
+    call s:MaybeMiddle()
 endfunction
 
 function! s:BriefSearchAndReplace(pattern)
@@ -989,6 +993,7 @@ function! s:BriefSearchAndReplace(pattern)
     else
         let searchstr = input("Find text: ", a:pattern)
         if searchstr == ""
+            echo "\rFind cancelled                   "
             return
         endif
 
@@ -1032,6 +1037,7 @@ endfunction
 function! s:BriefJumpMark()
     let mark = input("Jump to bookmark: ")
     if mark == ""
+        echo "\rJump to bookmark cancelled     "
         return
     endif
     if mark == "0"
@@ -1064,18 +1070,35 @@ function! s:BriefJumpMark()
     if mark == "9"
         normal `k
     endif
+    highlight SearchResults ctermbg=blue guibg=blue
+    execute 'match SearchResults /\%' . line('.') . 'l/'
+    echo ""
 endfunction
 
 function! s:BriefGotoLine()
-    let linenr = input("Line number to jump to: ")
+    let linenr = input("Line number to go to: ")
     if linenr == ""
+        echo "\rGo to line cancelled     "
         return
     endif
 
     execute "normal " . linenr . "gg"
+
+    highlight SearchResults ctermbg=blue guibg=blue
+    execute 'match SearchResults /\%' . line('.') . 'l/'
+    call s:MaybeMiddle()
+    echo ""
+endfunction
+
+" If cursor is in first or last line of window, scroll to middle line.
+function s:MaybeMiddle()
+  if winline() == 1 || winline() == winheight(0)
+    normal! zz
+  endif
 endfunction
 
 inoremap <C-e> <C-v>
+cmap <Esc> <Esc><c-o>:echo "foo"<CR>
 
 " configure airline
 let g:airline_powerline_fonts = 1
