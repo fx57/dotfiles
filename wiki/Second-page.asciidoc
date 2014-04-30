@@ -3,5 +3,7 @@
 This is a link:foo.asciidoc[link to foo]
 This is also a <<foo.asciidoc#,link to foo>>
 This is a link:newfile[link to newfile]
+This is a link:foobar.ad[link to foobar.ad]
+This is a link:cowbell.adoc[link to cowbell.adoc]
 
 End
