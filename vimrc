@@ -1113,7 +1113,7 @@ let g:airline_section_z = airline#section#create(['%3p%% ',
 
 
 function! Browser ()
-  let line = matchstr(getline("."), 'http:\/\/[^ >,;]*')
+  let line = matchstr(getline("."), 'https\=:\/\/[^ >,;]*')
   if (line == "")
       echo ""
       exec "normal! <c-]>"
