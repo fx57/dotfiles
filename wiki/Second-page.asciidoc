@@ -1,6 +1,6 @@
 == First Chapter
 
-This is a link:foo[link to foo]
+This is a link:foo.asciidoc[link to foo]
 This is also a <<foo.asciidoc#,link to foo>>
 This is a link:newfile[link to newfile]
 
