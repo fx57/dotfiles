@@ -2,6 +2,6 @@
 
 This is a link:foo.asciidoc[link to foo]
 This is also a <<foo.asciidoc#,link to foo>>
-This is a link:newfile[link to newfile]
+This is a xref:foo#[xref to foo]
 
 End
