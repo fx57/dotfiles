@@ -4,7 +4,7 @@ export PATH=/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH
 export CLICOLOR=1
 alias ls='CLICOLOR_FORCE=1 ls -G'
 alias more='more -R'
-alias l="ls -als"
+alias l="ls -alsG"
 alias u="cd .."
 alias dir="ls -als"
 alias lm="l | more"

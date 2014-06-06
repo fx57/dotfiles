@@ -83,7 +83,7 @@ hi StatusLineNC cterm=reverse
 hi VertSplit	cterm=reverse
 hi Title	ctermfg=5
 "hi Visual	cterm=NONE ctermfg=233 ctermbg=101
-hi Visual	ctermbg=240
+hi Visual	ctermbg=239
 hi VisualNOS	cterm=bold,underline
 hi WarningMsg	ctermfg=1
 hi WildMenu	ctermfg=0 ctermbg=3

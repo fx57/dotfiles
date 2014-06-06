@@ -114,7 +114,7 @@ alias ls='ls -hF --color=tty'                 # classify files in colour
 # alias vdir='ls --color=auto --format=long'
 # alias ll='ls -l'                              # long list
 # alias la='ls -A'                              # all but . and ..
-alias l='ls -Als --color=auto'                              #
+alias l='ls -AlG --color=auto'                              #
 alias bin='apt-cyg'
 PS1='\u@\h:\w$ '
 
@@ -202,5 +202,8 @@ PS1='\u@\h:\w$ '
 # alias cd=cd_func
 alias cdc="cd /cygdrive/c"
 alias more="less -X"
-alias b="vi"
+alias b="vim"
+alias bn="vim _nofile_"
+alias doc="cd /cygdrive/c/doc"
 export DISPLAY=localhost:0.0
+export GIT_EDITOR=vim

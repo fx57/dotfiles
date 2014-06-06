@@ -1,0 +1,2 @@
+#!/bin/bash
+cp cs64.ahk "$USERPROFILE/Start Menu/Programs/Startup/"

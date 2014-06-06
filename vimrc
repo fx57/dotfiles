@@ -1,5 +1,6 @@
 execute pathogen#infect()
-
+"Helptags - run this once after adding a new plugin
+"
 "  Movement Keys
 " --------------------
 " <Up>         - Move cursor up one line
@@ -32,7 +33,7 @@ execute pathogen#infect()
 " <C-t>        - Move the current line to the top of the window
 " <Keypad*>    - Extension> Instead of undo, navigate Forward in Jumplist
 " <S-Keypad*>  - Extension> Instead of ???, navigate Back in Jumplist
-" 
+"
 " Selecting text
 " --------------
 " <A-m>        - Toggle standard text marking mode
@@ -51,11 +52,11 @@ execute pathogen#infect()
 " <S-Home>     - Extension> Instead of going to the first column, this selects
 "                           between the cursor postition and the first column.
 " <S-End>      - Extension> Instead of going to the right side of the window,
-" 							this selects between the cursor postition and the
-" 							end of the line.
+"                           this selects between the cursor postition and the
+"                           end of the line.
 " <Keypad5>    - Extension> Redraw screen and hide selection and highlights
 " <S-Keypad5>  - Extension> Instead of ascii 5, select word under cursor
-" 
+"
 " Editing Keys
 " ------------
 " <C-CR>       - Open a new line below the current line and goto that line
@@ -87,15 +88,15 @@ execute pathogen#infect()
 " <A-BS>       - Delete the next word
 " <A-/>        - Complete a partially typed word
 " <A-q>        - Quote the next character
-" 
+"
 " Delete Keys
 " -----------
-" <A-u>        - 
+" <A-u>        -
 " <kMultiply>  - Undo last operation.  Either keypad * key or <A-u> can be
 "                used.
 " <A-y>        - Restore line
 " <C-y>        - Redo the previously undid commands
-" 
+"
 " Search and Replace Commands
 " ---------------------------
 " <C-f>        - Search
@@ -110,7 +111,7 @@ execute pathogen#infect()
 " <C-F5>       - toggle case sensitivity of search commands.
 " Keypad-/     - Search forwards for word under cursor
 " S-Keypad-/   - Seach backwards for word under cursor
-" 
+"
 " Buffer Commands
 " ---------------
 " <A-e>        - Open file
@@ -125,14 +126,14 @@ execute pathogen#infect()
 " <C-kMinus>   - Delete current buffer from buffer list
 " <A-b>        - Display buffer list
 " <A-f>        - Display buffer information
-" 
+"
 " Compiler related commands
 " -------------------------
 " <A-F10>      - Compile current buffer
 " <C-n>        - Jump to the next error
 " <C-l>        - pJump to the next previous error
 " <C-p>        - View compiler output
-" 
+"
 " Misc commands
 " -------------
 " <A-v>        - Show version
@@ -140,7 +141,7 @@ execute pathogen#infect()
 " <C-Down>     - Goto next/previous function
 " <A-z>        - Start a shell
 " <A-F1>       - Search for a keyword in online help
-" 
+"
 " Bookmark
 " --------
 " <A-0>        - Mark bookmark 0
@@ -154,7 +155,7 @@ execute pathogen#infect()
 " <A-8>        - Mark bookmark 8
 " <A-9>        - Mark bookmark 9
 " <A-j>        - Jump to a bookmark
-" 
+"
 " Windows Commands
 " ----------------
 " <A-F2>       - Zoom window toggle
@@ -172,18 +173,19 @@ set nocompatible
 "--mswin start
 
 " set the 'cpoptions' to its Vim default
-if 1	" only do this when compiled with expression evaluation
+if 1    " only do this when compiled with expression evaluation
   let s:save_cpo = &cpoptions
 endif
 set cpo&vim
 
-" Go modeless
+" use ESC for normal->insert, and CTRL-L for insert->normal
 set insertmode
-behave mswin
-" set selectmode="mouse,key"
-" set mousemodel="popup"
-" set keymodel="startsel,stopsel"
-" set selection="exclusive"
+
+" behave mswin, except use visual mode instead of select mode
+set selectmode=mouse
+set mousemodel=popup
+set keymodel=startsel,stopsel
+set selection=exclusive
 
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
@@ -195,8 +197,8 @@ vnoremap <BS> d
 "vnoremap <C-c> "+y
 
 " CTRL-V is Paste
-"map <C-V>		"+gP
-"cmap <C-V>		<C-R>+
+"map <C-V>      "+gP
+"cmap <C-V>     <C-R>+
 
 " Pasting blockwise and linewise selections is not possible in Insert and
 " Visual mode without the +virtualedit feature.  They are pasted as if they
@@ -206,11 +208,11 @@ vnoremap <BS> d
 "exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
 "exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
 
-imap <S-Insert>		<C-V>
-vmap <S-Insert>		<C-V>
+imap <S-Insert> <C-V>
+vmap <S-Insert> <C-V>
 
 " Use CTRL-Q to do what CTRL-V used to do
-inoremap <C-Q>		<C-V>
+inoremap <C-q>  <C-v>
 
 " For CTRL-V to work autoselect must be off.
 " On Unix we have two selections, autoselect can be used.
@@ -241,13 +243,13 @@ inoremap <silent> <Up> <C-R>=pumvisible() ? "\<lt>Up>" : "\<lt>C-O>gk"<CR>
 "inoremap <silent> <C-F> <C-O>:promptfind<CR>
 "cnoremap <silent> <C-F> <C-C>:promptfind<CR>
 
-set backspace=2		" allow backspacing over everything in insert mode
-set autoindent		" always set autoindenting on
+set backspace=2     " allow backspacing over everything in insert mode
+set autoindent      " always set autoindenting on
 
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set incsearch		" do incremental searching
-set mouse=a		" always use the mouse
+set history=50      " keep 50 lines of command line history
+set ruler           " show the cursor position all the time
+set incsearch       " do incremental searching
+set mouse=a         " always use the mouse
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -287,29 +289,44 @@ set virtualedit=all
 "nnoremap <c-j> <c-w>j
 "nnoremap <c-k> <c-w>k
 "nnoremap <c-l> <c-w>l
-                
+
 set nowrap
 if has("gui_running")
-	au GUIEnter * simalt ~x
+    au GUIEnter * simalt ~x
 else
-"	set lines=55
-"	set columns=120
+"   set lines=55
+"   set columns=120
 
-	" support alt key in 7-bit terminals like mintty
-	let c='a'
-	while c <= 'z'
-	  exec "set <A-".c.">=\e".c
-	  exec "imap \e".c." <A-".c.">"
-	  let c = nr2char(1+char2nr(c))
-	endw
-	let c='0'
-	while c <= '9'
-	  exec "set <A-".c.">=\e".c
-	  exec "imap \e".c." <A-".c.">"
-	  let c = nr2char(1+char2nr(c))
-	endw
-	set notimeout
+    " support alt key in 7-bit terminals like mintty
+    let c='a'
+    while c <= 'z'
+      exec "set <A-".c.">=\e".c
+"      exec "imap \e".c." <A-".c.">"
+      let c = nr2char(1+char2nr(c))
+    endw
+    let c='0'
+    while c <= '9'
+      exec "set <A-".c.">=\e".c
+"      exec "imap \e".c." <A-".c.">"
+      let c = nr2char(1+char2nr(c))
+    endw
+    set notimeout
+
+    " --- The following should let both <Esc> and the alt keys to work, but instead it
+    "  breaks the alt keys.
+    "
+    "set ttimeout
+    "set timeoutlen=1000
+    "set noesckeys
 endif
+
+" mintty application escape key mode - fixes having to hit <Esc> twice
+" see https://code.google.com/p/mintty/wiki/Tips#Avoiding_escape_timeout_issues_in_vim
+" also http://code.google.com/p/mintty/wiki/CtrlSeqs
+let &t_ti.="\e[?7727h"
+let &t_te.="\e[?7727l"
+noremap <Esc>O[ <Esc>
+noremap! <Esc>O[ <Esc>
 
 " hide gui distractions
 set guioptions-=T
@@ -354,20 +371,39 @@ au BufEnter /* call LoadCscope()
 
 set tabstop=4
 set shiftwidth=4
+set expandtab
 
 set backup
 set backupdir=~/.vimfiles
 
 " Restore session:  Go to last file(s) if invoked without arguments.
-"autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
+" autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
 autocmd VimEnter * nested if len(bufname("%")) == 0 && filereadable($HOME . "/.vim/Session.vim") |
-   \ execute "source " . $HOME . "/.vim/Session.vim"
+   \ execute "source " . $HOME . "/.vim/Session.vim"  |
+   \ endif
+
+autocmd VimEnter * nested if bufname("%") == "_nofile_" |
+   \ bd |
+   \ endif
 
 autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
    \ call mkdir($HOME . "/.vim") |
    \ endif |
    \ if !exists("g:SoyWikiLoaded") |
-   \ execute "mksession! " . $HOME . "/.vim/Session.vim"
+   \ execute "mksession! " . $HOME . "/.vim/Session.vim" |
+   \ endif
+
+"autocmd InsertCharPre * nested match none
+" clear highlights for searches and jumps
+set updatetime=200
+autocmd CursorHoldI * nested match none
+
+" search for tags in local directory, going up to parent dirs if needed
+set tags=./tags;
+
+" highlight tabs and trailing whitespace
+highlight RedundantWhitespace ctermbg=red guibg=red
+match RedundantWhitespace /\s\+$\|\t/
 
 "-----------------------------------------------------------------------
 " Brief bindings
@@ -399,11 +435,11 @@ inoremap <silent> <End> <C-O>:call <SID>BriefEndKey()<CR>
 inoremap <silent> <PageUp> <C-O>:call <SID>BriefPageUp()<CR>
 inoremap <silent> <PageDown> <C-O>:call <SID>BriefPageDown()<CR>
 
-" goto-beginning of file
-inoremap <silent> <C-PageUp> <C-O>gg
+" goto-beginning of file - conflicts with vim prev-tab
+"inoremap <silent> <C-PageUp> <C-O>gg
 
-" goto-end of file
-inoremap <silent> <C-PageDown> <C-O>G
+" goto-end of file - conflicts with vim next-tab
+"inoremap <silent> <C-PageDown> <C-O>G
 
 " beginning-of-window
 inoremap <silent> <C-Home> <C-O>H
@@ -439,14 +475,17 @@ inoremap <silent> <C-b> <C-O>z-
 inoremap <silent> <C-t> <C-O>z<CR>
 
 " go in or forward (Keypad*)
-inoremap <silent> <kMultiply> <C-O><C-I>
+inoremap <silent> <kMultiply> <C-O><C-O>
 
 " go out or back (S-Keypad*)
 exec "set <t_k/>=\e[1;2j"
-inoremap <silent> <t_k/> <C-O><C-O>
+inoremap <silent> <t_k/> <C-O><C-I>
 
 " Ctrl-] to follow link
 inoremap <C-]> <C-O><C-]>
+
+" Keypad enter to follow link
+inoremap <kEnter> <C-O><C-]>
 
 "-----------------------
 " Selecting
@@ -490,13 +529,17 @@ onoremap <C-A> <C-C>gggH<C-O>G
 snoremap <C-A> <C-C>gggH<C-O>G
 xnoremap <C-A> <C-C>ggVG
 
+" Indent or outdent a selection
+vnoremap <Tab> >
+vnoremap <S-Tab> <
+
 "-----------------------
 " Editing
 "-----------------------
 
 " Open a new line below the current line and goto that line
 inoremap <silent> <C-^> <C-O>o
-                      
+
 " open a new line below the current line, cursor stays in the current line
 "inoremap <silent> <S-CR> <C-O>o<C-O>k
 
@@ -597,14 +640,14 @@ inoremap <silent> <F5> <C-O>:call <SID>BriefSearch("")<CR>
 "inoremap <silent> <C-F> <C-O>F
 
 " search again
-inoremap <silent> <S-F5> <C-O>n<C-O>:nohl<CR>
-inoremap <silent> <C-n> <C-O>n<C-O>:nohl<CR><C-O>gno<C-g>
-vnoremap <silent> <C-n> <right><left>n:nohl<CR>gno<C-g>
+inoremap <silent> <S-F5> <C-O>:call <SID>BriefSearchAgain()<CR>
+inoremap <silent> <C-N> <C-O>:call <SID>BriefSearchAgain()<CR>
+vnoremap <silent> <C-N> <right><left>:call <SID>BriefSearchAgain()<CR>
 
 " Reverse search
-inoremap <silent> <A-F5> <C-O>N<C-O>:nohl<CR>
-inoremap <silent> <C-p> <C-O>N<C-O>:nohl<CR><C-O>gno<C-g>
-vnoremap <silent> <C-p> <right><left>N:nohl<CR>gno<C-g>
+inoremap <silent> <A-F5> <C-O>:call <SID>BriefSearchAgainBack()<CR>
+inoremap <silent> <C-p> <C-O>:call <SID>BriefSearchAgainBack()<CR>
+vnoremap <silent> <C-p> <right><left>:call <SID>BriefSearchAgainBack()<CR>
 
 " Search and replace from the current cursor position
 inoremap <silent> <F6> <C-O>:call <SID>BriefSearchAndReplace("")<CR>
@@ -638,15 +681,15 @@ inoremap <silent> <t_C5> <C-O>%
 "-----------------------
 
 " open file
-inoremap <A-e> <C-O>:edit 
-vnoremap <A-e> <right><left>:edit
+inoremap <A-e> <C-O>:edit<space>
+vnoremap <A-e> <right><left>:edit<space>
 
 " exit
 inoremap <silent> <A-x> <C-O>:confirm quit<CR>
 vnoremap <silent> <A-x> <right><left>:confirm quit<CR>
 
-" read file                          
-inoremap <A-r> <C-O>:read  
+" read file
+inoremap <A-r> <C-O>:read<space>
 
 " Save the current file
 inoremap <silent> <A-w> <C-O>:call <SID>BriefSave()<CR>
@@ -701,8 +744,8 @@ snoremap <silent> <A-v> <right><left>:version<CR>
 inoremap <silent> <A-z> <C-O>:stop<CR>
 
 " Help (Alt-h)
-inoremap <A-h> <C-O>:help 
-snoremap <A-h> <right><left>:help 
+inoremap <A-h> <C-O>:tab help<space>
+snoremap <A-h> <right><left>:tab help<space>
 
 " Command (F10)
 imap <F10> <C-O>:
@@ -762,7 +805,7 @@ inoremap <silent> <t_~2> <C-O>:call <SID>BriefZoomWindow()<CR>
 
 " Goto the window below the current window (Alt-down, or Ctrl-Alt-Numpad-down)
 inoremap <silent> <A-Down> <C-O><C-W>j
-exec "set <t_~u>=\e[1;7B"          
+exec "set <t_~u>=\e[1;7B"
 inoremap <silent> <t_~u> <C-O><C-W>j
 
 " Goto the window above the current window (Alt-up, or Ctrl-Alt-Numpad-up)
@@ -776,48 +819,50 @@ inoremap <silent> <t_~d> <C-O><C-W>k
 
 " brief home key goes to beginning of line on first press, first line of screen
 " on second press, and beginning of buffer on third press
-let b:homeline = 0
 function! s:BriefHomeKey()
-   " if we are on the first char of the line, go to the top of the screen
-   if (col(".") <= 1 && line(".") == b:homeline)
-      " if on top of screen, go to top of file
+   " have we jumped to the start of the line already?
+   if col(".") > 1 || !exists("b:wentsol") || line(".") != b:wentsol
+      " we didn't just jump to the start of this line, so do it now
+      normal 0
+      let b:wentsol = line(".")
+   else
+      " we recently jumped to the start of this line, so go to start of screen
       let l:a = line(".")
       normal H0
-      if (line(".") == l:a)
-         " we did not move! so ...
+      if line(".") != l:a
+         " we went to start of screen
+         let b:wentsol = line(".")
+      else
+         " jumping to start of screen did not move, so go to start of buffer
          normal 1G
       endif
-   else
-      " goto beginning of line
-      normal 0
-	  let b:homeline = line(".")
    endif
 endfunction
 
 " brief end key goes to end of line on first press, last line of screen
 " on second press, and end of buffer on third press
-let b:endline = 0
 function! s:BriefEndKey()
     let cur_col = virtcol(".")
     let line_len = virtcol("$")
 
-	if cur_col != line_len || line(".") != b:endline
-        " The cursor is not at the end of the line, goto the end of the line
+    if !exists("b:wenteol") || cur_col != line_len || line(".") != b:wenteol
+        " The cursor is not at the end of the line, so go to the end of the line
         execute "normal " . line_len . "|"
-		let b:endline = line(".")
+        let b:wenteol = line(".")
     else
-        " The cursor is already at the end of the line
+        " cursor is already at the end of the line, so go to end of screen
         let cur_line = line(".")
-        normal L         " goto the end of the current page
-        if line(".") == cur_line
-            " Cursor is already at the end of the page
-            normal G  " Goto the end of the file
+        normal L
+        if line(".") != cur_line
+            " moved to end of screen, so now go to the end of the line
             let line_len = virtcol("$")
             if line_len > 0
                 execute "normal " . line_len . "|"
             endif
+            let b:wenteol = line(".")
         else
-            " Cursor was not already in the end of the page
+            " jumping to end of screen did not move, so go to end of buffer
+            normal G
             let line_len = virtcol("$")
             if line_len > 0
                 execute "normal " . line_len . "|"
@@ -831,7 +876,7 @@ function! s:BriefPageUp()
    let l:a = getpos(".")
    execute "normal " . winheight(0) . "\<c-y>"
    let a[1] = a[1] - winheight(0)
-   if (a[1] < 1) 
+   if (a[1] < 1)
       let a[1] = 1
    endif
    call setpos(".",a)
@@ -842,10 +887,10 @@ function! s:BriefPageDown()
    let l:a = getpos(".")
    let l:dist = winheight(0)
    if (line(".") + winheight(0) > line("$"))
-	  " page down would go past end of buffer
-      let l:dist = line("$") - line(".") 
+      " page down would go past end of buffer
+      let l:dist = line("$") - line(".")
    else
-   	  execute "normal " . l:dist . "\<c-e>"
+      execute "normal " . l:dist . "\<c-e>"
    endif
    let a[1] = a[1] + l:dist
    call setpos(".",a)
@@ -857,15 +902,15 @@ function! s:BriefZoomWindow()
    let l:h = winheight(0)
    resize
    if (l:h == winheight(0))
-	   " could not zoom, so unzoom
-	   if (exists("w:restoreHeight")) 
+       " could not zoom, so unzoom
+       if (exists("w:restoreHeight"))
           execute "resize" w:restoreHeight
-	      unlet w:restoreHeight
-	   endif
+          unlet w:restoreHeight
+       endif
    else
-	   " zoomed
-	   if (!exists("w:restoreHeight")) 
-		   let w:restoreHeight = l:h
+       " zoomed
+       if (!exists("w:restoreHeight"))
+           let w:restoreHeight = l:h
        endif
    endif
 endfunction
@@ -881,14 +926,65 @@ function! s:BriefSearch(pattern)
     else
         let searchstr = input("Find text: ", a:pattern)
         if searchstr == ""
+            echo "\rFind cancelled                   "
             return
         endif
 
-        execute 'normal /' . searchstr . "\<CR>"
-		let @/ = searchstr
-		" TODO: select the text:   <C-O>viWo<C-g>
-		execute "normal gno\<C-g>"
+
+        let [lll, ccc] = searchpos(searchstr,'c')
+        if lll == 0 && ccc == 0
+            echo "\rPattern not found.                   "
+            return
+        endif
+        let cc = ccc - 1
+        let ee = ccc + len(searchstr) + 1
+"        execute 'normal /.*'
+         highlight SearchResults ctermbg=blue guibg=blue
+         execute 'match SearchResults /\%' . lll . 'l\%>' . cc . 'c.\%<' . ee . 'c/'
+         call s:MaybeMiddle()
+
+         let @/ = searchstr
+
+         execute "normal :<BS>"| "clear command window
     endif
+endfunction
+
+function! s:BriefSearchAgain()
+        let searchstr = @/
+
+        if searchstr == ""
+            return
+        endif
+
+        let [lll, ccc] = searchpos(searchstr,'')
+        if lll == 0 && ccc == 0
+            echo "\rPattern not found.                   "
+            return
+        endif
+        let cc = ccc - 1
+        let ee = ccc + len(searchstr) + 1
+        highlight SearchResults ctermbg=blue guibg=blue
+        execute 'match SearchResults /\%' . lll . 'l\%>' . cc . 'c.\%<' . ee . 'c/'
+    call s:MaybeMiddle()
+endfunction
+
+function! s:BriefSearchAgainBack()
+        let searchstr = @/
+
+        if searchstr == ""
+            return
+        endif
+
+        let [lll, ccc] = searchpos(searchstr,'b')
+        if lll == 0 && ccc == 0
+            echo "\rPattern not found.                   "
+            return
+        endif
+        let cc = ccc - 1
+        let ee = ccc + len(searchstr) + 1
+        highlight SearchResults ctermbg=blue guibg=blue
+        execute 'match SearchResults /\%' . lll . 'l\%>' . cc . 'c.\%<' . ee . 'c/'
+    call s:MaybeMiddle()
 endfunction
 
 function! s:BriefSearchAndReplace(pattern)
@@ -901,6 +997,7 @@ function! s:BriefSearchAndReplace(pattern)
     else
         let searchstr = input("Find text: ", a:pattern)
         if searchstr == ""
+            echo "\rFind cancelled                   "
             return
         endif
 
@@ -944,6 +1041,7 @@ endfunction
 function! s:BriefJumpMark()
     let mark = input("Jump to bookmark: ")
     if mark == ""
+        echo "\rJump to bookmark cancelled     "
         return
     endif
     if mark == "0"
@@ -976,14 +1074,52 @@ function! s:BriefJumpMark()
     if mark == "9"
         normal `k
     endif
+    highlight SearchResults ctermbg=blue guibg=blue
+    execute 'match SearchResults /\%' . line('.') . 'l/'
+    echo ""
 endfunction
 
 function! s:BriefGotoLine()
-    let linenr = input("Line number to jump to: ")
+    let linenr = input("Line number to go to: ")
     if linenr == ""
+        echo "\rGo to line cancelled     "
         return
     endif
 
     execute "normal " . linenr . "gg"
+
+    highlight SearchResults ctermbg=blue guibg=blue
+    execute 'match SearchResults /\%' . line('.') . 'l/'
+    call s:MaybeMiddle()
+    echo ""
 endfunction
 
+" If cursor is in first or last line of window, scroll to middle line.
+function s:MaybeMiddle()
+  if winline() == 1 || winline() == winheight(0)
+    normal! zz
+  endif
+endfunction
+
+inoremap <C-e> <C-v>
+cmap <Esc> <Esc><c-o>:echo "foo"<CR>
+
+" configure airline
+let g:airline_powerline_fonts = 1
+set noshowmode " don't show mode on command line
+set lazyredraw " don't flicker modes during insert mode navigation
+let g:airline_section_z = airline#section#create(['%3p%% ',
+             \ 'linenr', ':%3c-%-3v']) " add virtual column number
+
+
+function! Browser ()
+  let line = matchstr(getline("."), 'https\=:\/\/[^ >,;]*')
+  if (line == "")
+      echo ""
+      exec "normal! <c-]>"
+  else
+      echo ""
+      exec "silent !/cygdrive/c/Program\\ Files\\ \\(x86\\)/Mozilla\\ Firefox/firefox.exe -new-window ".line." &>/dev/null &" | redraw!
+  endif
+endfunction
+imap <c-]> <c-o>:call Browser ()<CR>
