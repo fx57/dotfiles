@@ -533,6 +533,9 @@ xnoremap <C-A> <C-C>ggVG
 vnoremap <Tab> >
 vnoremap <S-Tab> <
 
+" reflow text
+inoremap <silent> <C-R> <C-O>gqap
+
 "-----------------------
 " Editing
 "-----------------------
@@ -1113,6 +1116,12 @@ let g:airline_section_z = airline#section#create(['%3p%% ',
 
 
 function! Browser ()
+  let line = matchstr(getline("."), 'link:[^[#]*')
+  if (line != "")
+      exec "edit ".strpart(line,5)
+      return
+  endif
+
   let line = matchstr(getline("."), 'https\=:\/\/[^ >,;]*')
   if (line == "")
       echo ""
@@ -1123,3 +1132,9 @@ function! Browser ()
   endif
 endfunction
 imap <c-]> <c-o>:call Browser ()<CR>
+
+au BufNewFile,BufRead *.adoc set filetype=asciidoc
+au BufNewFile,BufRead *.adoc set textwidth=80
+au BufNewFile,BufRead *.ad set filetype=asciidoc
+au BufNewFile,BufRead *.ad set textwidth=80
+
