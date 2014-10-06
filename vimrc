@@ -529,6 +529,13 @@ onoremap <C-A> <C-C>gggH<C-O>G
 snoremap <C-A> <C-C>gggH<C-O>G
 xnoremap <C-A> <C-C>ggVG
 
+" Indent or outdent a selection
+vnoremap <Tab> >
+vnoremap <S-Tab> <
+
+" reflow text
+inoremap <silent> <C-R> <C-O>gqap
+
 "-----------------------
 " Editing
 "-----------------------
@@ -1106,3 +1113,28 @@ set noshowmode " don't show mode on command line
 set lazyredraw " don't flicker modes during insert mode navigation
 let g:airline_section_z = airline#section#create(['%3p%% ',
              \ 'linenr', ':%3c-%-3v']) " add virtual column number
+
+
+function! Browser ()
+  let line = matchstr(getline("."), 'link:[^[#]*')
+  if (line != "")
+      exec "edit ".strpart(line,5)
+      return
+  endif
+
+  let line = matchstr(getline("."), 'https\=:\/\/[^ >,;]*')
+  if (line == "")
+      echo ""
+      exec "normal! <c-]>"
+  else
+      echo ""
+      exec "silent !/cygdrive/c/Program\\ Files\\ \\(x86\\)/Mozilla\\ Firefox/firefox.exe -new-window ".line." &>/dev/null &" | redraw!
+  endif
+endfunction
+imap <c-]> <c-o>:call Browser ()<CR>
+
+au BufNewFile,BufRead *.adoc set filetype=asciidoc
+au BufNewFile,BufRead *.adoc set textwidth=80
+au BufNewFile,BufRead *.ad set filetype=asciidoc
+au BufNewFile,BufRead *.ad set textwidth=80
+
