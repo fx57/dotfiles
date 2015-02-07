@@ -91,5 +91,6 @@ alias doc="cd /cygdrive/c/doc"
 alias src="cd ~/src"
 alias dot="cd ~/dot"
 alias o="cygstart"
+alias start="cygstart"
 export DISPLAY=localhost:0.0
 export GIT_EDITOR=vim
