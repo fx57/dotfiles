@@ -12,6 +12,7 @@ Common GUI features
 * Ctrl-arrow to move by word
 * Ctrl-xcv to copy/cut/paste
 * Ctrl-zy to undo/redo
+* Ctrl-f to find
 * Backspace in col 1 deletes newline on preceding line
 * Delete at newline or beyond deletes newline
 * Click with mouse to move to cursor
@@ -49,6 +50,7 @@ Custom
 * Numpad * to navigate fwd/back
 * Numpad / to search word under cursor (fwd/back/matching)
 * Numpad 5 to (refresh+shrink)/enlarge selection (word->quote->line->block)
+* Ctrl-n for search next, Ctrl-p for search previous
 * Ctrl-up/down to move by function
 * Shift-arrow down or up causes linewise selection
 * Shift-arrow right or left during linewise selection switches to column selection
