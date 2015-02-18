@@ -1,6 +1,6 @@
 #SingleInstance force
 
-text=(F)irefox`n(C)hrome`n(T)erminal`n(N)ew terminal`n(E)xplorer`n(V)im`n( `; )Cancel`n(Q)uit app
+text=(F)irefox`n(G)oogle`n(C)hrome`n(T)erminal`n(N)ew terminal`n(E)xplorer`n(V)im`n( `; )Cancel`n(Q)uit app
 
 Gui, +LastFound +AlwaysOnTop +owner -Caption   
 Gui, Color, black,black
@@ -44,6 +44,11 @@ if (ErrorLevel="max")
       	    WinActivate
         else
       	    Run, "c:\Program Files (x86)\Mozilla Firefox\firefox.exe", c:\Program Files\Mozilla Firefox
+    }
+    else if (thekey="g" OR theKey=chr(7))
+    {
+		Gui,Cancel
+  	    Run, "c:\Program Files (x86)\Mozilla Firefox\firefox.exe", c:\Program Files\Mozilla Firefox
     }
     else if (thekey="e" OR theKey=chr(5))
     {
