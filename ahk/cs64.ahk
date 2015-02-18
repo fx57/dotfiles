@@ -1,6 +1,6 @@
 #SingleInstance force
 
-text=(F)irefox`n(C)hrome`n(T)erminal`n(E)xplorer`n(V)im`n(`;)Cancel`n(Q)uit app
+text=(F)irefox`n(C)hrome`n(T)erminal`n(N)ew terminal`n(E)xplorer`n(V)im`n( `; )Cancel`n(Q)uit app
 
 Gui, +LastFound +AlwaysOnTop +owner -Caption   
 Gui, Color, black,black
@@ -23,6 +23,11 @@ if (ErrorLevel="max")
             WinActivate
         else
             Run, c:\cygwin\bin\mintty.exe -
+    }
+    else if (thekey="n" OR theKey=chr(14))
+    {
+		Gui,Cancel
+        Run, c:\cygwin\bin\mintty.exe -
     }
     else if (thekey="c" OR theKey=chr(3))
     {
