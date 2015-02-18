@@ -559,25 +559,25 @@ inoremap <silent> <C-k> <C-U>
 inoremap <silent> <A-d> <C-O>dd
 
 " Copy line or mark to scrap buffer.  Vim register 'a' is used as the scrap
-" buffer
+" buffer, register '+' is the system clipboard.
 inoremap <silent> <kPlus> <C-O>"ayy
-inoremap <silent> <C-c> <C-O>"ayy
+inoremap <silent> <C-c> <Nop>
 vnoremap <silent> <kPlus> "ay
-vnoremap <silent> <C-c> "ay
+vnoremap <silent> <C-c> "+y
 
 " Cut line or mark to scrap buffer.  Vim register 'a' is used as the scrap
-" buffer
+" buffer, register '+' is the system clipboard.
 inoremap <silent> <kMinus> <C-O>"add
-inoremap <silent> <C-x> <C-O>"add
+inoremap <silent> <C-x> <Nop>
 vnoremap <silent> <kMinus> "ax
-vnoremap <silent> <C-x> "ax
+vnoremap <silent> <C-x> "+x
 
 " Paste scrap buffer contents to current cursor position.  Vim register 'a' is
 " used as the scrap buffer
 inoremap <silent> <Ins> <C-O>"aP
-inoremap <silent> <C-v> <C-O>"aP
+inoremap <silent> <C-v> <C-O>"+P
 vnoremap <silent> <Ins> "aP
-vnoremap <silent> <C-v> "aP
+vnoremap <silent> <C-v> "+P
 
 " Copy marked text to system clipboard.  If no mark, copy current line
 inoremap <silent> <C-Ins> <C-O>"*yy
