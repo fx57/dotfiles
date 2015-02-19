@@ -1,9 +1,0 @@
-"3.6 (created: 2012/12/24 13:05:56)
-
-cmap <C-l> <Esc>
-highlight Hint::after content: attr(number); font-size:12pt
-imap <C-l> <Esc>
-nmap <C-l> <Esc>
-set hintchars=asdfghjkl;
-
-" vim: set ft=vimperator:
