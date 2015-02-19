@@ -1,0 +1,4 @@
+firefox extensions:
+* vimfx, uncheck "prevent autofocusing inputs" to make focus work normal
+* tabinta - tab in textarea, for woas
+* tiddlyfox, for woas

@@ -11,7 +11,7 @@ bin/apt-cyg install vim
 cp bin/apt-cyg /bin
 cp _vimperatorrc "$USERPROFILE"
 cp vimrc "$USERPROFILE/_vimrc"
-cp ahk/altspace.ahk "$USERPROFILE/Start Menu/Programs/Startup/"
+cp ahk/cs64.ahk "$USERPROFILE/Start Menu/Programs/Startup/"
 pushd vim
 mkdir -p "$USERPROFILE/vimfiles"
 cp -r * "$USERPROFILE/vimfiles"
