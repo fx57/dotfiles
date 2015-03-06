@@ -562,23 +562,30 @@ inoremap <silent> <A-d> <C-O>dd
 " buffer, register '+' is the system clipboard.
 inoremap <silent> <kPlus> <C-O>"ayy
 inoremap <silent> <C-c> <Nop>
+"vnoremap <silent> <C-c> :w !pbcopy<CR><CR>
 vnoremap <silent> <kPlus> "ay
-vnoremap <silent> <C-c> "+y
+"vnoremap <silent> <C-c> "*y
+"vnoremap <silent> <C-c> "ay
+vnoremap <silent> <C-c> "ay
+"<C-O>:<CR>
+":let foo = system("pbcopy",@a)
 
 " Cut line or mark to scrap buffer.  Vim register 'a' is used as the scrap
 " buffer, register '+' is the system clipboard.
 inoremap <silent> <kMinus> <C-O>"add
 inoremap <silent> <C-x> <Nop>
 vnoremap <silent> <kMinus> "ax
-vnoremap <silent> <C-x> "+x
+vnoremap <silent> <C-x> "*x
 
 " Paste scrap buffer contents to current cursor position.  Vim register 'a' is
 " used as the scrap buffer
 inoremap <silent> <Ins> <C-O>"aP
-inoremap <silent> <C-v> <C-O>"+P
+"inoremap <silent> <C-v> <C-O>"+P
 vnoremap <silent> <Ins> "aP
-vnoremap <silent> <C-v> "+P
+"vnoremap <silent> <C-v> "*P
+inoremap <silent> <C-v> <C-O>:let @a = system("pbpaste")<CR><C-O>"aP
 
+"
 " Copy marked text to system clipboard.  If no mark, copy current line
 inoremap <silent> <C-Ins> <C-O>"*yy
 vnoremap <silent> <C-Ins> "*y
