@@ -1,0 +1,2 @@
+#!/bin/bash
+defaults read com.apple.Terminal | diff show.in -
