@@ -5,3 +5,4 @@ PS1='\u@\h:\w$ '
 alias more="less -X"
 alias b="vi"
 export PATH=$PATH:/opt/local/bin
+export QTDIR=~/Qt/5.4/clang_64
