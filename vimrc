@@ -534,7 +534,7 @@ vnoremap <Tab> >
 vnoremap <S-Tab> <
 
 " reflow text
-inoremap <silent> <C-R> <C-O>gqap
+"inoremap <silent> <C-R> <C-O>gqap
 
 "-----------------------
 " Editing
@@ -564,11 +564,7 @@ inoremap <silent> <kPlus> <C-O>"ayy
 inoremap <silent> <C-c> <Nop>
 "vnoremap <silent> <C-c> :w !pbcopy<CR><CR>
 vnoremap <silent> <kPlus> "ay
-"vnoremap <silent> <C-c> "*y
-"vnoremap <silent> <C-c> "ay
-vnoremap <silent> <C-c> "ay
-"<C-O>:<CR>
-":let foo = system("pbcopy",@a)
+vnoremap <silent> <C-c> "*y
 
 " Cut line or mark to scrap buffer.  Vim register 'a' is used as the scrap
 " buffer, register '+' is the system clipboard.
@@ -582,13 +578,16 @@ vnoremap <silent> <C-x> "*x
 inoremap <silent> <Ins> <C-O>"aP
 "inoremap <silent> <C-v> <C-O>"+P
 vnoremap <silent> <Ins> "aP
-"vnoremap <silent> <C-v> "*P
-inoremap <silent> <C-v> <C-O>:let @a = system("pbpaste")<CR><C-O>"aP
+vnoremap <silent> <C-v> "*P
+
+" special cut/copy/paste for OSX when vim has no clipboard support
+inoremap <silent> <C-v> <C-R>=system("pbpaste")<CR>
+vnoremap <silent> <C-c> "ayi<C-R>=system("pbcopy",@a)?'':''<CR><C-O>gv
+vnoremap <silent> <C-x> "axi<C-R>=system("pbcopy",@a)?'':''<CR>
 
 "
 " Copy marked text to system clipboard.  If no mark, copy current line
-inoremap <silent> <C-Ins> <C-O>"*yy
-vnoremap <silent> <C-Ins> "*y
+inoremap <silent> <C-Ins> <C-O>"*yy vnoremap <silent> <C-Ins> "*y
 
 " Paste the system clipboard contents to current cursor
 inoremap <silent> <S-Ins> <C-O>"*P
