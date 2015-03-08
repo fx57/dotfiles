@@ -562,28 +562,65 @@ inoremap <silent> <A-d> <C-O>dd
 " buffer, register '+' is the system clipboard.
 inoremap <silent> <kPlus> <C-O>"ayy
 inoremap <silent> <C-c> <Nop>
-"vnoremap <silent> <C-c> :w !pbcopy<CR><CR>
 vnoremap <silent> <kPlus> "ay
-vnoremap <silent> <C-c> "*y
 
 " Cut line or mark to scrap buffer.  Vim register 'a' is used as the scrap
 " buffer, register '+' is the system clipboard.
 inoremap <silent> <kMinus> <C-O>"add
 inoremap <silent> <C-x> <Nop>
 vnoremap <silent> <kMinus> "ax
-vnoremap <silent> <C-x> "*x
 
 " Paste scrap buffer contents to current cursor position.  Vim register 'a' is
 " used as the scrap buffer
 inoremap <silent> <Ins> <C-O>"aP
-"inoremap <silent> <C-v> <C-O>"+P
 vnoremap <silent> <Ins> "aP
-vnoremap <silent> <C-v> "*P
 
-" special cut/copy/paste for OSX when vim has no clipboard support
-inoremap <silent> <C-v> <C-R>=system("pbpaste")<CR>
-vnoremap <silent> <C-c> "ayi<C-R>=system("pbcopy",@a)?'':''<CR><C-O>gv
-vnoremap <silent> <C-x> "axi<C-R>=system("pbcopy",@a)?'':''<CR>
+if has('clipboard')
+  vnoremap <silent> <C-x> "*x
+  vnoremap <silent> <C-c> "*ygv
+  vnoremap <silent> <C-v> "*P
+  inoremap <silent> <C-v> <C-O>"+P
+else
+  " cut/copy/paste for OSX terminal, local vim with no built-in clipboard support
+  vnoremap <silent> <C-x> "axi<C-R>=system("pbcopy",@a)?'':''<CR>
+  vnoremap <silent> <C-c> "ayi<C-R>=system("pbcopy",@a)?'':''<CR><C-O>gv
+  vnoremap <silent> <C-v> x<C-R>=system("pbpaste")<CR>
+  inoremap <silent> <C-v> <C-R>=system("pbpaste")<CR>
+endif
+
+"change cursor to block inside selections to hide the fact that cursor overrides highlight
+let &t_ti.="\e[2 q"
+let &t_EI.="\e[2 q"
+let &t_SI.="\e[3 q"
+let &t_te.="\e[0 q"
+function s:Cursor_Moved()
+   if mode("") == "v"
+     if line(".") > line("v") || (line(".") == line("v") && virtcol(".") > virtcol("v"))
+       " outside block, so use underbar cursor
+       let l:underbar=1
+     else
+       let l:underbar=0
+     endif
+   else
+     " all other normal modes (visual line, etc)
+     let l:underbar=0
+   endif
+
+   if !exists("b:lastshape")
+       let b:lastshape=1
+   endif
+
+   if l:underbar != b:lastshape
+       if l:underbar == 1
+           silent !echo -ne "\e[3 q"
+       else
+           silent !echo -ne "\e[2 q"
+       endif
+   endif
+
+   let b:lastshape = l:underbar
+endfunction
+autocmd CursorMoved * call s:Cursor_Moved()
 
 "
 " Copy marked text to system clipboard.  If no mark, copy current line
