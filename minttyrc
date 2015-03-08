@@ -26,3 +26,4 @@ RightClickAction=menu
 Red=255,96,96
 Green=32,240,32
 Blue=96,96,255
+AllowBlinking=no

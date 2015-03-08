@@ -597,30 +597,27 @@ function s:Cursor_Moved()
    if mode("") == "v"
      if line(".") > line("v") || (line(".") == line("v") && virtcol(".") > virtcol("v"))
        " outside block, so use underbar cursor
-       let l:underbar=1
+       let l:cursor=1
      else
-       let l:underbar=0
+       let l:cursor=2
      endif
    else
      " all other normal modes (visual line, etc)
-     let l:underbar=0
+     let l:cursor=2
    endif
 
-   if !exists("b:lastshape")
-       let b:lastshape=1
-   endif
-
-   if l:underbar != b:lastshape
-       if l:underbar == 1
+   if !exists("b:lastcursor") || l:cursor != b:lastcursor
+       if l:cursor == 1
            silent !echo -ne "\e[3 q"
        else
            silent !echo -ne "\e[2 q"
        endif
    endif
 
-   let b:lastshape = l:underbar
+   let b:lastcursor = l:cursor
 endfunction
 autocmd CursorMoved * call s:Cursor_Moved()
+autocmd InsertLeave * let b:lastcursor=0
 
 "
 " Copy marked text to system clipboard.  If no mark, copy current line
