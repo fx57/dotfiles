@@ -366,14 +366,14 @@ let &t_SI.="\e[3 q"
 let &t_te.="\e[0 q"
 function s:Cursor_Moved()
    if mode("") == "v"
-     if line(".") > line("v") || (line(".") == line("v") && virtcol(".") > virtcol("v"))
-       " outside block, so use underbar cursor
+     if line(".") > line("v") || (line(".") == line("v") && virtcol(".") >= virtcol("v"))
+       " cursor outside of char selection, so use underbar cursor
        let l:cursor=1
      else
+       " cursor within char selection, so use block cursor
        let l:cursor=2
      endif
    else
-     " all other normal modes (visual line, etc)
      let l:cursor=2
    endif
 
@@ -390,13 +390,14 @@ endfunction
 autocmd CursorMoved * if mode("") != "i" | call s:Cursor_Moved() | endif
 autocmd InsertEnter * let b:lastcursor = 0
 
-" start linewise selections using shifted up/down arrows
-inoremap <silent> <S-Down> <C-O>V
-inoremap <silent> <S-Up> <C-O>V
-"inoremap <silent> <S-Down> <C-O>gH  (this used select mode instead of visual)
-"inoremap <silent> <S-Up> <C-O>gH
+" start character selections using shifted left/right arrows
 inoremap <silent> <S-Left> <C-O>:<C-u>set selection=exclusive<CR><S-Left>
 inoremap <silent> <S-Right> <C-O>:<C-u>set selection=exclusive<CR><S-Right>
+
+" start linewise selections using shifted up/down arrows
+" --> TODO: pgup/pgdn/home/end
+inoremap <silent> <S-Down> <C-O>V
+inoremap <silent> <S-Up> <C-O>V
 
 " select word - (shifted numpad-5)  --> TODO: further presses select line, block
 exec "set <t_S5>=\e[1;2E"
@@ -407,7 +408,9 @@ exec "set <t_K5>=\eOE"
 imap <t_K5> <C-O>:nohl<CR>
 smap <t_K5> <right><left>
 
-" toggle standard text marking mode
+" toggle standard text marking mode  --> TODO: force selection=exclusive
+inoremap <silent> <A-a> <C-O>v
+vnoremap <silent> <A-a> v
 inoremap <silent> <A-m> <C-O>v
 vnoremap <silent> <A-m> v
 
@@ -415,11 +418,9 @@ vnoremap <silent> <A-m> v
 inoremap <silent> <A-l> <C-O>V
 vnoremap <silent> <A-l> V
 
-" Toggle column marking mode
+" Start column marking mode   --> TODO: make it toggle instead
 inoremap <silent> <A-c> <C-O><C-V>:<C-u>set selection=inclusive<CR><C-O>gv
-inoremap <silent> <A-a> <C-O><C-V>
 vnoremap <silent> <A-c> <C-V>:<C-u>set selection=inclusive<CR><C-O>gv
-vnoremap <silent> <A-a> <C-V>
 
 " Mark current word
 "inoremap <silent> <A-h> <C-O>viw
