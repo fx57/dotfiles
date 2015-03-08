@@ -1,6 +1,5 @@
 execute pathogen#infect()
-"Helptags - run this once after adding a new plugin
-"
+
 "  Movement Keys
 " --------------------
 " <Up>         - Move cursor up one line
@@ -164,95 +163,36 @@ execute pathogen#infect()
 " <A-Down>     - Goto the window below the current window
 " <A-Up>       - Goto the window above the current window
 "
-"--- evim
-"source $VIMRUNTIME/evim.vim
+
+
+"-----------------------
+" De-modalize
+"-----------------------
+
 " Don't use Vi-compatible mode.
 set nocompatible
 
-" Use the mswin.vim script for most mappings
-"--mswin start
-
-" set the 'cpoptions' to its Vim default
-if 1    " only do this when compiled with expression evaluation
-  let s:save_cpo = &cpoptions
-endif
-set cpo&vim
-
-" use ESC for normal->insert, and CTRL-L for insert->normal
+" Modeless operation, stay in insert mode.
+" Use ESC for normal->insert, and CTRL-L for insert->normal
 set insertmode
 
-" behave mswin, except use visual mode instead of select mode
-set selectmode=mouse
+" Home row escape - mnemonic: leave insert mode
+"imap <c-l> <esc>
+
+
+"-----------------------
+" Mouse
+"-----------------------
+
+" allow mouse to start select mode
+set selectmode+=mouse
 set mousemodel=popup
-set keymodel=startsel,stopsel
-set selection=exclusive
-
-" backspace in Visual mode deletes selection
-vnoremap <BS> d
-
-" CTRL-X is Cut
-"vnoremap <C-x> "+x
-
-" CTRL-C is Copy
-"vnoremap <C-c> "+y
-
-" CTRL-V is Paste
-"map <C-V>      "+gP
-"cmap <C-V>     <C-R>+
-
-" Pasting blockwise and linewise selections is not possible in Insert and
-" Visual mode without the +virtualedit feature.  They are pasted as if they
-" were characterwise instead.
-" Uses the paste.vim autoload script.
-
-"exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
-"exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
-
-imap <S-Insert> <C-V>
-vmap <S-Insert> <C-V>
-
-" Use CTRL-Q to do what CTRL-V used to do
-inoremap <C-q>  <C-v>
-
-" For CTRL-V to work autoselect must be off.
-" On Unix we have two selections, autoselect can be used.
-if !has("unix")
-  set guioptions-=a
-endif
-
-" restore 'cpoptions'
-set cpo&
-if 1
-  let &cpoptions = s:save_cpo
-  unlet s:save_cpo
-endif
-"--mswin end
-
-
-" Make a buffer hidden when editing another one
-set hidden
-
-" Make cursor keys ignore wrapping
-inoremap <silent> <Down> <C-R>=pumvisible() ? "\<lt>Down>" : "\<lt>C-O>gj"<CR>
-inoremap <silent> <Up> <C-R>=pumvisible() ? "\<lt>Up>" : "\<lt>C-O>gk"<CR>
-
-" CTRL-F does Find dialog instead of page forward
-"noremap <silent> <C-F> :promptfind<CR>
-"vnoremap <silent> <C-F> y:promptfind <C-R>"<CR>
-"onoremap <silent> <C-F> <C-C>:promptfind<CR>
-"inoremap <silent> <C-F> <C-O>:promptfind<CR>
-"cnoremap <silent> <C-F> <C-C>:promptfind<CR>
-
-set backspace=2     " allow backspacing over everything in insert mode
-set autoindent      " always set autoindenting on
-
-set history=50      " keep 50 lines of command line history
-set ruler           " show the cursor position all the time
-set incsearch       " do incremental searching
 set mouse=a         " always use the mouse
 
-" Don't use Ex mode, use Q for formatting
-map Q gq
+
+"-----------------------
+" Color
+"-----------------------
 
 " Switch syntax highlighting on, when the terminal has colors
 " Highlight the last used search pattern on the next search command.
@@ -262,9 +202,7 @@ if &t_Co > 2 || has("gui_running")
   nohlsearch
 endif
 
-" Only do this part when compiled with support for autocommands.
 if has("autocmd")
-
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
   " 'cindent' is on in C files, etc.
@@ -272,23 +210,41 @@ if has("autocmd")
   filetype plugin indent on
 
   " For all text files set 'textwidth' to 78 characters.
-  au FileType text setlocal tw=78
+  autocmd FileType text setlocal tw=78
+endif
 
-endif " has("autocmd")
-"--- evim end
-
-let mapleader=','
 syntax enable
 colo gc
+
+
+"-----------------------
+" Virtual Editing
+"-----------------------
+
+set backspace=indent,eol,start     " allow backspacing over everything in insert mode
+
 " virtual edit everywhere
 set virtualedit=all
-" Home row escape - mnemonic: leave insert mode
-"imap <c-l> <esc>
-" Move around splits with <c-hjkl>
-"nnoremap <c-h> <c-w>h
-"nnoremap <c-j> <c-w>j
-"nnoremap <c-k> <c-w>k
-"nnoremap <c-l> <c-w>l
+
+" Make cursor keys ignore wrapping
+"inoremap <silent> <Down> <C-R>=pumvisible() ? "\<lt>Down>" : "\<lt>C-O>gj"<CR>
+"inoremap <silent> <Up> <C-R>=pumvisible() ? "\<lt>Up>" : "\<lt>C-O>gk"<CR>
+
+" backspace and cursor keys wrap to previous/next line
+"set backspace=indent,eol,start whichwrap+=<,>,[,]
+
+" Allow backspace over everything
+set backspace=indent,eol,start
+
+" Wrap to the line above the current one when using arrow keys, backpsace
+" and space character
+"set whichwrap=b,s,<,>,[,]
+set whichwrap=
+
+
+"-----------------------
+" Alt modifier key (key to the left of the space bar)
+"-----------------------
 
 set nowrap
 if has("gui_running")
@@ -328,7 +284,11 @@ let &t_te.="\e[?7727l"
 noremap <Esc>O[ <Esc>
 noremap! <Esc>O[ <Esc>
 
-" hide gui distractions
+
+"-----------------------
+" De-guify
+"-----------------------
+
 set guioptions-=T
 set guioptions-=r
 set guioptions-=L
@@ -339,22 +299,19 @@ set number
 set guicursor=n-v-c:block-Cursor/lCursor,ve:hor13-Cursor,o:hor50-Cursor,i-ci:hor13-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 hi Cursor guifg=white guibg=red
 
-" Always the display the current line and column
-set ruler
 
-" Always have a status line
-set laststatus=2
+"-----------------------
+" Misc
+"-----------------------
 
-" backspace and cursor keys wrap to previous/next line
-"set backspace=indent,eol,start whichwrap+=<,>,[,]
+set laststatus=2    " Always have a status line
+set hidden          " Make a buffer hidden when editing another one
+set autoindent      " always set autoindenting on
+set history=50      " keep 50 lines of command line history
+set ruler           " show the cursor position all the time
+set incsearch       " do incremental searching
 
-" Allow backspace over everything
-set backspace=indent,eol,start
-
-" Wrap to the line above the current one when using arrow keys, backpsace
-" and space character
-"set whichwrap=b,s,<,>,[,]
-set whichwrap=
+let mapleader=','
 
 inoremap <silent> <A-f> <C-O>:NERDTreeToggle<CR>
 
@@ -405,6 +362,125 @@ set tags=./tags;
 highlight RedundantWhitespace ctermbg=red guibg=red
 match RedundantWhitespace /\s\+$\|\t/
 
+
+"-----------------------
+" Modeless selections: character, line and block selection
+"-----------------------
+
+"use visual mode for selections (does not auto-delete on text entry)
+
+set keymodel=startsel,stopsel
+set selection=exclusive
+
+" backspace in Visual mode deletes selection
+vnoremap <BS> d
+
+"change cursor to block inside selections to hide the fact that cursor overrides highlight
+let &t_ti.="\e[2 q"
+let &t_EI.="\e[2 q"
+let &t_SI.="\e[3 q"
+let &t_te.="\e[0 q"
+function s:Cursor_Moved()
+   if mode("") == "v"
+     if line(".") > line("v") || (line(".") == line("v") && virtcol(".") > virtcol("v"))
+       " outside block, so use underbar cursor
+       let l:cursor=1
+     else
+       let l:cursor=2
+     endif
+   else
+     " all other normal modes (visual line, etc)
+     let l:cursor=2
+   endif
+
+   if !exists("b:lastcursor") || l:cursor != b:lastcursor
+       if l:cursor == 1
+           silent !echo -ne "\e[3 q"
+       else
+           silent !echo -ne "\e[2 q"
+       endif
+   endif
+
+   let b:lastcursor = l:cursor
+endfunction
+autocmd CursorMoved * if mode("") != "i" | call s:Cursor_Moved() | endif
+
+" start linewise selections using shifted up/down arrows
+inoremap <silent> <S-Down> <C-O>V
+inoremap <silent> <S-Up> <C-O>V
+"inoremap <silent> <S-Down> <C-O>gH  (this used select mode instead of visual)
+"inoremap <silent> <S-Up> <C-O>gH
+
+" select word - (shifted numpad-5)  --> TODO: further presses select line, block
+exec "set <t_S5>=\e[1;2E"
+imap <t_S5> <C-O>viWo<C-g>
+
+" hide selection - (numpad-5)
+exec "set <t_K5>=\eOE"
+imap <t_K5> <C-O>:nohl<CR>
+smap <t_K5> <right><left>
+
+" toggle standard text marking mode
+inoremap <silent> <A-m> <C-O>v
+vnoremap <silent> <A-m> v
+
+" Toggle line marking mode
+inoremap <silent> <A-l> <C-O>V
+vnoremap <silent> <A-l> V
+
+" Toggle column marking mode
+inoremap <silent> <A-c> <C-O><C-V>
+inoremap <silent> <A-a> <C-O><C-V>
+vnoremap <silent> <A-c> <C-V>
+vnoremap <silent> <A-a> <C-V>
+
+" Mark current word
+"inoremap <silent> <A-h> <C-O>viw
+
+" CTRL-A is Select all (or should we make it beginning of line? Eg., Ctrl-aefbd)
+noremap <C-A> gggH<C-O>G
+inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
+cnoremap <C-A> <C-C>gggH<C-O>G
+onoremap <C-A> <C-C>gggH<C-O>G
+snoremap <C-A> <C-C>gggH<C-O>G
+xnoremap <C-A> <C-C>ggVG
+
+" Indent or outdent a selection
+vnoremap <Tab> >
+vnoremap <S-Tab> <
+
+" reflow text
+"inoremap <silent> <C-R> <C-O>gqap
+
+
+"-----------------------
+" Copy/Paste from clipboard using CTRL-X, CTRL-C and CTRL-V
+"-----------------------
+
+" Don't autoselect (automatically copy selection to clipboard)
+if !has("unix")
+  set guioptions-=a
+endif
+
+" Use CTRL-Q to enter literal characters (what CTRL-V used to do)
+inoremap <C-q>  <C-v>
+
+if has('clipboard')
+  vnoremap <silent> <C-x> "*x
+  vnoremap <silent> <C-c> "*ygv
+  vnoremap <silent> <C-v> "*P
+  inoremap <silent> <C-v> <C-O>"+P
+  cnoremap <C-V>     <C-R>+
+else
+  " cut/copy/paste for OSX terminal, local vim with no built-in clipboard support
+  vnoremap <silent> <C-x> "axi<C-R>=system("pbcopy",@a)?'':''<CR>
+  vnoremap <silent> <C-c> "ayi<C-R>=system("pbcopy",@a)?'':''<CR><C-O>gv
+  vnoremap <silent> <C-v> x<C-R>=system("pbpaste")<CR>
+  inoremap <silent> <C-v> <C-R>=system("pbpaste")<CR>
+  cnoremap <C-v> <C-R>=system("pbpaste")<CR>
+endif
+
+
 "-----------------------------------------------------------------------
 " Brief bindings
 
@@ -420,8 +496,8 @@ set winaltkeys=no
 "-----------------------
 
 " Make cursor keys ignore wrapping
-inoremap <silent> <Down> <C-O>gj
-inoremap <silent> <Up> <C-O>gk
+"inoremap <silent> <Down> <C-O>gj
+"inoremap <silent> <Up> <C-O>gk
 
 " goto beginning of previous word
 inoremap <silent> <C-Left> <C-O>B
@@ -488,55 +564,6 @@ inoremap <C-]> <C-O><C-]>
 inoremap <kEnter> <C-O><C-]>
 
 "-----------------------
-" Selecting
-"-----------------------
-
-" linewise selections
-inoremap <silent> <S-Down> <C-O>gH
-inoremap <silent> <S-Up> <C-O>gH
-
-" select word - (shifted numpad-5)  --> TODO: further presses select line, block
-exec "set <t_S5>=\e[1;2E"
-imap <t_S5> <C-O>viWo<C-g>
-
-" hide selection - (numpad-5)
-exec "set <t_K5>=\eOE"
-imap <t_K5> <C-O>:nohl<CR>
-smap <t_K5> <right><left>
-
-" toggle standard text marking mode
-inoremap <silent> <A-m> <C-O>v
-vnoremap <silent> <A-m> v
-
-" Toggle line marking mode
-inoremap <silent> <A-l> <C-O>V
-vnoremap <silent> <A-l> V
-
-" Toggle column marking mode
-inoremap <silent> <A-c> <C-O><C-V>
-inoremap <silent> <A-a> <C-O><C-V>
-vnoremap <silent> <A-c> <C-V>
-vnoremap <silent> <A-a> <C-V>
-
-" Mark current word
-"inoremap <silent> <A-h> <C-O>viw
-
-" CTRL-A is Select all (or should we make it beginning of line? Eg., Ctrl-aefbd)
-noremap <C-A> gggH<C-O>G
-inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
-cnoremap <C-A> <C-C>gggH<C-O>G
-onoremap <C-A> <C-C>gggH<C-O>G
-snoremap <C-A> <C-C>gggH<C-O>G
-xnoremap <C-A> <C-C>ggVG
-
-" Indent or outdent a selection
-vnoremap <Tab> >
-vnoremap <S-Tab> <
-
-" reflow text
-"inoremap <silent> <C-R> <C-O>gqap
-
-"-----------------------
 " Editing
 "-----------------------
 
@@ -574,50 +601,8 @@ vnoremap <silent> <kMinus> "ax
 " used as the scrap buffer
 inoremap <silent> <Ins> <C-O>"aP
 vnoremap <silent> <Ins> "aP
-
-if has('clipboard')
-  vnoremap <silent> <C-x> "*x
-  vnoremap <silent> <C-c> "*ygv
-  vnoremap <silent> <C-v> "*P
-  inoremap <silent> <C-v> <C-O>"+P
-else
-  " cut/copy/paste for OSX terminal, local vim with no built-in clipboard support
-  vnoremap <silent> <C-x> "axi<C-R>=system("pbcopy",@a)?'':''<CR>
-  vnoremap <silent> <C-c> "ayi<C-R>=system("pbcopy",@a)?'':''<CR><C-O>gv
-  vnoremap <silent> <C-v> x<C-R>=system("pbpaste")<CR>
-  inoremap <silent> <C-v> <C-R>=system("pbpaste")<CR>
-endif
-
-"change cursor to block inside selections to hide the fact that cursor overrides highlight
-let &t_ti.="\e[2 q"
-let &t_EI.="\e[2 q"
-let &t_SI.="\e[3 q"
-let &t_te.="\e[0 q"
-function s:Cursor_Moved()
-   if mode("") == "v"
-     if line(".") > line("v") || (line(".") == line("v") && virtcol(".") > virtcol("v"))
-       " outside block, so use underbar cursor
-       let l:cursor=1
-     else
-       let l:cursor=2
-     endif
-   else
-     " all other normal modes (visual line, etc)
-     let l:cursor=2
-   endif
-
-   if !exists("b:lastcursor") || l:cursor != b:lastcursor
-       if l:cursor == 1
-           silent !echo -ne "\e[3 q"
-       else
-           silent !echo -ne "\e[2 q"
-       endif
-   endif
-
-   let b:lastcursor = l:cursor
-endfunction
-autocmd CursorMoved * call s:Cursor_Moved()
-autocmd InsertLeave * let b:lastcursor=0
+imap <S-Insert> <C-V>
+vmap <S-Insert> <C-V>
 
 "
 " Copy marked text to system clipboard.  If no mark, copy current line
@@ -718,6 +703,13 @@ snoremap <silent> <S-kDivide> <right><left>#:nohl<CR>viWo<C-g>
 " Jump to matching brace or paren - (Ctrl-/)
 exec "set <t_C5>=\e[1;5o"
 inoremap <silent> <t_C5> <C-O>%
+
+" CTRL-F does Find dialog instead of page forward
+"noremap <silent> <C-F> :promptfind<CR>
+"vnoremap <silent> <C-F> y:promptfind <C-R>"<CR>
+"onoremap <silent> <C-F> <C-C>:promptfind<CR>
+"inoremap <silent> <C-F> <C-O>:promptfind<CR>
+"cnoremap <silent> <C-F> <C-C>:promptfind<CR>
 
 "-----------------------
 " Buffer
@@ -855,6 +847,12 @@ inoremap <silent> <t_~u> <C-O><C-W>j
 inoremap <silent> <A-Up> <C-O><C-W>k
 exec "set <t_~d>=\e[1;7A"
 inoremap <silent> <t_~d> <C-O><C-W>k
+
+" Move around splits with <c-hjkl>
+"nnoremap <c-h> <c-w>h
+"nnoremap <c-j> <c-w>j
+"nnoremap <c-k> <c-w>k
+"nnoremap <c-l> <c-w>l
 
 "-----------------------
 " Functions
