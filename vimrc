@@ -187,7 +187,7 @@ set insertmode
 " allow mouse to start select mode
 set selectmode+=mouse
 set mousemodel=popup
-set mouse=a         " always use the mouse
+set mouse=a             " always use the mouse
 
 
 "-----------------------
@@ -221,32 +221,16 @@ colo gc
 " Virtual Editing
 "-----------------------
 
-set backspace=indent,eol,start     " allow backspacing over everything in insert mode
-
-" virtual edit everywhere
-set virtualedit=all
-
-" Make cursor keys ignore wrapping
-"inoremap <silent> <Down> <C-R>=pumvisible() ? "\<lt>Down>" : "\<lt>C-O>gj"<CR>
-"inoremap <silent> <Up> <C-R>=pumvisible() ? "\<lt>Up>" : "\<lt>C-O>gk"<CR>
-
-" backspace and cursor keys wrap to previous/next line
-"set backspace=indent,eol,start whichwrap+=<,>,[,]
-
-" Allow backspace over everything
-set backspace=indent,eol,start
-
-" Wrap to the line above the current one when using arrow keys, backpsace
-" and space character
-"set whichwrap=b,s,<,>,[,]
-set whichwrap=
+set virtualedit=all             " virtual edit in all modes
+set backspace=indent,eol,start  " allow backspace over any boundary
+set whichwrap=                  " do not let <Left> or <Right> cursor movement wrap
+set nowrap                      " do not wrap lines
 
 
 "-----------------------
 " Alt modifier key (key to the left of the space bar)
 "-----------------------
 
-set nowrap
 if has("gui_running")
     au GUIEnter * simalt ~x
 else
@@ -404,12 +388,15 @@ function s:Cursor_Moved()
    let b:lastcursor = l:cursor
 endfunction
 autocmd CursorMoved * if mode("") != "i" | call s:Cursor_Moved() | endif
+autocmd InsertEnter * let b:lastcursor = 0
 
 " start linewise selections using shifted up/down arrows
 inoremap <silent> <S-Down> <C-O>V
 inoremap <silent> <S-Up> <C-O>V
 "inoremap <silent> <S-Down> <C-O>gH  (this used select mode instead of visual)
 "inoremap <silent> <S-Up> <C-O>gH
+inoremap <silent> <S-Left> <C-O>:<C-u>set selection=exclusive<CR><S-Left>
+inoremap <silent> <S-Right> <C-O>:<C-u>set selection=exclusive<CR><S-Right>
 
 " select word - (shifted numpad-5)  --> TODO: further presses select line, block
 exec "set <t_S5>=\e[1;2E"
@@ -429,9 +416,9 @@ inoremap <silent> <A-l> <C-O>V
 vnoremap <silent> <A-l> V
 
 " Toggle column marking mode
-inoremap <silent> <A-c> <C-O><C-V>
+inoremap <silent> <A-c> <C-O><C-V>:<C-u>set selection=inclusive<CR><C-O>gv
 inoremap <silent> <A-a> <C-O><C-V>
-vnoremap <silent> <A-c> <C-V>
+vnoremap <silent> <A-c> <C-V>:<C-u>set selection=inclusive<CR><C-O>gv
 vnoremap <silent> <A-a> <C-V>
 
 " Mark current word
