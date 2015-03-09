@@ -689,6 +689,7 @@ inoremap <silent> <C-F5> <C-O>:set invignorecase<CR>
 " Search forward for word under cursor - (/)  TODO - use other search method
 inoremap <silent> <kDivide> <C-O>*<C-O>:nohl<CR><C-O>viwo<C-g>
 snoremap <silent> <kDivide> <right><left>*:nohl<CR>viwo<C-g>
+vnoremap <silent> <kDivide> <C-g><right><left>*:nohl<CR>viwo<C-g>
 
 " Search backward for word under cursor - (Shift-/)
 exec "set <t_~*>=\e[1;2o"
@@ -696,6 +697,8 @@ inoremap <silent> <t_~*> <C-O>#<C-O>:nohl<CR><C-O>viwo<C-g>
 inoremap <silent> <S-kDivide> <C-O>#<C-O>:nohl<CR><C-O>viwo<C-g>
 snoremap <silent> <t_~*> <right><left>#:nohl<CR>viwo<C-g>
 snoremap <silent> <S-kDivide> <right><left>#:nohl<CR>viwo<C-g>
+vnoremap <silent> <t_~*> <C-g><right><left>#:nohl<CR>viwo<C-g>
+vnoremap <silent> <S-kDivide> <C-g><right><left>#:nohl<CR>viwo<C-g>
 
 " Jump to matching brace or paren - (Ctrl-/)
 exec "set <t_C5>=\e[1;5o"
