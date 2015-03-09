@@ -273,10 +273,13 @@ noremap! <Esc>O[ <Esc>
 " De-guify
 "-----------------------
 
-set guioptions-=T
-set guioptions-=r
-set guioptions-=L
-set guioptions-=m
+set winaltkeys=no
+set guioptions-=T   " no toolbar
+set guioptions-=r   " right hand scrollbar always present
+set guioptions-=L   " left hand scrollbar present on vertical split
+set guioptions-=m   " menu bar is present
+set guioptions-=M   " no menu.vim
+set guioptions+=c   " disable popups
 
 set guifont=Consolas:h13
 set number
@@ -336,7 +339,7 @@ autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
 
 "autocmd InsertCharPre * nested match none
 " clear highlights for searches and jumps
-set updatetime=200
+set updatetime=300
 autocmd CursorHoldI * nested match none
 
 " search for tags in local directory, going up to parent dirs if needed
@@ -360,6 +363,7 @@ set selection=exclusive
 vnoremap <BS> d
 
 "change cursor to block inside selections to hide the fact that cursor overrides highlight
+if !has("gui_running")
 let &t_ti.="\e[2 q"
 let &t_EI.="\e[2 q"
 let &t_SI.="\e[3 q"
@@ -389,6 +393,7 @@ function s:Cursor_Moved()
 endfunction
 autocmd CursorMoved * if mode("") != "i" | call s:Cursor_Moved() | endif
 autocmd InsertEnter * let b:lastcursor = 0
+endif
 
 " start character selections using shifted left/right arrows
 inoremap <silent> <S-Left> <C-O>:<C-u>set selection=exclusive<CR><S-Left>
@@ -399,14 +404,15 @@ inoremap <silent> <S-Right> <C-O>:<C-u>set selection=exclusive<CR><S-Right>
 inoremap <silent> <S-Down> <C-O>V
 inoremap <silent> <S-Up> <C-O>V
 
-" select word - (shifted numpad-5)  --> TODO: further presses select line, block
+" shrink selection - (shifted numpad-5)  --> TODO: further presses select line, block
 exec "set <t_S5>=\e[1;2E"
-imap <t_S5> <C-O>viWo<C-g>
+inoremap <t_S5> <Nop>
+vnoremap <t_S5> <C-C>
 
-" hide selection - (numpad-5)
+" grow selection - (numpad-5)  --> TODO: further presses select line, block
 exec "set <t_K5>=\eOE"
-imap <t_K5> <C-O>:nohl<CR>
-smap <t_K5> <right><left>
+imap <t_K5> <C-O>viwo
+vnoremap <t_K5> <Nop>
 
 " toggle standard text marking mode  --> TODO: force selection=exclusive
 inoremap <silent> <A-a> <C-O>v
@@ -539,14 +545,16 @@ inoremap <silent> <C-b> <C-O>z-
 inoremap <silent> <C-t> <C-O>z<CR>
 
 " go in or forward (Keypad*)
-inoremap <silent> <kMultiply> <C-O><C-O>
+inoremap <silent> <kMultiply> <C-O><C-I>
+exec "set <t_l/>=\e[1;5j"
 
 " go out or back (S-Keypad*)
 exec "set <t_k/>=\e[1;2j"
-inoremap <silent> <t_k/> <C-O><C-I>
+inoremap <silent> <t_k/> <C-O><C-O>
 
-" Ctrl-] to follow link
+" follow link (Ctrl-] or C-Keypad*)
 inoremap <C-]> <C-O><C-]>
+inoremap <silent> <t_l/> <C-O><C-]>
 
 " Keypad enter to follow link
 inoremap <kEnter> <C-O><C-]>
@@ -628,16 +636,15 @@ inoremap <silent> <A-q> <C-v>
 " Delete
 "-----------------------
 
-" undo last operation.  Either keypad * key or <A-u> can be used
+" undo last operation.  Either (CTRL-Z) or (ALt-U) can be used
 noremap <C-Z> u
 inoremap <C-Z> <C-O>u
 inoremap <silent> <A-u> <C-O>u
-"inoremap <silent> <kMultiply> <C-O>u
 
 " Restore line
 inoremap <silent> <A-y> <C-O>U
 
-" Redo the previously undid commands
+" Redo the previously undid commands  (CTRL-Y)
 inoremap <silent> <C-y> <C-O>:redo<CR>
 
 "-----------------------
@@ -650,6 +657,8 @@ inoremap <silent> <A-s> <C-O>:call <SID>BriefSearch("")<CR>
 inoremap <silent> <F5> <C-O>:call <SID>BriefSearch("")<CR>
 "inoremap <silent> <A-s> <C-O>:call <SID>BriefSearch(expand("<cword>")<CR>
 "inoremap <C-f> <C-O>/
+"TODO- implement this
+vnoremap <silent> <C-f> <Nop>
 
 " letter search
 "inoremap <silent> <C-f> <C-O>f
@@ -677,27 +686,20 @@ inoremap <silent> <S-F6> <C-O>:.,$&&<CR>
 " toggle case sensitivity of search commands.
 inoremap <silent> <C-F5> <C-O>:set invignorecase<CR>
 
-" Search forward for word under cursor - (/)
-inoremap <silent> <kDivide> <C-O>*<C-O>:nohl<CR><C-O>viWo<C-g>
-snoremap <silent> <kDivide> <right><left>*:nohl<CR>viWo<C-g>
+" Search forward for word under cursor - (/)  TODO - use other search method
+inoremap <silent> <kDivide> <C-O>*<C-O>:nohl<CR><C-O>viwo<C-g>
+snoremap <silent> <kDivide> <right><left>*:nohl<CR>viwo<C-g>
 
 " Search backward for word under cursor - (Shift-/)
 exec "set <t_~*>=\e[1;2o"
-inoremap <silent> <t_~*> <C-O>#<C-O>:nohl<CR><C-O>viWo<C-g>
-inoremap <silent> <S-kDivide> <C-O>#<C-O>:nohl<CR><C-O>viWo<C-g>
-snoremap <silent> <t_~*> <right><left>#:nohl<CR>viWo<C-g>
-snoremap <silent> <S-kDivide> <right><left>#:nohl<CR>viWo<C-g>
+inoremap <silent> <t_~*> <C-O>#<C-O>:nohl<CR><C-O>viwo<C-g>
+inoremap <silent> <S-kDivide> <C-O>#<C-O>:nohl<CR><C-O>viwo<C-g>
+snoremap <silent> <t_~*> <right><left>#:nohl<CR>viwo<C-g>
+snoremap <silent> <S-kDivide> <right><left>#:nohl<CR>viwo<C-g>
 
 " Jump to matching brace or paren - (Ctrl-/)
 exec "set <t_C5>=\e[1;5o"
 inoremap <silent> <t_C5> <C-O>%
-
-" CTRL-F does Find dialog instead of page forward
-"noremap <silent> <C-F> :promptfind<CR>
-"vnoremap <silent> <C-F> y:promptfind <C-R>"<CR>
-"onoremap <silent> <C-F> <C-C>:promptfind<CR>
-"inoremap <silent> <C-F> <C-O>:promptfind<CR>
-"cnoremap <silent> <C-F> <C-C>:promptfind<CR>
 
 "-----------------------
 " Buffer
@@ -766,9 +768,10 @@ snoremap <silent> <A-v> <right><left>:version<CR>
 " Start shell
 inoremap <silent> <A-z> <C-O>:stop<CR>
 
-" Help (Alt-h)
-inoremap <A-h> <C-O>:tab help<space>
-snoremap <A-h> <right><left>:tab help<space>
+" Help (Alt-h) - the vnoremap version returns to the same place
+"inoremap <A-h> <C-O>:tab help<space>
+inoremap <A-h> <C-O>:help<space>
+vnoremap <A-h> "cy<C-O>gv:<C-u>help <C-R>c<CR>
 
 " Command (F10)
 imap <F10> <C-O>:
@@ -946,36 +949,28 @@ endfunction
 
 " brief search prompts for text, then goes forward to that text
 function! s:BriefSearch(pattern)
-    if has("gui_running")
-        if a:pattern == ""
-            promptfind
-        else
-            execute "promptfind " . a:pattern
-        endif
-    else
-        let searchstr = input("Find text: ", a:pattern)
-        if searchstr == ""
-            echo "\rFind cancelled                   "
-            return
-        endif
-
-
-        let [lll, ccc] = searchpos(searchstr,'c')
-        if lll == 0 && ccc == 0
-            echo "\rPattern not found.                   "
-            return
-        endif
-        let cc = ccc - 1
-        let ee = ccc + len(searchstr) + 1
-"        execute 'normal /.*'
-         highlight SearchResults ctermbg=blue guibg=blue
-         execute 'match SearchResults /\%' . lll . 'l\%>' . cc . 'c.\%<' . ee . 'c/'
-         call s:MaybeMiddle()
-
-         let @/ = searchstr
-
-         execute "normal :<BS>"| "clear command window
+    let searchstr = input("Find text: ", a:pattern)
+    if searchstr == ""
+        echo "\rFind cancelled                   "
+        return
     endif
+
+
+    let [lll, ccc] = searchpos(searchstr,'c')
+    if lll == 0 && ccc == 0
+        echo "\rPattern not found.                   "
+        return
+    endif
+    let cc = ccc - 1
+    let ee = ccc + len(searchstr) + 1
+"        execute 'normal /.*'
+     highlight SearchResults ctermbg=blue guibg=blue
+     execute 'match SearchResults /\%' . lll . 'l\%>' . cc . 'c.\%<' . ee . 'c/'
+     call s:MaybeMiddle()
+
+     let @/ = searchstr
+
+     execute "normal :<BS>"| "clear command window
 endfunction
 
 function! s:BriefSearchAgain()
@@ -1133,13 +1128,14 @@ endfunction
 inoremap <C-e> <C-v>
 cmap <Esc> <Esc><c-o>:echo "foo"<CR>
 
-" configure airline
-let g:airline_powerline_fonts = 1
-set noshowmode " don't show mode on command line
-set lazyredraw " don't flicker modes during insert mode navigation
-let g:airline_section_z = airline#section#create(['%3p%% ',
-             \ 'linenr', ':%3c-%-3v']) " add virtual column number
-
+if !has("gui_running")
+  " configure airline
+  let g:airline_powerline_fonts = 1
+  set noshowmode " don't show mode on command line
+  set lazyredraw " don't flicker modes during insert mode navigation
+  let g:airline_section_z = airline#section#create(['%3p%% ',
+               \ 'linenr', ':%3c-%-3v']) " add virtual column number
+endif
 
 function! Browser ()
   let line = matchstr(getline("."), 'link:[^[#]*')
