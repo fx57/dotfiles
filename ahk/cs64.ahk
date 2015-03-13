@@ -2,7 +2,7 @@
 
 text=(F)irefox`n(G)oogle`n(C)hrome`n(T)erminal`n(N)ew terminal`n(E)xplorer`n(V)im`n( `; )Cancel`n(Q)uit app
 
-Gui, +LastFound +AlwaysOnTop +owner -Caption   
+Gui, +LastFound +AlwaysOnTop +owner -Caption
 Gui, Color, black,black
 WinSet, Transparent, 120
 Gui,Font,s20 cYellow bold,Calibri
@@ -33,28 +33,28 @@ if (ErrorLevel="max")
     {
 		Gui,Cancel
         ifwinexist, ahk_class Chrome_WidgetWin_1
-      	    WinActivate
+            WinActivate
         else
-      	    Run, "C:\Users\dstam\AppData\Local\Google\Chrome\Application\chrome.exe", C:\Users\dstam.CORP\AppData\Local\Google\Chrome\Application
+            Run, "C:\Users\dstam\AppData\Local\Google\Chrome\Application\chrome.exe", C:\Users\dstam.CORP\AppData\Local\Google\Chrome\Application
     }
     else if (thekey="f" OR theKey=chr(6))
     {
 		Gui,Cancel
         ifwinexist, ahk_class MozillaWindowClass
-      	    WinActivate
+            WinActivate
         else
-      	    Run, "c:\Program Files (x86)\Mozilla Firefox\firefox.exe", c:\Program Files\Mozilla Firefox
+            Run, "c:\Program Files (x86)\Mozilla Firefox\firefox.exe", c:\Program Files\Mozilla Firefox
     }
     else if (thekey="g" OR theKey=chr(7))
     {
 		Gui,Cancel
-  	    Run, "c:\Program Files (x86)\Mozilla Firefox\firefox.exe", c:\Program Files\Mozilla Firefox
+        Run, "c:\Program Files (x86)\Mozilla Firefox\firefox.exe", c:\Program Files\Mozilla Firefox
     }
     else if (thekey="e" OR theKey=chr(5))
     {
 		Gui,Cancel
         ifwinexist, ahk_class CabinetWClass
-      	    WinActivate
+            WinActivate
         else
       	    Send #e
     }
@@ -64,7 +64,7 @@ if (ErrorLevel="max")
         ifwinexist, ahk_class Vim
       	    WinActivate
         else
-      	    Run, "c:\Program Files (x86)\Vim\vim73\gvim.exe", c:\Program Files\Vim\vim73
+      	    Run, "c:\Program Files (x86)\Vim\vim73\gvim.exe" _nofile_, %TMP%
     }
     else if (thekey="q")
     {
