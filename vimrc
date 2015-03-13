@@ -545,15 +545,18 @@ inoremap <silent> <C-b> <C-O>z-
 inoremap <silent> <C-t> <C-O>z<CR>
 
 " go in or forward (Keypad*)
-inoremap <silent> <kMultiply> <C-O><C-I>
-exec "set <t_l/>=\e[1;5j"
+inoremap <silent> <kMultiply> <C-O>:call <SID>FollowOrJumpNext()<CR>
+"inoremap <silent> <kMultiply> <C-O><C-I>
 
 " go out or back (S-Keypad*)
 exec "set <t_k/>=\e[1;2j"
+inoremap <S-kMultiply> <C-O><C-O>
 inoremap <silent> <t_k/> <C-O><C-O>
 
 " follow link (Ctrl-] or C-Keypad*)
 inoremap <C-]> <C-O><C-]>
+inoremap <C-kMultiply> <C-O><C-]>
+exec "set <t_l/>=\e[1;5j"
 inoremap <silent> <t_l/> <C-O><C-]>
 
 " Keypad enter to follow link
@@ -1039,15 +1042,15 @@ endfunction
 
 function! s:BriefSave()
     if expand("%") == ""
-        if has("gui_running")
-            browse write
-        else
+"        if has("gui_running")
+"            browse write
+"        else
             let fname = input("Save file as: ")
             if fname == ""
                 return
             endif
             execute "write " . fname
-        endif
+"        endif
     else
         write!
     endif
@@ -1157,6 +1160,23 @@ function! Browser ()
   endif
 endfunction
 imap <c-]> <c-o>:call Browser ()<CR>
+
+" Either jump to the next item in jump list, or follow link
+function! s:FollowOrJumpNext()
+  redir => l:jumpsOutput
+  silent! execute 'jumps'
+  redir END
+  redraw " This is necessary because of the :redir done earlier.
+  let l:jumplines = split(l:jumpsOutput, "\n")[1:] " The first line contains the header.
+
+  echo jumplines[-1]
+
+  if l:jumplines[-1][0] ==# '>'
+     exec "normal! \<C-]>"
+  else
+     exec "normal! 1\<C-i>"
+  endif
+endfunction
 
 au BufNewFile,BufRead *.adoc set filetype=asciidoc
 au BufNewFile,BufRead *.adoc set textwidth=80
