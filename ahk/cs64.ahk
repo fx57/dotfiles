@@ -64,7 +64,7 @@ if (ErrorLevel="max")
         ifwinexist, ahk_class Vim
       	    WinActivate
         else
-      	    Run, "c:\Program Files (x86)\Vim\vim73\gvim.exe" _nofile_, %TMP%
+            Run, "c:\Program Files (x86)\Vim\vim74\gvim.exe" _nofile_, %TMP%
     }
     else if (thekey="q")
     {

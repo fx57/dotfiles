@@ -164,6 +164,7 @@ execute pathogen#infect()
 " <A-Up>       - Goto the window above the current window
 "
 
+set encoding=utf8
 
 "-----------------------
 " De-modalize
@@ -281,7 +282,7 @@ set guioptions-=m   " menu bar is present
 set guioptions-=M   " no menu.vim
 set guioptions+=c   " disable popups
 
-set guifont=Consolas:h13
+set guifont=DejaVu_Sans_Mono_for_Powerline:h13:cANSI
 set number
 set guicursor=n-v-c:block-Cursor/lCursor,ve:hor13-Cursor,o:hor50-Cursor,i-ci:hor13-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 hi Cursor guifg=white guibg=red
@@ -440,12 +441,14 @@ snoremap <C-A> <C-C>gggH<C-O>G
 xnoremap <C-A> <C-C>ggVG
 
 " Indent or outdent a selection
-vnoremap <Tab> >
-vnoremap <S-Tab> <
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
 
 " reflow text
-"inoremap <silent> <C-R> <C-O>gqap
+inoremap <silent> <C-W> <C-O>gqap
 
+" delete word (ctrl-backspace)
+inoremap <silent> <C-_> <C-W>
 
 "-----------------------
 " Copy/Paste from clipboard using CTRL-X, CTRL-C and CTRL-V
@@ -1134,14 +1137,12 @@ endfunction
 inoremap <C-e> <C-v>
 cmap <Esc> <Esc><c-o>:echo "foo"<CR>
 
-if !has("gui_running")
-  " configure airline
-  let g:airline_powerline_fonts = 1
-  set noshowmode " don't show mode on command line
-  set lazyredraw " don't flicker modes during insert mode navigation
-  let g:airline_section_z = airline#section#create(['%3p%% ',
-               \ 'linenr', ':%3c-%-3v']) " add virtual column number
-endif
+" configure airline
+let g:airline_powerline_fonts = 1
+set noshowmode " don't show mode on command line
+set lazyredraw " don't flicker modes during insert mode navigation
+let g:airline_section_z = airline#section#create(['%3p%% ',
+           \ 'linenr', ':%3c-%-3v']) " add virtual column number
 
 function! Browser ()
   let line = matchstr(getline("."), 'link:[^[#]*')
