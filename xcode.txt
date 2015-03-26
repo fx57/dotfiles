@@ -1,0 +1,23 @@
+Xcode | Preferences | Key Bindings | Text
+
+Add new bindings:
+
+Ctrl-A     = Select All
+Num1       = Move to End of Line
+Shift-Num1 = Move to End of Line Extending Selection
+Shift-Num7 = Move to Beginning of Line Extending Selection
+Num9       = Move Page Up
+Num7       = Move to Beginning of Line
+Num3       = Move Page Down
+
+Remove conflicts:
+
+Shift-Num7 = Move to Beginning of Document Extending Selection
+Ctrl-A     = Move to Beginning of Paragraph
+Shift-Num1 = Move to End of Document Extending Selection
+Num9       = Scroll Page Up
+Num7       = Scroll to Beginning of Document
+Num3       = Scroll Page Down
+Num1       = Scroll to End of Document
+
+
