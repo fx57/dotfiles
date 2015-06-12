@@ -181,6 +181,7 @@ autocmd CursorHoldI * nested match none
 
 " search for tags in local directory, going up to parent dirs if needed
 set tags=./tags;,./bin/TAGS;src
+set notr
 
 " highlight tabs and trailing whitespace
 highlight RedundantWhitespace ctermbg=red guibg=red
