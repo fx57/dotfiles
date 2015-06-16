@@ -974,7 +974,8 @@ endfunction
 inoremap <C-e> <C-v>
 cmap <Esc> <Esc><c-o>:echo "foo"<CR>
 
-" configure airline
+" configure airline, set theme to dark to fix vim returning error code
+let g:airline_theme='dark'
 let g:airline_powerline_fonts = 1
 set noshowmode " don't show mode on command line
 set lazyredraw " don't flicker modes during insert mode navigation
