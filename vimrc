@@ -385,7 +385,8 @@ inoremap <silent> <C-b> <C-O>z-
 inoremap <silent> <C-t> <C-O>z<CR>
 
 " go in or forward (Keypad*)
-inoremap <silent> <kMultiply> <C-O>:call <SID>FollowOrJumpNext()<CR>
+inoremap <silent> <kMultiply> <C-O><C-]>
+"inoremap <silent> <kMultiply> <C-O>:call <SID>FollowOrJumpNext()<CR>
 "inoremap <silent> <kMultiply> <C-O><C-I>
 
 " go out or back (S-Keypad*)
