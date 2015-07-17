@@ -6,3 +6,4 @@ alias more="less -X"
 alias b="vi"
 export PATH=$PATH:/opt/local/bin
 export QTDIR=~/Qt/5.4/clang_64
+export PATH=$PATH:/usr/local/gcc-arm-none-eabi-4_8-2014q2/bin

@@ -180,7 +180,8 @@ set updatetime=300
 autocmd CursorHoldI * nested match none
 
 " search for tags in local directory, going up to parent dirs if needed
-set tags=./tags;
+set tags=./tags;,./bin/TAGS;src
+set notr
 
 " highlight tabs and trailing whitespace
 highlight RedundantWhitespace ctermbg=red guibg=red
@@ -384,7 +385,8 @@ inoremap <silent> <C-b> <C-O>z-
 inoremap <silent> <C-t> <C-O>z<CR>
 
 " go in or forward (Keypad*)
-inoremap <silent> <kMultiply> <C-O>:call <SID>FollowOrJumpNext()<CR>
+inoremap <silent> <kMultiply> <C-O><C-]>
+"inoremap <silent> <kMultiply> <C-O>:call <SID>FollowOrJumpNext()<CR>
 "inoremap <silent> <kMultiply> <C-O><C-I>
 
 " go out or back (S-Keypad*)
@@ -973,7 +975,8 @@ endfunction
 inoremap <C-e> <C-v>
 cmap <Esc> <Esc><c-o>:echo "foo"<CR>
 
-" configure airline
+" configure airline, set theme to dark to fix vim returning error code
+let g:airline_theme='dark'
 let g:airline_powerline_fonts = 1
 set noshowmode " don't show mode on command line
 set lazyredraw " don't flicker modes during insert mode navigation
