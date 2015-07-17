@@ -118,7 +118,7 @@ set guioptions-=m   " menu bar is present
 set guioptions-=M   " no menu.vim
 set guioptions+=c   " disable popups
 
-set guifont=DejaVu_Sans_Mono_for_Powerline:h13:cANSI
+set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
 set number
 set guicursor=n-v-c:block-Cursor/lCursor,ve:hor13-Cursor,o:hor50-Cursor,i-ci:hor13-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 hi Cursor guifg=white guibg=red
