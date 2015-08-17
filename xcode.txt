@@ -1,4 +1,4 @@
-Xcode | Preferences | Key Bindings | Text
+Xcode | Preferences | Key Bindings | Text | Selection
 
 Add new bindings:
 
@@ -20,4 +20,8 @@ Num7       = Scroll to Beginning of Document
 Num3       = Scroll Page Down
 Num1       = Scroll to End of Document
 
+Xcode | Preferences | Key Bindings | Menu | Editor Menu for Source Code
+
+Shift-Tab  = Structure -> Shift Left
+Ctrl-Tab   = Structure -> Shift Right
 
