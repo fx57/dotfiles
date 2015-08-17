@@ -264,7 +264,7 @@ vnoremap <silent> <A-l> V
 
 " Start column marking mode   --> TODO: make it toggle instead
 inoremap <silent> <A-c> <C-O><C-V>:<C-u>set selection=inclusive<CR><C-O>gv
-vnoremap <silent> <A-c> <C-V>:<C-u>set selection=inclusive<CR><C-O>gv
+vnoremap <silent> <A-c> :<C-u>set selection=inclusive<CR><C-O>gv
 
 " Mark current word
 "inoremap <silent> <A-h> <C-O>viw
