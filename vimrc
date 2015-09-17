@@ -180,7 +180,7 @@ set updatetime=300
 autocmd CursorHoldI * nested match none
 
 " search for tags in local directory, going up to parent dirs if needed
-set tags=./tags;,./bin/TAGS;src
+set tags=./build/tags,../build/tags,../../build/tags,../../../build/tags,../../../../build/tags,../../../../../build/tags,./tags;src
 set notr
 
 " highlight tabs and trailing whitespace
@@ -384,8 +384,8 @@ inoremap <silent> <C-b> <C-O>z-
 " Move the current line to the top of the window
 inoremap <silent> <C-t> <C-O>z<CR>
 
-" go in or forward (Keypad*)
-inoremap <silent> <kMultiply> <C-O><C-]>
+" go in  (Keypad*)
+inoremap <silent> <kMultiply> <C-O><C-I>
 "inoremap <silent> <kMultiply> <C-O>:call <SID>FollowOrJumpNext()<CR>
 "inoremap <silent> <kMultiply> <C-O><C-I>
 
@@ -394,13 +394,11 @@ exec "set <t_k/>=\e[1;2j"
 inoremap <S-kMultiply> <C-O><C-O>
 inoremap <silent> <t_k/> <C-O><C-O>
 
-" follow link (Ctrl-] or C-Keypad*)
+" follow link (Ctrl-] or Keypad-enter)
 inoremap <C-]> <C-O><C-]>
 inoremap <C-kMultiply> <C-O><C-]>
 exec "set <t_l/>=\e[1;5j"
 inoremap <silent> <t_l/> <C-O><C-]>
-
-" Keypad enter to follow link
 inoremap <kEnter> <C-O><C-]>
 
 "-----------------------
