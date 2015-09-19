@@ -181,7 +181,7 @@ autocmd CursorHoldI * nested match none
 
 " search for tags in local directory, going up to parent dirs if needed
 set tags=./build/tags,../build/tags,../../build/tags,../../../build/tags,../../../../build/tags,../../../../../build/tags,./tags;src
-set notr
+set tr
 
 " highlight tabs and trailing whitespace
 highlight RedundantWhitespace ctermbg=red guibg=red
@@ -264,6 +264,7 @@ vnoremap <silent> <A-l> V
 
 " Start column marking mode   --> TODO: make it toggle instead
 inoremap <silent> <A-c> <C-O><C-V>:<C-u>set selection=inclusive<CR><C-O>gv
+"vnoremap <silent> <A-c> <C-V>:<C-u>set selection=inclusive<CR><C-O>gv
 vnoremap <silent> <A-c> :<C-u>set selection=inclusive<CR><C-O>gv
 
 " Mark current word
@@ -278,11 +279,14 @@ snoremap <C-A> <C-C>gggH<C-O>G
 xnoremap <C-A> <C-C>ggVG
 
 " Indent or outdent a selection
+"vnoremap <Tab> >
+"vnoremap <S-Tab> <
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
 " reflow text
 inoremap <silent> <C-W> <C-O>gqap
+:command Format %!astyle -A1
 
 " delete word (ctrl-backspace)
 inoremap <silent> <C-_> <C-W>
@@ -384,21 +388,25 @@ inoremap <silent> <C-b> <C-O>z-
 " Move the current line to the top of the window
 inoremap <silent> <C-t> <C-O>z<CR>
 
-" go in  (Keypad*)
+" go out  (Keypad*)
 inoremap <silent> <kMultiply> <C-O><C-I>
 "inoremap <silent> <kMultiply> <C-O>:call <SID>FollowOrJumpNext()<CR>
 "inoremap <silent> <kMultiply> <C-O><C-I>
+inoremap <kMultiply> <C-O><C-O>
+snoremap <kMultiply> <left><right><C-O>
 
-" go out or back (S-Keypad*)
+" go in or forward (S-Keypad*)
 exec "set <t_k/>=\e[1;2j"
-inoremap <S-kMultiply> <C-O><C-O>
-inoremap <silent> <t_k/> <C-O><C-O>
+inoremap <S-kMultiply> <C-O><C-I>
+inoremap <silent> <t_k/> <C-O><C-I>
 
 " follow link (Ctrl-] or Keypad-enter)
 inoremap <C-]> <C-O><C-]>
-inoremap <C-kMultiply> <C-O><C-]>
+"inoremap <C-kMultiply> <C-O><C-]>
 exec "set <t_l/>=\e[1;5j"
 inoremap <silent> <t_l/> <C-O><C-]>
+
+" Keypad enter to follow link
 inoremap <kEnter> <C-O><C-]>
 
 "-----------------------
