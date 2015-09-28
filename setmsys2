@@ -1,0 +1,19 @@
+#!/bin/bash
+
+pushd $HOME/dot
+cp vimrc $HOME/_vimrc
+cp bashrc_msys2 $HOME/.bashrc
+cp minttyrc $HOME/.minttyrc
+cp gitconfig $HOME/.gitconfig
+#ln -fsT dot/vim $HOME/.vim
+#bin/apt-cyg install vim
+#cp bin/apt-cyg /bin
+#cp _vimperatorrc "$USERPROFILE"
+#cp vimrc "$USERPROFILE/_vimrc"
+#cp ahk/cs64.ahk "$USERPROFILE/Start Menu/Programs/Startup/"
+#pushd vim
+#mkdir -p "$USERPROFILE/vimfiles"
+#cp -r * "$USERPROFILE/vimfiles"
+#popd
+popd
+source $HOME/.bashrc

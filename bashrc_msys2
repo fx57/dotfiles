@@ -108,14 +108,12 @@ PS1="$PS1"'$ '                 # prompt: always $
 # Paranoid: neither group nor others have any perms:
 # umask 077
 
-alias cdc="cd /cygdrive/c"
+alias cdc="cd /c"
 alias more="less -X"
 alias b="vim"
 alias bn="vim _nofile_"
 alias doc="cd /cygdrive/c/doc"
 alias src="cd ~/src"
 alias dot="cd ~/dot"
-alias o="cygstart"
-alias start="cygstart"
 export DISPLAY=localhost:0.0
 export GIT_EDITOR=vim
