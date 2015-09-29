@@ -407,7 +407,7 @@ exec "set <t_l/>=\e[1;5j"
 inoremap <silent> <t_l/> <C-O><C-]>
 
 " Keypad enter to follow link
-inoremap <kEnter> <C-O><C-]>
+inoremap <kEnter> <C-O><C-]><C-O>zz
 
 "-----------------------
 " Editing
@@ -565,6 +565,10 @@ vnoremap <A-e> <right><left>:edit<space>
 " exit
 inoremap <silent> <A-x> <C-O>:confirm quit<CR>
 vnoremap <silent> <A-x> <right><left>:confirm quit<CR>
+
+" close single window
+inoremap <silent> <A-s> <C-O>:bd<CR>
+vnoremap <silent> <A-s> <right><left>:bd<CR>
 
 " read file
 inoremap <A-r> <C-O>:read<space>
