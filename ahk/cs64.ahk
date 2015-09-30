@@ -1,6 +1,6 @@
 #SingleInstance force
 
-text=(F)irefox`n(G)oogle`n(C)hrome`n(T)erminal`n(N)ew terminal`n(E)xplorer`n(V)im`n( `; )Cancel`n(Q)uit app
+text=(F)irefox`n(G)oogle`n(C)ygwin`n(T)erminal`n(N)ew terminal`n(O)ther Instance`n(E)xplorer`n(V)im`n( `; )Cancel`n(Q)uit app
 
 Gui, +LastFound +AlwaysOnTop +owner -Caption
 Gui, Color, black,black
@@ -16,7 +16,7 @@ Gui, Show, NoActivate  ;, AutoSize Center
 Input,thekey,L1 T3 M
 if (ErrorLevel="max")
 {
-    if (thekey="t" OR theKey=chr(20))
+    if (thekey="c" OR theKey=chr(3))
     {
 		Gui,Cancel
         ifwinexist, -bash
@@ -24,18 +24,28 @@ if (ErrorLevel="max")
         else
             Run, c:\cygwin\bin\mintty.exe -
     }
+    else if (thekey="t" OR theKey=chr(20))
+    {
+        SetTitleMatchMode, 1
+        Gui,Cancel
+        ifwinexist, MINGW64
+            WinActivate
+        else
+            Run, "C:\Program Files\Git\git-bash.exe" --cd-to-home
+    }
     else if (thekey="n" OR theKey=chr(14))
     {
 		Gui,Cancel
-        Run, c:\cygwin\bin\mintty.exe -
+        Run, "C:\Program Files\Git\git-bash.exe" --cd-to-home
     }
-    else if (thekey="c" OR theKey=chr(3))
+    else if (thekey="o" OR theKey=chr(15))
     {
 		Gui,Cancel
-        ifwinexist, ahk_class Chrome_WidgetWin_1
-            WinActivate
-        else
-            Run, "C:\Users\dstam\AppData\Local\Google\Chrome\Application\chrome.exe", C:\Users\dstam.CORP\AppData\Local\Google\Chrome\Application
+        WinGetClass, CurrentActive, A
+        WinGet, Instances, Count, ahk_class %CurrentActive%
+        If Instances > 1
+            WinSet, Bottom,, A
+        WinActivate, ahk_class %CurrentActive%
     }
     else if (thekey="f" OR theKey=chr(6))
     {
