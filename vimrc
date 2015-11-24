@@ -6,16 +6,11 @@ set encoding=utf8
 " De-modalize
 "-----------------------
 
-" Don't use Vi-compatible mode.
-set nocompatible
-
 " Modeless operation, stay in insert mode.
-" Use ESC for normal->insert, and CTRL-L for insert->normal
+" Use CTRL-O for one normal vi command
+" Use CTRL-L for multiple normal vi commands
+set nocompatible
 set insertmode
-
-" Home row escape - mnemonic: leave insert mode
-"imap <c-l> <esc>
-
 
 "-----------------------
 " Mouse
@@ -65,7 +60,7 @@ set nowrap                      " do not wrap lines
 
 
 "-----------------------
-" Alt modifier key (key to the left of the space bar)
+" Alt as modifier key (key to the left of the space bar)
 "-----------------------
 
 if has("gui_running")
@@ -105,7 +100,6 @@ let &t_te.="\e[?7727l"
 noremap <Esc>O[ <Esc>
 noremap! <Esc>O[ <Esc>
 
-
 "-----------------------
 " De-guify
 "-----------------------
@@ -122,7 +116,6 @@ set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
 set number
 set guicursor=n-v-c:block-Cursor/lCursor,ve:hor13-Cursor,o:hor50-Cursor,i-ci:hor13-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 hi Cursor guifg=white guibg=red
-
 
 "-----------------------
 " Misc
@@ -157,8 +150,15 @@ set expandtab
 set backup
 set backupdir=~/.vimfiles
 
+"autocmd InsertCharPre * nested match none
+" clear highlights for searches and jumps
+set updatetime=300
+autocmd CursorHoldI * nested match none
+
+"-----------------------
 " Restore session:  Go to last file(s) if invoked without arguments.
 " autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
+"-----------------------
 autocmd VimEnter * nested if len(bufname("%")) == 0 && filereadable($HOME . "/.vim/Session.vim") |
    \ execute "source " . $HOME . "/.vim/Session.vim"  |
    \ endif
@@ -174,28 +174,35 @@ autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
    \ execute "mksession! " . $HOME . "/.vim/Session.vim" |
    \ endif
 
-"autocmd InsertCharPre * nested match none
-" clear highlights for searches and jumps
-set updatetime=300
-autocmd CursorHoldI * nested match none
-
-" search for tags in local directory, going up to parent dirs if needed
-set tags=./build/tags,../build/tags,../../build/tags,../../../build/tags,../../../../build/tags,../../../../../build/tags,./tags;src
-set tr
-
 " highlight tabs and trailing whitespace
 highlight RedundantWhitespace ctermbg=red guibg=red
 match RedundantWhitespace /\s\+$\|\t/
 
-
 "-----------------------
-" Modeless selections: character, line and block selection
+" tags: search for tags in local directory, going up to parent dirs if needed
 "-----------------------
+set tags=./build/tags,../build/tags,../../build/tags,../../../build/tags,../../../../build/tags,../../../../../build/tags,./tags;src
+set tr
 
-"use visual mode for selections (does not auto-delete on text entry)
+"------------------
+" Shift to select
+"------------------
+
+" Use visual mode for selections (does not auto-delete on text entry)
+" Left or right for character selection ("v" mode)
+" Up or down for line selection ("V" mode)
 
 set keymodel=startsel,stopsel
 set selection=exclusive
+
+" start character selections using shifted left/right arrows
+inoremap <silent> <S-Left> <C-O>:<C-u>set selection=exclusive<CR><S-Left>
+inoremap <silent> <S-Right> <C-O>:<C-u>set selection=exclusive<CR><S-Right>
+
+" start linewise selections using shifted up/down arrows
+" --> TODO: pgup/pgdn/home/end
+inoremap <silent> <S-Down> <C-O>V
+inoremap <silent> <S-Up> <C-O>V
 
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
@@ -221,8 +228,10 @@ function s:Cursor_Moved()
 
    if !exists("b:lastcursor") || l:cursor != b:lastcursor
        if l:cursor == 1
+           " underbar
            silent !echo -ne "\e[3 q"
        else
+           " block
            silent !echo -ne "\e[2 q"
        endif
    endif
@@ -232,15 +241,6 @@ endfunction
 autocmd CursorMoved * if mode("") != "i" | call s:Cursor_Moved() | endif
 autocmd InsertEnter * let b:lastcursor = 0
 endif
-
-" start character selections using shifted left/right arrows
-inoremap <silent> <S-Left> <C-O>:<C-u>set selection=exclusive<CR><S-Left>
-inoremap <silent> <S-Right> <C-O>:<C-u>set selection=exclusive<CR><S-Right>
-
-" start linewise selections using shifted up/down arrows
-" --> TODO: pgup/pgdn/home/end
-inoremap <silent> <S-Down> <C-O>V
-inoremap <silent> <S-Up> <C-O>V
 
 " shrink selection - (shifted numpad-5)  --> TODO: further presses select line, block
 exec "set <t_S5>=\e[1;2E"
@@ -262,10 +262,46 @@ vnoremap <silent> <A-m> v
 inoremap <silent> <A-l> <C-O>V
 vnoremap <silent> <A-l> V
 
+" Why is this not working in mintty????
 " Start column marking mode   --> TODO: make it toggle instead
-inoremap <silent> <A-c> <C-O><C-V>:<C-u>set selection=inclusive<CR><C-O>gv
+"inoremap <silent> <A-c> <C-O><C-V>:<C-u>set selection=inclusive<CR><C-O>gv<C-v>
 "vnoremap <silent> <A-c> <C-V>:<C-u>set selection=inclusive<CR><C-O>gv
-vnoremap <silent> <A-c> :<C-u>set selection=inclusive<CR><C-O>gv
+"vnoremap <silent> <A-c> :<C-u>set selection=inclusive<CR><C-O>gv<C-v>
+inoremap <silent> <A-c> <c-o><c-v>
+vnoremap <silent> <A-c> :<C-u>call <SID>ColumnSelection()<CR>
+vnoremap <silent> <S-c> :<C-u>call <SID>ColumnSelection()<CR>
+
+function! s:ColumnSelection()
+     exe "normal! gv"
+     if line(".") > line("v") || (line(".") == line("v") && virtcol(".") >= virtcol("v"))
+       " cursor outside of char selection
+       let l:right=1
+     else
+       " cursor within char selection
+       let l:right=0
+     endif
+    if visualmode() == ""
+        " go to char selection
+        set selection=exclusive
+        if l:right == 1
+            exe "normal! gvv\<s-Right>"
+        else
+            exe "normal! gvvo\<s-Right>o"
+        endif
+    elseif visualmode() == "V"
+        " go to column selection
+        set selection=inclusive
+        exe "normal! gv\<c-v>"
+    else
+        " go to column selection
+        set selection=inclusive
+        if l:right == 1
+            exe "normal! gv\<c-v>\<s-Left>"
+        else
+            exe "normal! gv\<c-v>o\<s-Left>o"
+        endif
+    endif
+endfunction
 
 " Mark current word
 "inoremap <silent> <A-h> <C-O>viw
@@ -284,7 +320,7 @@ xnoremap <C-A> <C-C>ggVG
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
-" reflow text
+" CTRL-W to wrap text (reflow paragraph)
 inoremap <silent> <C-W> <C-O>gqap
 :command Format %!astyle -A1
 
@@ -300,9 +336,11 @@ if !has("unix")
   set guioptions-=a
 endif
 
-" Use CTRL-Q to enter literal characters (what CTRL-V used to do)
+" Use CTRL-X, CTRL-C and CTRL-V for cut, copy and paste
+" Use CTRL-BREAK to stop (What CTRL-C used to do)
+" Use ALT-Q to enter literal characters (what CTRL-V used to do)
 inoremap <C-q>  <C-v>
-
+inoremap <silent> <A-q> <C-v>
 if has('clipboard')
   vnoremap <silent> <C-x> "*x
   vnoremap <silent> <C-c> "*ygv
@@ -479,9 +517,6 @@ inoremap <silent> <A-BS> <C-O>E<C-O>E<C-O>a<C-W>
 
 " Complete a partially typed word
 inoremap <silent> <A-/> <C-p>
-
-" Quote the next character
-inoremap <silent> <A-q> <C-v>
 
 "-----------------------
 " Delete
