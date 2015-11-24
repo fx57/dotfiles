@@ -31,12 +31,12 @@ if (ErrorLevel="max")
         ifwinexist, MINGW64
             WinActivate
         else
-            Run, "C:\Program Files\Git\git-bash.exe" --cd-to-home
+            Run, "C:\Program Files\Git\git-bash.exe" --cd-to-home, %HOMEDRIVE%%HOMEPATH%
     }
     else if (thekey="n" OR theKey=chr(14))
     {
 		Gui,Cancel
-        Run, "C:\Program Files\Git\git-bash.exe" --cd-to-home
+        Run, "C:\Program Files\Git\git-bash.exe" --cd-to-home, %HOMEDRIVE%%HOMEPATH%
     }
     else if (thekey="o" OR theKey=chr(15))
     {
