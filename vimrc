@@ -344,7 +344,7 @@ inoremap <silent> <A-q> <C-v>
 if has('clipboard')
   vnoremap <silent> <C-x> "*x
   vnoremap <silent> <C-c> "*ygv
-  vnoremap <silent> <C-v> "*P
+  vnoremap <silent> <C-v> "*Pgv<S-right>y
   inoremap <silent> <C-v> <C-O>"+P
   cnoremap <C-V>     <C-R>+
 else
