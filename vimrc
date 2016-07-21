@@ -150,10 +150,11 @@ set expandtab
 set backup
 set backupdir=~/.vimfiles
 
-"autocmd InsertCharPre * nested match none
-" clear highlights for searches and jumps
+" clear highlights for searches and jumps and trailing whitespace
 set updatetime=300
 autocmd CursorHoldI * nested match none
+" it would be nice to always show trailing whitespace but until we have
+" a way to hide it when the cursor follows it it is too annoying to leave on
 
 "-----------------------
 " Restore session:  Go to last file(s) if invoked without arguments.
@@ -177,6 +178,17 @@ autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
 " highlight tabs and trailing whitespace
 highlight RedundantWhitespace ctermbg=red guibg=red
 match RedundantWhitespace /\s\+$\|\t/
+imap <C-R><C-W> <C-O>:call <SID>RevealWhitespace()<CR>
+
+function! s:RevealWhitespace()
+    let [lll, ccc] = searchpos('\s\+$\|\t','w')
+    if lll == 0 && ccc == 0
+        echo "\rNo tabs or trailing whitespace found.               "
+        return
+    endif
+    highlight RedundantWhitespace ctermbg=red guibg=red
+    match RedundantWhitespace /\s\+$\|\t/
+endfunction
 
 "-----------------------
 " tags: search for tags in local directory, going up to parent dirs if needed
