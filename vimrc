@@ -128,7 +128,7 @@ set history=50      " keep 50 lines of command line history
 set ruler           " show the cursor position all the time
 set incsearch       " do incremental searching
 
-let mapleader=','
+let mapleader=' '
 
 inoremap <silent> <A-f> <C-O>:NERDTreeToggle<CR>
 

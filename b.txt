@@ -1,5 +1,7 @@
 = Text Editor
 
+Options:  Vim, Emacs, other
+
 Common GUI features
 * Arrow keys to move
 * Page up, page down, goes up or down a page
@@ -18,7 +20,6 @@ Common GUI features
 * Click with mouse to move to cursor
 * Click and drag with mouse to select
 * Click and drag with ALT+mouse for column selection
-* Shift-click to extend selection
 
 Emacs features
 * Ctrl-a/e to go to beginning or end of line
@@ -67,6 +68,7 @@ VIM features
 * Ctrl-O to perform one VIM command (INSERT->NORMAL or SELECT->VISUAL)
 * Ctrl-L to toggle VIM mode (switches from INSERT->NORMAL or SELECT->VISUAL)
 * F10 is VIM command line
+* Leader is <space> so do C-O <space>
 
 == brief key bindings
 

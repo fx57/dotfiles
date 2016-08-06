@@ -1,0 +1,182 @@
+#!/bin/bash
+
+CWD=`pwd`
+
+install() {
+  if [[ $ACTION == uninstall ]]
+  then
+    if [[ -d $CWD/backup ]]
+    then
+      printf "uninstalling:\n"
+      uninstall_dots
+      uninstall_file $VIMFILE
+      uninstall_file $VIMDIR
+      uninstall_file bin
+      restore_dots
+      restore_file $VIMFILE
+      restore_file $VIMDIR
+      restore_file bin
+      rm -rf $CWD/backup
+    else
+      printf "cannot uninstall that which is not installed\n"
+    fi
+    exit 0
+  fi
+
+  backup
+
+  printf "installing:\n"
+  install_dots
+  install_file bin bin
+  install_file $VIMFILE vimrc
+  install_file $VIMDIR vim
+  printf "\nYou are good to go!\n"
+}
+
+backup() {
+  if [[ -d $CWD/backup ]]
+  then
+    printf "already set up\n"
+    exit 0
+  else
+    printf "creating backup:\n"
+    mkdir -p $CWD/backup
+    backup_dots
+    backup_file $VIMFILE
+    backup_file $VIMDIR
+    backup_file bin
+  fi
+}
+
+install_dots() {
+  for dot in $DOTS
+  do
+    printf "  linking $dot file\n"
+    if [[ -e $CWD/dots_$SYSNAME/$dot ]]
+    then
+      ln -sf $CWD/dots_$SYSNAME/$dot $HOME/.$dot
+    else
+      ln -sf $CWD/dots/$dot $HOME/.$dot
+    fi
+  done
+}
+
+install_file() {
+  printf "  linking $1/ file\n"
+  ln -sf $CWD/$2 $HOME/$1
+}
+
+uninstall_dots() {
+  for dot in $DOTS_COMBINED
+  do
+    if [[ -f $HOME/.$dot ]]
+    then
+      printf "  removing .$dot file\n"
+      rm $HOME/.$dot
+    fi
+  done
+}
+
+uninstall_file() {
+  if [[ -d $HOME/$1 ]]
+  then
+    printf "  removing $1/ file\n"
+    rm -rf $HOME/$1
+  fi
+}
+
+backup_file() {
+  if [[ -e $HOME/$1 ]]
+  then
+    printf "  backing up $1 file\n"
+    mv $HOME/$1 $CWD/backup/$1
+  fi
+}
+
+backup_dots() {
+  mkdir -p $CWD/backup/dots
+  for dot in $DOTS_COMBINED
+  do
+    if [[ -f $HOME/.$dot ]]
+    then
+      printf "  backing up .$dot file.\n"
+      mv $HOME/.$dot $CWD/backup/dots/$dot
+    fi
+  done
+}
+
+restore_file() {
+  if [[ -e $CWD/backup/$1 ]]
+  then
+    printf "  restoring $1 file\n"
+    mv $CWD/backup/$1 $HOME/$1
+  fi
+}
+
+restore_dots() {
+  for dot in $DOTS_COMBINED
+  do
+    if [[ -f $CWD/backup/dots/$dot ]]
+    then
+      printf "  restoring .$dot file\n"
+      mv $CWD/backup/dots/$dot $HOME/.$dot
+    fi
+  done
+}
+
+initialize() {
+  DOTS_GENERIC=$(get_dots dots)
+  DOTS_SPECIFIC=$(get_dots dots_$SYSNAME)
+
+  # list of generic dots not overridden by specific dots
+  DOTS=$(printf "%s\n" $DOTS_GENERIC $DOTS_SPECIFIC | sort | uniq -u)
+
+  DOTS_COMBINED=$(printf "%s\n" $DOTS_GENERIC $DOTS_SPECIFIC | sort | uniq)
+}
+
+get_dots() {
+  local files=()
+  for file in `find $CWD/$1 \( ! -regex '.*/\..*' \) -type f `
+  do
+    files+=(`basename $file`)
+  done
+  echo ${files[@]}
+}
+
+
+# ----------------------------------------------
+
+setup_msys() {
+  SYSNAME=msys2
+  VIMDIR=vimfiles
+  VIMFILE=_vimrc
+  initialize
+  install
+}
+
+setup_maxos() {
+  SYSNAME=macos
+  VIMDIR=.vim
+  VIMFILE=.vimrc
+  initialize
+  install
+}
+
+if [[ $1 == "uninstall" ]]
+then
+  ACTION=uninstall
+else
+  ACTION=setup
+fi
+
+SYSTYPE=$(uname -o)
+if [[ "$SYSTYPE" == "Msys" ]]
+then
+  setup_msys
+elif [[ "$SYSTYPE" == "macos" ]]
+then
+  setup_macos
+else
+  printf "I don't know how to set up $SYSTYPE\n"
+fi
+
