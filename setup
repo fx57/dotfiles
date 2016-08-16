@@ -152,6 +152,13 @@ setup_msys() {
   VIMFILE=_vimrc
   initialize
   install
+  if [[ $ACTION == uninstall ]]
+  then
+    rm "$APPDATA/Microsoft/Windows/Start Menu/Programs/Startup/cs64.ahk"
+  else
+    cp $CWD/ahk/cs64.ahk "$APPDATA/Microsoft/Windows/Start Menu/Programs/Startup/cs64.ahk"
+    start $CWD/ahk/cs64.ahk
+  fi
 }
 
 setup_maxos() {
