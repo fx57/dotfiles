@@ -161,8 +161,16 @@ setup_msys() {
   fi
 }
 
-setup_maxos() {
+setup_macos() {
   SYSNAME=macos
+  VIMDIR=.vim
+  VIMFILE=.vimrc
+  initialize
+  install
+}
+
+setup_linux() {
+  SYSNAME=linux
   VIMDIR=.vim
   VIMFILE=.vimrc
   initialize
@@ -183,6 +191,9 @@ then
 elif [[ "$SYSTYPE" == "macos" ]]
 then
   setup_macos
+elif [[ "$SYSTYPE" == "GNU/Linux" ]]
+then
+  setup_linux
 else
   printf "I don't know how to set up $SYSTYPE\n"
 fi
