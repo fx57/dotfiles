@@ -1,2 +1,2 @@
 /usr/libexec/PListBuddy
-plutil
+plutil -p

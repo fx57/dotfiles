@@ -166,6 +166,8 @@ setup_macos() {
   VIMDIR=.vim
   VIMFILE=.vimrc
   initialize
+  karabiner/install
+  /usr/bin/chflags nohidden ~/Library
   install
 }
 
