@@ -184,17 +184,23 @@ else
   ACTION=setup
 fi
 
-SYSTYPE=$(uname -o)
-if [[ "$SYSTYPE" == "Msys" ]]
+SYSTYPE=$(uname)
+if [[ "$SYSTYPE" == "Darwin" ]]
 then
-  setup_msys
-elif [[ "$SYSTYPE" == "macos" ]]
-then
-  setup_macos
-elif [[ "$SYSTYPE" == "GNU/Linux" ]]
-then
-  setup_linux
+    setup_macos
 else
-  printf "I don't know how to set up $SYSTYPE\n"
+  SYSTYPE=$(uname -o)
+  if [[ "$SYSTYPE" == "Msys" ]]
+  then
+    setup_msys
+  elif [[ "$SYSTYPE" == "macos" ]]
+  then
+    setup_macos
+  elif [[ "$SYSTYPE" == "GNU/Linux" ]]
+  then
+    setup_linux
+  else
+    printf "I don't know how to set up $SYSTYPE\n"
+  fi
 fi
 
