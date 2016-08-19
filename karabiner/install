@@ -8,9 +8,11 @@ then
     exit 0
 fi
 
+cp org.pqrs.Karabiner.plist ~/Library/Preferences
 curl -o karabiner.dmg https://pqrs.org/osx/karabiner/files/Karabiner-10.21.0.dmg
 
 hdiutil attach karabiner.dmg
 open -W /Volumes/Karabiner-10.21.0/Karabiner.sparkle_guided.pkg
 hdiutil detach /Volumes/Karabiner-10.21.0
 rm karabiner.dmg
+open /Applications/Karabiner.app
