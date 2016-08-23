@@ -38,14 +38,14 @@ backup() {
   then
     printf "already set up\n"
     exit 0
-  else
-    printf "creating backup:\n"
-    mkdir -p $CWD/backup
-    backup_dots
-    backup_file $VIMFILE
-    backup_file $VIMDIR
-    backup_file bin
   fi
+
+  printf "creating backup:\n"
+  mkdir -p $CWD/backup
+  backup_dots
+  backup_file $VIMFILE
+  backup_file $VIMDIR
+  backup_file bin
 }
 
 install_dots() {
@@ -57,6 +57,16 @@ install_dots() {
       ln -sf $CWD/dots_$SYSNAME/$dot $HOME/.$dot
     else
       ln -sf $CWD/dots/$dot $HOME/.$dot
+    fi
+  done
+
+  for dot in $DOTS_FILL
+  do
+    if [[ ! -e $HOME/.$dot ]]
+    then
+      printf "  linking $dot file\n"
+      ln -sf $CWD/dots_fill/$dot $HOME/.$dot
+      touch $CWD/backup/.$dot
     fi
   done
 }
@@ -125,7 +135,13 @@ restore_dots() {
 }
 
 initialize() {
+  # Dot files that are filled in only if they don't already exist
+  DOTS_FILL=$(get_dots dots_fill)
+
+  # Dot files installed for all systems (unless overridden)
   DOTS_GENERIC=$(get_dots dots)
+
+  # System specific overrides
   DOTS_SPECIFIC=$(get_dots dots_$SYSNAME)
 
   # list of generic dots not overridden by specific dots
