@@ -1,0 +1,4 @@
+Use xkeycaps
+
+sudo apt-get install xkeycaps
+
