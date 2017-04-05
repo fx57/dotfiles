@@ -117,6 +117,9 @@ set number
 set guicursor=n-v-c:block-Cursor/lCursor,ve:hor13-Cursor,o:hor50-Cursor,i-ci:hor13-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 hi Cursor guifg=white guibg=red
 
+set sidescroll=1
+set autoread
+
 "-----------------------
 " Misc
 "-----------------------
