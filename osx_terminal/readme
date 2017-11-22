@@ -27,7 +27,7 @@ xterm control sequences
   F713  keypad 0   F16         *^[2~                                (F16 because cannot map "insert")
   F714  keypad +   F17         *^Ok                                 
   F715  keypad -   F18         *^Om                                
-  F716  keypad *   F19         *^Oj      *^[1;2j                   
+  F716  keypad *   F19         *^Oj      *^[1;2j  *^[1;5j                
   F717  keypad 5   F20         *^OE      *^[1;2E
   F728             del         +^[3~     +^[3;2~  +^[3;5~         
   F729  keypad 7   home        *^OH      *^[1;2H 
