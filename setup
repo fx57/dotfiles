@@ -30,6 +30,8 @@ install() {
   install_file bin bin
   install_file $VIMFILE vimrc
   install_file $VIMDIR vim
+  source ~/.bashrc
+  
   printf "\nYou are good to go!\n"
 }
 
@@ -202,6 +204,12 @@ then
   ACTION=uninstall
 else
   ACTION=setup
+  if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
+  then
+    printf "Setup must be sourced, not run in a subshell.\n"
+    printf "Type: . setup\n"
+    exit 0
+  fi
 fi
 
 SYSTYPE=$(uname)

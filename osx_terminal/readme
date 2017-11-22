@@ -1,2 +1,40 @@
 /usr/libexec/PListBuddy
 plutil -p
+
+        key        mapping     plain     shift$   ctrl^    alt~   
+        --------   -------     -----     -------  -------  ------
+  F700  keypad 8   up          -^OA      *^[1;2A                           
+  F701  keypad 2   down        -^OB      *^[1;2B                 
+  F702  keypad 4   left        -^OD      +^[1;2D  +^[1;5D  +^b
+  F703  keypad 6   right       -^OC      +^[1;2C  +^[1;5C  +^f
+  F704             F1          +^OP                        +^[17~
+  F705             F2          +^OQ                        +^[18~
+  F706             F3          +^OR                        +^[19~
+  F707             F4          +^OS                        +^[20~
+  F708             F5          +^[15~    +^[25~            +^[21~
+  F709             F6          +^[17~    +^[26~            +^[23~
+  F70A             F7          +^[18~    +^[28~            +^[24~
+  F70B             F8          +^[19~    +^[29~            +^[25~
+  F70C             F9          +^[20~    +^[31~            +^[26~
+  F70D             F10         +^[21~    *^[22~            +^[28~
+  F70E             F11         +^[23~    +^[33~            +^[29~
+  F70F             F12         +^[24~    +^[34~            +^[31~
+  F710  keypad /   F13         *^Oo      *^[1;2o
+  F711             F14                                              (brightness -)
+  F712             F15                                              (brightness +)
+  F713  keypad 0   F16         *^[2~
+  F714  keypad +   F17         *^Ok                                 
+  F715  keypad -   F18         *^Om                                
+  F716  keypad *   F19         *^Oj      *^[1;2j                   
+  F717  keypad 5   F20         *^OE      *^[1;2E
+  F728             del         +^[3~     +^[3;2~  +^[3;5~         
+  F729  keypad 7   home        *^OH      *^[1;2H 
+  F72B  keypad 1   end         *^OF      *^[1;2F   
+  F72C  keypad 9   pgup        *^[5~     *^[5;2~
+  F72D  keypad 3   pgdn        *^[6~     *^[6;2~
+
+-  is hard coded in terminal
++  is in terminal profile list
+*  is one we define
+
+^ = \033
