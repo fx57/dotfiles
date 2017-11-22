@@ -2,17 +2,43 @@
 
 # downlad and install karabiner 10.21.0
 
-if [[ -d /Applications/Karabiner.app ]]
+VER=$(sw_vers -productVersion)
+echo OS version $VER
+
+if [[ $VER < "10.11" ]]
 then
-    echo Karabiner is already installed
-    exit 0
+    if [[ -d /Applications/Karabiner.app ]]
+    then
+        echo Karabiner is already installed
+        exit 0
+    fi
+
+    cp org.pqrs.Karabiner.plist ~/Library/Preferences
+    curl -o karabiner.dmg https://pqrs.org/osx/karabiner/files/Karabiner-10.21.0.dmg
+
+    hdiutil attach karabiner.dmg
+    open -W /Volumes/Karabiner-10.21.0/Karabiner.sparkle_guided.pkg
+    hdiutil detach /Volumes/Karabiner-10.21.0
+    rm karabiner.dmg
+    open /Applications/Karabiner.app
+else
+    if [[ -d /Applications/Karabiner-Elements.app ]]
+    then
+        echo Karabiner-Elements is already installed
+        exit 0
+    fi
+
+    cp org.pqrs.Karabiner.plist ~/Library/Preferences
+    curl -o karabiner.dmg https://pqrs.org/osx/karabiner/files/Karabiner-Elements-11.3.0.dmg
+
+    hdiutil attach karabiner.dmg
+    open -W /Volumes/Karabiner-Elements-11.3.0/Karabiner-Elements.sparkle_guided.pkg
+    hdiutil detach /Volumes/Karabiner-11.3.0
+    rm karabiner.dmg
+    open /Applications/Karabiner-Elements.app
+
+    cp -R complex/ ~/.config/karabiner/assets/complex_modifications
+    cp karabiner.json ~/.config/karabiner
 fi
 
-cp org.pqrs.Karabiner.plist ~/Library/Preferences
-curl -o karabiner.dmg https://pqrs.org/osx/karabiner/files/Karabiner-10.21.0.dmg
 
-hdiutil attach karabiner.dmg
-open -W /Volumes/Karabiner-10.21.0/Karabiner.sparkle_guided.pkg
-hdiutil detach /Volumes/Karabiner-10.21.0
-rm karabiner.dmg
-open /Applications/Karabiner.app
