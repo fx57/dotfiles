@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# downlad and install karabiner 10.21.0
+# downlad and install karabiner 10.21.0 or karabiner elements 11.3.0
 
 VER=$(sw_vers -productVersion)
 echo OS version $VER
