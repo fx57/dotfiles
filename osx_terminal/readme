@@ -1,6 +1,8 @@
 /usr/libexec/PListBuddy
 plutil -p
 
+xterm control sequences
+
         key        mapping     plain     shift$   ctrl^    alt~   
         --------   -------     -----     -------  -------  ------
   F700  keypad 8   up          -^OA      *^[1;2A                           
@@ -22,7 +24,7 @@ plutil -p
   F710  keypad /   F13         *^Oo      *^[1;2o
   F711             F14                                              (brightness -)
   F712             F15                                              (brightness +)
-  F713  keypad 0   F16         *^[2~
+  F713  keypad 0   F16         *^[2~                                (F16 because cannot map "insert")
   F714  keypad +   F17         *^Ok                                 
   F715  keypad -   F18         *^Om                                
   F716  keypad *   F19         *^Oj      *^[1;2j                   
@@ -32,9 +34,19 @@ plutil -p
   F72B  keypad 1   end         *^OF      *^[1;2F   
   F72C  keypad 9   pgup        *^[5~     *^[5;2~
   F72D  keypad 3   pgdn        *^[6~     *^[6;2~
+                   enter       *^OM
 
 -  is hard coded in terminal
 +  is in terminal profile list
 *  is one we define
 
-^ = \033
+^ = \033 = 0x1B = Ctrl-[ = Escape
+
+;2 Shift
+;3 Alt
+;4 Alt Shift
+;5 Ctrl
+;6 Ctrl Shift
+;7 Ctrl Alt
+;8 Ctrl Alt Shift
+N = 1 + 1*Shift + 2*Alt + 4*Ctrl + 8*Cmd
