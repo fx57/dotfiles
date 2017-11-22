@@ -315,14 +315,6 @@
                     "to": {
                         "key_code": "page_up"
                     }
-                },
-                {
-                    "from": {
-                        "key_code": "left_command"
-                    },
-                    "to": {
-                        "key_code": "left_option"
-                    }
                 }
             ],
             "virtual_hid_keyboard": {

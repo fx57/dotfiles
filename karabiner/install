@@ -33,9 +33,10 @@ else
 
     hdiutil attach karabiner.dmg
     open -W /Volumes/Karabiner-Elements-11.3.0/Karabiner-Elements.sparkle_guided.pkg
-    hdiutil detach /Volumes/Karabiner-11.3.0
+    hdiutil detach /Volumes/Karabiner-Elements-11.3.0
     rm karabiner.dmg
-    open /Applications/Karabiner-Elements.app
+    open -W /Applications/Karabiner-Elements.app
+    sleep 2
 
     cp -R complex/ ~/.config/karabiner/assets/complex_modifications
     cp karabiner.json ~/.config/karabiner
