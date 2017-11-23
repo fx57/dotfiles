@@ -1,0 +1,149 @@
+{
+    "title": "PC numpad special characters",
+    "rules":
+    [
+        {
+            "description": "Map PC numpad special characters",
+            "manipulators":
+            [
+                {
+                    "type": "basic",
+                    "conditions":
+                    [
+                        {
+                            "identifiers":
+                            [
+                                {
+                                    "vendor_id": 1542,
+                                    "product_id": 544,
+                                    "description": "Apple Wired Keyboard with Numeric Keypad"
+                                }
+                            ],
+                            "type": "device_unless"
+                        }
+                    ],
+                    "from":
+                    {
+                        "key_code": "keypad_asterisk",
+                        "modifiers":
+                        {
+                            "optional":
+                            [
+                                "any"
+                            ]
+                        }
+                    },
+                    "to":
+                    [
+                        {
+                            "key_code": "f19"
+                        }
+                    ]
+                },
+                {
+                    "type": "basic",
+                    "conditions":
+                    [
+                        {
+                            "identifiers":
+                            [
+                                {
+                                    "vendor_id": 1542,
+                                    "product_id": 544,
+                                    "description": "Apple Wired Keyboard with Numeric Keypad"
+                                }
+                            ],
+                            "type": "device_unless"
+                        }
+                    ],
+                    "from":
+                    {
+                        "key_code": "keypad_hyphen",
+                        "modifiers":
+                        {
+                            "optional":
+                            [
+                                "any"
+                            ]
+                        }
+                    },
+                    "to":
+                    [
+                        {
+                            "key_code": "f18"
+                        }
+                    ]
+                },
+                {
+                    "type": "basic",
+                    "conditions":
+                    [
+                        {
+                            "identifiers":
+                            [
+                                {
+                                    "vendor_id": 1542,
+                                    "product_id": 544,
+                                    "description": "Apple Wired Keyboard with Numeric Keypad"
+                                }
+                            ],
+                            "type": "device_unless"
+                        }
+                    ],
+                    "from":
+                    {
+                        "key_code": "keypad_plus",
+                        "modifiers":
+                        {
+                            "optional":
+                            [
+                                "any"
+                            ]
+                        }
+                    },
+                    "to":
+                    [
+                        {
+                            "key_code": "f17"
+                        }
+                    ]
+                },
+                {
+                    "type": "basic",
+                    "conditions":
+                    [
+                        {
+                            "identifiers":
+                            [
+                                {
+                                    "vendor_id": 1542,
+                                    "product_id": 544,
+                                    "description": "Apple Wired Keyboard with Numeric Keypad"
+                                }
+                            ],
+                            "type": "device_unless"
+                        }
+                    ],
+                    "from":
+                    {
+                        "key_code": "keypad_slash",
+                        "modifiers":
+                        {
+                            "optional":
+                            [
+                                "any"
+                            ]
+                        }
+                    },
+                    "to":
+                    [
+                        {
+                            "key_code": "f13"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
