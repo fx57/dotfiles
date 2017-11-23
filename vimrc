@@ -245,6 +245,8 @@ function s:Cursor_Moved()
        if l:cursor == 1
            " underbar
            silent !echo -ne "\e[3 q"
+           " NOTE: This seems to no longer work.  Possible fix is to 
+           "       change t_EI then start and exit insert mode.
        else
            " block
            silent !echo -ne "\e[2 q"
