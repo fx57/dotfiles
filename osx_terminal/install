@@ -102,6 +102,7 @@ defaults write com.apple.Terminal "Window Settings" -dict-add Night '{
 /usr/libexec/PListBuddy -c "Add :'Window Settings':Night:FontHeightSpacing integer 1" ~/Library/Preferences/com.apple.Terminal.plist
 /usr/libexec/PListBuddy -c "Add :'Window Settings':Night:LineWrap bool true" ~/Library/Preferences/com.apple.Terminal.plist
 /usr/libexec/PListBuddy -c "Add :'Window Settings':Night:ProfileCurrentVersion real 2.04" ~/Library/Preferences/com.apple.Terminal.plist
+/usr/libexec/PListBuddy -c "Add :'Window Settings':Night:ScrollAlternateScreen bool false" ~/Library/Preferences/com.apple.Terminal.plist
 /usr/libexec/PListBuddy -c "Add :'Window Settings':Night:ShowCommandKeyInTitle bool false" ~/Library/Preferences/com.apple.Terminal.plist
 /usr/libexec/PListBuddy -c "Add :'Window Settings':Night:ShowShellComandInTitle bool false" ~/Library/Preferences/com.apple.Terminal.plist
 /usr/libexec/PListBuddy -c "Add :'Window Settings':Night:ShowTTYNameInTitle bool false" ~/Library/Preferences/com.apple.Terminal.plist

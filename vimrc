@@ -358,11 +358,13 @@ endif
 " Use ALT-Q to enter literal characters (what CTRL-V used to do)
 inoremap <C-q>  <C-v>
 inoremap <silent> <A-q> <C-v>
+inoremap <silent> <C-c> <Nop>
+inoremap <silent> <C-x> <Nop>
 if has('clipboard')
   vnoremap <silent> <C-x> "*x
   vnoremap <silent> <C-c> "*ygv
   vnoremap <silent> <C-v> "*Pgv<S-right>y
-  inoremap <silent> <C-v> <C-O>"+P
+  inoremap <silent> <C-v> <C-O>"+gP
   cnoremap <C-V>     <C-R>+
 else
   " cut/copy/paste for OSX terminal, local vim with no built-in clipboard support
@@ -490,19 +492,17 @@ inoremap <silent> <A-d> <C-O>dd
 " Copy line or mark to scrap buffer.  Vim register 'a' is used as the scrap
 " buffer, register '+' is the system clipboard.
 inoremap <silent> <kPlus> <C-O>"ayy
-inoremap <silent> <C-c> <Nop>
-vnoremap <silent> <kPlus> "ay
+vnoremap <silent> <kPlus> "aygv<Esc>
 
 " Cut line or mark to scrap buffer.  Vim register 'a' is used as the scrap
 " buffer, register '+' is the system clipboard.
 inoremap <silent> <kMinus> <C-O>"add
-inoremap <silent> <C-x> <Nop>
 vnoremap <silent> <kMinus> "ax
 
 " Paste scrap buffer contents to current cursor position.  Vim register 'a' is
 " used as the scrap buffer
-inoremap <silent> <Ins> <C-O>"aP
-vnoremap <silent> <Ins> "aP
+inoremap <silent> <Ins> <C-O>"agP
+vnoremap <silent> <Ins> "agP
 imap <S-Insert> <C-V>
 vmap <S-Insert> <C-V>
 
