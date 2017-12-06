@@ -1,0 +1,82 @@
+{
+    "title": "Ctrl ZY to undo/redo except in Terminal",
+    "rules":
+    [
+        {
+            "description": "Ctrl Z/Y to undo/redo (Cmd-Z)/(Shift-Cmd-Z) except in Terminal",
+            "manipulators":
+            [
+                {
+                    "type": "basic",
+                    "conditions":
+                    [
+                        {
+                            "bundle_identifiers":
+                            [
+                                "com\\.apple\\.Terminal"
+                            ],
+                            "type": "frontmost_application_unless"
+                        }
+                    ],
+                    "from":
+                    {
+                        "key_code": "z",
+                        "modifiers":
+                        {
+                            "mandatory":
+                            [
+                                "control"
+                            ]
+                        }
+                    },
+                    "to":
+                    [
+                        {
+                            "key_code": "z",
+                            "modifiers":
+                            [
+                                "command"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "basic",
+                    "conditions":
+                    [
+                        {
+                            "bundle_identifiers":
+                            [
+                                "com\\.apple\\.Terminal"
+                            ],
+                            "type": "frontmost_application_unless"
+                        }
+                    ],
+                    "from":
+                    {
+                        "key_code": "y",
+                        "modifiers":
+                        {
+                            "mandatory":
+                            [
+                                "control"
+                            ]
+                        }
+                    },
+                    "to":
+                    [
+                        {
+                            "key_code": "z",
+                            "modifiers":
+                            [
+                                "command",
+                                "shift"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+

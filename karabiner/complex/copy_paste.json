@@ -1,0 +1,115 @@
+{
+    "title": "Ctrl XCV to cut/copy/paste except in Terminal",
+    "rules":
+    [
+        {
+            "description": "Ctrl XCV to cut/copy/paste except in Terminal",
+            "manipulators":
+            [
+                {
+                    "type": "basic",
+                    "conditions":
+                    [
+                        {
+                            "bundle_identifiers":
+                            [
+                                "com\\.apple\\.Terminal"
+                            ],
+                            "type": "frontmost_application_unless"
+                        }
+                    ],
+                    "from":
+                    {
+                        "key_code": "x",
+                        "modifiers":
+                        {
+                            "mandatory":
+                            [
+                                "control"
+                            ]
+                        }
+                    },
+                    "to":
+                    [
+                        {
+                            "key_code": "x",
+                            "modifiers":
+                            [
+                                "command"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "basic",
+                    "conditions":
+                    [
+                        {
+                            "bundle_identifiers":
+                            [
+                                "com\\.apple\\.Terminal"
+                            ],
+                            "type": "frontmost_application_unless"
+                        }
+                    ],
+                    "from":
+                    {
+                        "key_code": "c",
+                        "modifiers":
+                        {
+                            "mandatory":
+                            [
+                                "control"
+                            ]
+                        }
+                    },
+                    "to":
+                    [
+                        {
+                            "key_code": "c",
+                            "modifiers":
+                            [
+                                "command"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "basic",
+                    "conditions":
+                    [
+                        {
+                            "bundle_identifiers":
+                            [
+                                "com\\.apple\\.Terminal"
+                            ],
+                            "type": "frontmost_application_unless"
+                        }
+                    ],
+                    "from":
+                    {
+                        "key_code": "v",
+                        "modifiers":
+                        {
+                            "mandatory":
+                            [
+                                "control"
+                            ]
+                        }
+                    },
+                    "to":
+                    [
+                        {
+                            "key_code": "v",
+                            "modifiers":
+                            [
+                                "command"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
