@@ -3,7 +3,7 @@
     "rules":
     [
         {
-            "description": "Swap command_L and option_L in Terminal",
+            "description": "Swap command_L and option_R in Terminal",
             "manipulators":
             [
                 {
@@ -20,7 +20,7 @@
                     ],
                     "from":
                     {
-                        "key_code": "left_option",
+                        "key_code": "right_option",
                         "modifiers":
                         {
                             "optional":
@@ -62,7 +62,7 @@
                     "to":
                     [
                         {
-                            "key_code": "left_option"
+                            "key_code": "right_option"
                         }
                     ]
                 }
