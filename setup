@@ -212,6 +212,9 @@ else
   fi
 fi
 
+git config user.email fx57@wishtech.com
+git config user.name fx57
+
 SYSTYPE=$(uname)
 if [[ "$SYSTYPE" == "Darwin" ]]
 then
