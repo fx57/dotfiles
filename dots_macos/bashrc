@@ -7,3 +7,7 @@ alias b="vi"
 export PATH=$PATH:/opt/local/bin
 export QTDIR=~/Qt/5.7/clang_64
 export PATH=~/development/toolchain/common/bin:$PATH:/usr/local/gcc-arm-none-eabi-4_8-2014q2/bin
+alias d="python drone.py"
+alias sd="sudo python drone.py"
+alias k="cd ~/src/lego"
+alias gs="git status"
