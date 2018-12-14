@@ -115,3 +115,4 @@ defaults write com.apple.Terminal "Window Settings" -dict-add Night '{
 /usr/libexec/PListBuddy -c "Add :'Window Settings':Night:shellExitAction integer 1" ~/Library/Preferences/com.apple.Terminal.plist
 /usr/libexec/PListBuddy -c "Add :'Window Settings':Night:useOptionAsMetaKey bool true" ~/Library/Preferences/com.apple.Terminal.plist
 
+killall Terminal
