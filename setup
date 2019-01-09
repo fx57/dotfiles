@@ -185,7 +185,7 @@ setup_macos() {
   VIMFILE=.vimrc
   initialize
   karabiner/install
-  osx_terminal/install
+  # osx_terminal/install
   cp fonts/*.ttf ~/Library/Fonts
   /usr/bin/chflags nohidden ~/Library
   install
