@@ -112,8 +112,30 @@ alias cdc="cd /c"
 alias more="less -X"
 alias b="vim"
 alias bn="vim _nofile_"
-alias doc="cd /cygdrive/c/doc"
 alias src="cd ~/src"
 alias dot="cd ~/dot"
 export DISPLAY=localhost:0.0
 export GIT_EDITOR=vim
+export PYTHONDONTWRITEBYTECODE=1
+alias godocs="pushd ~/src/lego/docs/sphinx/src"
+alias godrone="pushd ~/src/lego/tools/python/drone"
+alias goproto="pushd ~/src/lego/logi/protocol/logi/protocol"
+alias golego="pushd ~/src/lego"
+alias k="pushd ~/src/lego"
+alias gs="git status"
+alias drone="d"
+
+d () {
+    path=$(pwd)
+    while [[ "$path" != "" && ! -e "$path/drone.py" ]]; do
+        path=${path%/*}
+    done
+
+    if [[ -e "$path/drone.py" ]]
+    then
+        python "$path/drone.py" "$@"
+    else
+        echo Could not find drone in current or any parent directories
+    fi
+}
+
