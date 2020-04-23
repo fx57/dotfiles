@@ -14,7 +14,7 @@
                             "identifiers":
                             [
                                 {
-                                    "vendor_id": 1542,
+                                    "vendor_id": 1452,
                                     "product_id": 544,
                                     "description": "Apple Wired Keyboard with Numeric Keypad"
                                 }
@@ -48,7 +48,7 @@
                             "identifiers":
                             [
                                 {
-                                    "vendor_id": 1542,
+                                    "vendor_id": 1452,
                                     "product_id": 544,
                                     "description": "Apple Wired Keyboard with Numeric Keypad"
                                 }
@@ -82,7 +82,7 @@
                             "identifiers":
                             [
                                 {
-                                    "vendor_id": 1542,
+                                    "vendor_id": 1452,
                                     "product_id": 544,
                                     "description": "Apple Wired Keyboard with Numeric Keypad"
                                 }
@@ -116,7 +116,7 @@
                             "identifiers":
                             [
                                 {
-                                    "vendor_id": 1542,
+                                    "vendor_id": 1452,
                                     "product_id": 544,
                                     "description": "Apple Wired Keyboard with Numeric Keypad"
                                 }
@@ -150,7 +150,7 @@
                             "identifiers":
                             [
                                 {
-                                    "vendor_id": 1542,
+                                    "vendor_id": 1452,
                                     "product_id": 544,
                                     "description": "Apple Wired Keyboard with Numeric Keypad"
                                 }
@@ -160,7 +160,7 @@
                     ],
                     "from":
                     {
-                        "key_code": "keypad_equals",
+                        "key_code": "keypad_equal_sign",
                         "modifiers":
                         {
                             "optional":
