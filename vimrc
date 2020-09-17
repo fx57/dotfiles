@@ -682,6 +682,18 @@ inoremap <silent> <A-z> <C-O>:stop<CR>
 inoremap <A-h> <C-O>:help<space>
 vnoremap <A-h> "cy<C-O>gv:<C-u>help <C-R>c<CR>
 
+" Helper mappings
+nnoremap @{ :imap <F7> <C-O>@}<CR><C-O>qr
+nnoremap @} q<C-O>:imap <F7> <C-O>@{<CR>
+
+" Record (F7) toggle
+imap <F7> <C-O>@{
+smap <F7> <C-O>@{
+
+" Playback (F8)
+imap <F8> <C-O>@r
+smap <F8> <C-O>@r
+
 " Command (F10)
 imap <F10> <C-O>:
 smap <F10> <C-O>:
