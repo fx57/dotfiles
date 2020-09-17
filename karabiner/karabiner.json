@@ -11,11 +11,12 @@
                     "basic.simultaneous_threshold_milliseconds": 50,
                     "basic.to_delayed_action_delay_milliseconds": 500,
                     "basic.to_if_alone_timeout_milliseconds": 1000,
-                    "basic.to_if_held_down_threshold_milliseconds": 500
+                    "basic.to_if_held_down_threshold_milliseconds": 500,
+                    "mouse_motion_to_scroll.speed": 100
                 },
                 "rules": [
                     {
-                        "description": "Map PC numpad special characters",
+                        "description": "Map Apple numpad special characters",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -24,14 +25,14 @@
                                             {
                                                 "description": "Apple Wired Keyboard with Numeric Keypad",
                                                 "product_id": 544,
-                                                "vendor_id": 1542
+                                                "vendor_id": 1452
                                             }
                                         ],
-                                        "type": "device_unless"
+                                        "type": "device_if"
                                     }
                                 ],
                                 "from": {
-                                    "key_code": "keypad_asterisk",
+                                    "key_code": "keypad_slash",
                                     "modifiers": {
                                         "optional": [
                                             "any"
@@ -52,14 +53,14 @@
                                             {
                                                 "description": "Apple Wired Keyboard with Numeric Keypad",
                                                 "product_id": 544,
-                                                "vendor_id": 1542
+                                                "vendor_id": 1452
                                             }
                                         ],
-                                        "type": "device_unless"
+                                        "type": "device_if"
                                     }
                                 ],
                                 "from": {
-                                    "key_code": "keypad_hyphen",
+                                    "key_code": "keypad_asterisk",
                                     "modifiers": {
                                         "optional": [
                                             "any"
@@ -80,10 +81,38 @@
                                             {
                                                 "description": "Apple Wired Keyboard with Numeric Keypad",
                                                 "product_id": 544,
-                                                "vendor_id": 1542
+                                                "vendor_id": 1452
                                             }
                                         ],
-                                        "type": "device_unless"
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "keypad_hyphen",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "f17"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "description": "Apple Wired Keyboard with Numeric Keypad",
+                                                "product_id": 544,
+                                                "vendor_id": 1452
+                                            }
+                                        ],
+                                        "type": "device_if"
                                     }
                                 ],
                                 "from": {
@@ -108,14 +137,14 @@
                                             {
                                                 "description": "Apple Wired Keyboard with Numeric Keypad",
                                                 "product_id": 544,
-                                                "vendor_id": 1542
+                                                "vendor_id": 1452
                                             }
                                         ],
-                                        "type": "device_unless"
+                                        "type": "device_if"
                                     }
                                 ],
                                 "from": {
-                                    "key_code": "keypad_slash",
+                                    "key_code": "keypad_equal_sign",
                                     "modifiers": {
                                         "optional": [
                                             "any"
@@ -132,23 +161,19 @@
                         ]
                     },
                     {
-                        "description": "Map Apple numpad special characters",
+                        "description": "Swap command_L and option_R in Terminal",
                         "manipulators": [
                             {
                                 "conditions": [
                                     {
-                                        "identifiers": [
-                                            {
-                                                "description": "Apple Wired Keyboard with Numeric Keypad",
-                                                "product_id": 544,
-                                                "vendor_id": 1542
-                                            }
+                                        "bundle_identifiers": [
+                                            "com\\.apple\\.Terminal"
                                         ],
-                                        "type": "device_if"
+                                        "type": "frontmost_application_if"
                                     }
                                 ],
                                 "from": {
-                                    "key_code": "keypad_slash",
+                                    "key_code": "right_option",
                                     "modifiers": {
                                         "optional": [
                                             "any"
@@ -157,7 +182,7 @@
                                 },
                                 "to": [
                                     {
-                                        "key_code": "f19"
+                                        "key_code": "left_command"
                                     }
                                 ],
                                 "type": "basic"
@@ -165,18 +190,14 @@
                             {
                                 "conditions": [
                                     {
-                                        "identifiers": [
-                                            {
-                                                "description": "Apple Wired Keyboard with Numeric Keypad",
-                                                "product_id": 544,
-                                                "vendor_id": 1542
-                                            }
+                                        "bundle_identifiers": [
+                                            "com\\.apple\\.Terminal"
                                         ],
-                                        "type": "device_if"
+                                        "type": "frontmost_application_if"
                                     }
                                 ],
                                 "from": {
-                                    "key_code": "keypad_asterisk",
+                                    "key_code": "left_command",
                                     "modifiers": {
                                         "optional": [
                                             "any"
@@ -185,91 +206,7 @@
                                 },
                                 "to": [
                                     {
-                                        "key_code": "f18"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "identifiers": [
-                                            {
-                                                "description": "Apple Wired Keyboard with Numeric Keypad",
-                                                "product_id": 544,
-                                                "vendor_id": 1542
-                                            }
-                                        ],
-                                        "type": "device_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "keypad_minus",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "f17"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "identifiers": [
-                                            {
-                                                "description": "Apple Wired Keyboard with Numeric Keypad",
-                                                "product_id": 544,
-                                                "vendor_id": 1542
-                                            }
-                                        ],
-                                        "type": "device_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "keypad_plus",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "f17"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "identifiers": [
-                                            {
-                                                "description": "Apple Wired Keyboard with Numeric Keypad",
-                                                "product_id": 544,
-                                                "vendor_id": 1542
-                                            }
-                                        ],
-                                        "type": "device_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "keypad_equals",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "f13"
+                                        "key_code": "right_option"
                                     }
                                 ],
                                 "type": "basic"
@@ -423,126 +360,7 @@
                         ]
                     },
                     {
-                        "description": "Launch apps by option+letters.",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "a",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_option"
-                                        ],
-                                        "optional": [
-                                            "caps_lock"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open '/Applications/Utilities/Activity Monitor.app'"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "d",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_option"
-                                        ],
-                                        "optional": [
-                                            "caps_lock"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open '/Applications/Dictionary.app'"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "x",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_option"
-                                        ],
-                                        "optional": [
-                                            "caps_lock"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open '/Applications/TextEdit.app'"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "e",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_option"
-                                        ],
-                                        "optional": [
-                                            "caps_lock"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open ~"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "b",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_option"
-                                        ],
-                                        "optional": [
-                                            "caps_lock"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open '/Applications/Safari.app'"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "t",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_option"
-                                        ],
-                                        "optional": [
-                                            "caps_lock"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open '/Applications/Utilities/Terminal.app'"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Swap command_L and option_R in Terminal",
+                        "description": "Terminal L_option-N for new window",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -554,40 +372,19 @@
                                     }
                                 ],
                                 "from": {
-                                    "key_code": "right_option",
+                                    "key_code": "n",
                                     "modifiers": {
-                                        "optional": [
-                                            "any"
+                                        "mandatory": [
+                                            "left_option"
                                         ]
                                     }
                                 },
                                 "to": [
                                     {
-                                        "key_code": "left_command"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "com\\.apple\\.Terminal"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "left_command",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
+                                        "key_code": "n",
+                                        "modifiers": [
+                                            "right_command"
                                         ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "right_option"
                                     }
                                 ],
                                 "type": "basic"
@@ -603,10 +400,10 @@
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": false,
-                        "product_id": 50475,
+                        "product_id": 49277,
                         "vendor_id": 1133
                     },
-                    "ignore": false,
+                    "ignore": true,
                     "manipulate_caps_lock_led": false,
                     "simple_modifications": []
                 },
@@ -621,7 +418,104 @@
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
-                    "simple_modifications": []
+                    "simple_modifications": [
+                        {
+                            "from": {
+                                "key_code": "caps_lock"
+                            },
+                            "to": {
+                                "key_code": "left_control"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_0"
+                            },
+                            "to": {
+                                "key_code": "f16"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_1"
+                            },
+                            "to": {
+                                "key_code": "end"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_2"
+                            },
+                            "to": {
+                                "key_code": "down_arrow"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_3"
+                            },
+                            "to": {
+                                "key_code": "page_down"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_4"
+                            },
+                            "to": {
+                                "key_code": "left_arrow"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_5"
+                            },
+                            "to": {
+                                "key_code": "f20"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_6"
+                            },
+                            "to": {
+                                "key_code": "right_arrow"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_7"
+                            },
+                            "to": {
+                                "key_code": "home"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_8"
+                            },
+                            "to": {
+                                "key_code": "up_arrow"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_9"
+                            },
+                            "to": {
+                                "key_code": "page_up"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "keypad_period"
+                            },
+                            "to": {
+                                "key_code": "delete_forward"
+                            }
+                        }
+                    ]
                 }
             ],
             "fn_function_keys": [
@@ -694,7 +588,7 @@
                         "key_code": "f9"
                     },
                     "to": {
-                        "consumer_key_code": "fastforward"
+                        "consumer_key_code": "fast_forward"
                     }
                 },
                 {
@@ -723,109 +617,14 @@
                 }
             ],
             "name": "Default profile",
+            "parameters": {
+                "delay_milliseconds_before_open_device": 1000
+            },
             "selected": true,
-            "simple_modifications": [
-                {
-                    "from": {
-                        "key_code": "caps_lock"
-                    },
-                    "to": {
-                        "key_code": "left_control"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "keypad_0"
-                    },
-                    "to": {
-                        "key_code": "f16"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "keypad_1"
-                    },
-                    "to": {
-                        "key_code": "end"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "keypad_2"
-                    },
-                    "to": {
-                        "key_code": "down_arrow"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "keypad_3"
-                    },
-                    "to": {
-                        "key_code": "page_down"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "keypad_4"
-                    },
-                    "to": {
-                        "key_code": "left_arrow"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "keypad_5"
-                    },
-                    "to": {
-                        "key_code": "f20"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "keypad_6"
-                    },
-                    "to": {
-                        "key_code": "right_arrow"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "keypad_7"
-                    },
-                    "to": {
-                        "key_code": "home"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "keypad_8"
-                    },
-                    "to": {
-                        "key_code": "up_arrow"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "keypad_9"
-                    },
-                    "to": {
-                        "key_code": "page_up"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "keypad_period"
-                    },
-                    "to": {
-                        "key_code": "delete_forward"
-                    }
-                }
-            ],
+            "simple_modifications": [],
             "virtual_hid_keyboard": {
-                "caps_lock_delay_milliseconds": 0,
                 "country_code": 0,
-                "keyboard_type": "ansi"
+                "mouse_key_xy_scale": 100
             }
         }
     ]

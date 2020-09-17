@@ -92,7 +92,7 @@
                     ],
                     "from":
                     {
-                        "key_code": "keypad_minus",
+                        "key_code": "keypad_hyphen",
                         "modifiers":
                         {
                             "optional":
