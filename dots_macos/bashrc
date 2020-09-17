@@ -7,7 +7,38 @@ alias b="vi"
 export PATH=$PATH:/opt/local/bin
 export QTDIR=~/Qt/5.7/clang_64
 export PATH=~/development/toolchain/common/bin:$PATH:/usr/local/gcc-arm-none-eabi-4_8-2014q2/bin
-alias d="python drone.py"
+echo export DRONE__XCODEBUILD__SDK="macosx10.14"
 alias sd="sudo python drone.py"
-alias k="cd ~/src/lego"
+alias k="cd ~/src/kiros"
+alias kiros="cd ~/src/kiros"
+alias lego="cd ~/src/lego"
+alias devio="cd ~/src/devio"
 alias gs="git status"
+alias godrone="cdroot; cd tools/python/drone"
+alias godocs="cdroot; cd docs/sphinx/src"
+alias goproto="cdroot; cd logi/protocol/logi/protocol"
+alias goui="cdroot; cd logi/frontends/kiros/src"
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+export QTDIR=/Users/dstam/Qt/5.12.1/clang_64
+
+d () {
+    path=$(pwd)
+    while [[ "$path" != "" && (! -e "$path/drone.py" || -e "$path/config.py") ]]; do
+        path=${path%/*}
+    done
+
+    if [[ -e "$path/drone.py" ]]
+    then
+        python "$path/drone.py" "$@"
+    else
+        echo Could not find drone in current or any parent directories
+    fi
+}
+
+cdroot () {
+    path=$(pwd)
+    while [[ "$path" != "" && (! -e "$path/drone.py" || -e "$path/config.py") ]]; do
+        path=${path%/*}
+    done
+    cd $path
+}
