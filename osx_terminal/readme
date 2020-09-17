@@ -5,8 +5,8 @@ xterm control sequences
 
         key        mapping     plain     shift$   ctrl^    alt~
         --------   -------     -----     -------  -------  ------
-  F700  keypad 8   up          -^OA      *^[1;2A
-  F701  keypad 2   down        -^OB      *^[1;2B
+  F700  keypad 8   up          -^OA      *^[1;2A   ^[1;5A
+  F701  keypad 2   down        -^OB      *^[1;2B   ^[1;5B
   F702  keypad 4   left        -^OD      +^[1;2D  +^[1;5D  +^b
   F703  keypad 6   right       -^OC      +^[1;2C  +^[1;5C  +^f
   F704             F1          +^OP                        +^[17~
@@ -21,19 +21,19 @@ xterm control sequences
   F70D             F10         +^[21~    *^[22~            +^[28~
   F70E             F11         +^[23~    +^[33~            +^[29~
   F70F             F12         +^[24~    +^[34~            +^[31~
-  F710  keypad /   F13         *^Oo      *^[1;2o
-  F711             F14                                              (brightness -)
-  F712             F15                                              (brightness +)
+  F710  keypad /   F13         *^Oo      *^[1;2o   ^[1;5o   ^[32~
+  F711             F14                                      ^[33~   (brightness -)
+  F712             F15                                      ^[34~   (brightness +)
   F713  keypad 0   F16         *^[2~                                (F16 because cannot map "insert")
   F714  keypad +   F17         *^Ok
   F715  keypad -   F18         *^Om
   F716  keypad *   F19         *^Oj      *^[1;2j  *^[1;5j
-  F717  keypad 5   F20         *^OE      *^[1;2E
+  F717  keypad 5   F20         *^OE      *^[1;2E   ^[1;5E
   F728             del         +^[3~     +^[3;2~  +^[3;5~
-  F729  keypad 7   home        *^OH      *^[1;2H
-  F72B  keypad 1   end         *^OF      *^[1;2F
-  F72C  keypad 9   pgup        *^[5~     *^[5;2~
-  F72D  keypad 3   pgdn        *^[6~     *^[6;2~
+  F729  keypad 7   home        *^OH      *^[1;2H   ^[1;5H
+  F72B  keypad 1   end         *^OF      *^[1;2F   ^[1;5F
+  F72C  keypad 9   pgup        *^[5~     *^[5;2~   ^[5;5~
+  F72D  keypad 3   pgdn        *^[6~     *^[6;2~   ^[6;5~
                    enter       *^OM
 
 -  is hard coded in terminal
@@ -50,3 +50,14 @@ xterm control sequences
 ;7 Ctrl Alt
 ;8 Ctrl Alt Shift
 N = 1 + 1*Shift + 2*Alt + 4*Ctrl + 8*Cmd
+
+Karabiner
+---------
+
+copy_paste.json        Ctrl XCV to cut/copy/paste except in Terminal      Map ^ to Cmd
+launch.json            Launch apps by option+letters.
+numpad_apple.json      Map Apple numpad special characters
+numpad_pc.json
+swap_alt_cmd.json      Swap command_L and option_R in Terminalq
+term_new.json          Terminal L_option-N for new window
+undo_redo.json         Ctrl Z/Y to undo/redo (Cmd-Z)/(Shift-Cmd-Z) except in Terminal
