@@ -371,7 +371,7 @@ else
   vnoremap <silent> <C-x> "axi<C-R>=system("pbcopy",@a)?'':''<CR>
   vnoremap <silent> <C-c> "ayi<C-R>=system("pbcopy",@a)?'':''<CR><C-O>gv
   vnoremap <silent> <C-v> x<C-R>=system("pbpaste")<CR>
-  inoremap <silent> <C-v> <C-O>:set paste<CR><C-R>=system("pbpaste")<CR><C-O>:set nopaste<CR>
+  inoremap <silent> <C-v> <C-O>:call setreg("\"",system("pbpaste"))<CR><C-O>P
   cnoremap <C-v> <C-R>=system("pbpaste")<CR>
 endif
 
